@@ -1,0 +1,24 @@
+From 0d45fef77bbbd53619784cf13f9b222f1e003a33 Mon Sep 17 00:00:00 2001
+From: Alex ter Weele <alex.ter.weele@gmail.com>
+Date: Sun, 9 Sep 2018 16:22:22 -0500
+Subject: [PATCH] Do not use command -p in Makefile.
+
+---
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 49c7bf0..fe9f0f3 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -254,7 +254,7 @@ lib_libtarsnap_a_CPPFLAGS=				\
+ LIBTARSNAP_A=	lib/libtarsnap.a
+ 
+ cpusupport-config.h:
+-	( export CC="${CC}"; export CFLAGS="${CFLAGS}"; command -p sh $(srcdir)/libcperciva/cpusupport/Build/cpusupport.sh "$$PATH" ) > cpusupport-config.h.tmp && command -p mv cpusupport-config.h.tmp cpusupport-config.h
++	( export CC="${CC}"; export CFLAGS="${CFLAGS}"; sh $(srcdir)/libcperciva/cpusupport/Build/cpusupport.sh "$$PATH" ) > cpusupport-config.h.tmp && mv cpusupport-config.h.tmp cpusupport-config.h
+ EXTRA_DIST=								\
+ 		libcperciva/cpusupport/Build/cpusupport.sh		\
+ 		libcperciva/cpusupport/Build/cpusupport-X86-AESNI.c	\
+-- 
+2.18.0

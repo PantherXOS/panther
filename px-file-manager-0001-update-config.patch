@@ -1,0 +1,15 @@
+diff --git a/pcmanfm/settings.cpp b/pcmanfm/settings.cpp
+index d8c2c4d..f8561e6 100644
+--- a/pcmanfm/settings.cpp
++++ b/pcmanfm/settings.cpp
+@@ -206,8 +206,8 @@ bool Settings::loadFile(QString filePath) {
+         fallbackIconThemeName_ = QLatin1String("oxygen"); // fallback icon theme name
+     }
+     suCommand_ = settings.value(QStringLiteral("SuCommand"), QStringLiteral("lxqt-sudo %s")).toString();
+-    setTerminal(settings.value(QStringLiteral("Terminal"), QStringLiteral("xterm")).toString());
+-    setArchiver(settings.value(QStringLiteral("Archiver"), QStringLiteral("file-roller")).toString());
++    setTerminal(settings.value(QStringLiteral("Terminal"), QStringLiteral("qterminal")).toString());
++    setArchiver(settings.value(QStringLiteral("Archiver"), QStringLiteral("lxqt-archiver")).toString());
+     setSiUnit(settings.value(QStringLiteral("SIUnit"), false).toBool());
+ 
+     setOnlyUserTemplates(settings.value(QStringLiteral("OnlyUserTemplates"), false).toBool());

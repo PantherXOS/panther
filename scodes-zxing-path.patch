@@ -1,0 +1,89 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index bf687e1..ce66fee 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -15,7 +15,7 @@ endif()
+ set(BUILD_UNIT_TESTS OFF)
+ set(BUILD_BLACKBOX_TESTS OFF)
+ set(BUILD_EXAMPLES OFF)
+-add_subdirectory(zxing-cpp)
++find_package(ZXing REQUIRED)
+ 
+ find_package(QT NAMES Qt5 Qt6 COMPONENTS Core Multimedia Concurrent Quick REQUIRED)
+ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Multimedia Concurrent Quick REQUIRED)
+@@ -39,7 +39,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
+ 
+ target_link_libraries(${PROJECT_NAME} PUBLIC ZXing Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::Concurrent Qt${QT_VERSION_MAJOR}::Quick)
+ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/zxing-cpp/thirdparty/stb)
+ 
+ if (ANDROID)
+ 
+@@ -52,3 +51,10 @@ if (ANDROID)
+ 
+     target_link_libraries(${PROJECT_NAME} PUBLIC EGL GLESv2)
+ endif()
++
++install (
++    DIRECTORY ./
++    DESTINATION include/SCodes
++    FILES_MATCHING PATTERN "*.h"
++)
++install(TARGETS ${PROJECT_NAME} DESTINATION lib)
+\ No newline at end of file
+diff --git a/src/SBarcodeDecoder.cpp b/src/SBarcodeDecoder.cpp
+index f34822e..74eb1da 100644
+--- a/src/SBarcodeDecoder.cpp
++++ b/src/SBarcodeDecoder.cpp
+@@ -8,7 +8,7 @@
+ #include <QOffscreenSurface>
+ #include <iostream>
+ 
+-#include <ReadBarcode.h>
++#include <ZXing/ReadBarcode.h>
+ #define STB_IMAGE_IMPLEMENTATION
+ #include "stb_image.h"
+ 
+diff --git a/src/SBarcodeFormat.h b/src/SBarcodeFormat.h
+index 0065199..ad65b37 100644
+--- a/src/SBarcodeFormat.h
++++ b/src/SBarcodeFormat.h
+@@ -3,7 +3,7 @@
+ 
+ #include <qqml.h>
+ 
+-#include "BarcodeFormat.h"
++#include <ZXing/BarcodeFormat.h>
+ 
+ namespace SCodes {
+ Q_NAMESPACE
+diff --git a/src/SBarcodeGenerator.cpp b/src/SBarcodeGenerator.cpp
+index 27c9f89..d01b1d3 100644
+--- a/src/SBarcodeGenerator.cpp
++++ b/src/SBarcodeGenerator.cpp
+@@ -9,8 +9,8 @@
+ #endif
+ #endif
+ 
+-#include "MultiFormatWriter.h"
+-#include "TextUtfEncoding.h"
++#include <ZXing/MultiFormatWriter.h>
++#include <ZXing/TextUtfEncoding.h>
+ 
+ #define STB_IMAGE_WRITE_IMPLEMENTATION
+ #include "stb_image_write.h"
+diff --git a/src/SBarcodeGenerator.h b/src/SBarcodeGenerator.h
+index 2579681..32246da 100644
+--- a/src/SBarcodeGenerator.h
++++ b/src/SBarcodeGenerator.h
+@@ -7,8 +7,8 @@
+ #include <QQuickItem>
+ #include <QObject>
+ 
+-#include "BitMatrix.h"
+-#include "ByteMatrix.h"
++#include <ZXing/BitMatrix.h>
++#include <ZXing/ByteMatrix.h>
+ 
+ #include "SBarcodeFormat.h"
+ 

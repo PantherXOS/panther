@@ -1,0 +1,194 @@
+(define-module (px packages qt)
+  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (guix download)
+  #:use-module (gnu packages documentation)
+  #:use-module (guix packages)
+  #:use-module (guix build-system cmake)
+  #:use-module (guix utils)
+  #:use-module (guix git-download)
+  #:use-module (guix build-system gnu)
+  #:use-module (guix build-system qt)
+  #:use-module (guix build-system trivial)
+  #:use-module (gnu packages compression)
+  #:use-module (gnu packages sqlite)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages qt)
+  #:use-module (gnu packages)
+  #:use-module (gnu packages bison)
+  #:use-module (gnu packages build-tools)
+  #:use-module (gnu packages cups)
+  #:use-module (gnu packages curl)
+  #:use-module (gnu packages databases)
+  #:use-module (gnu packages documentation)
+  #:use-module (gnu packages fontutils)
+  #:use-module (gnu packages flex)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages ghostscript)
+  #:use-module (gnu packages gl)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages gnome)
+  #:use-module (gnu packages gnupg)
+  #:use-module (gnu packages gperf)
+  #:use-module (gnu packages gstreamer)
+  #:use-module (gnu packages gtk)
+  #:use-module (gnu packages icu4c)
+  #:use-module (gnu packages image)
+  #:use-module (gnu packages libevent)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages maths)
+  #:use-module (gnu packages ninja)
+  #:use-module (gnu packages nss)
+  #:use-module (gnu packages pciutils)
+  #:use-module (gnu packages pcre)
+  #:use-module (gnu packages perl)
+  #:use-module (gnu packages protobuf)
+  #:use-module (gnu packages pulseaudio)
+  #:use-module (gnu packages python)
+  #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages qt)
+  #:use-module (gnu packages regex)
+  #:use-module (gnu packages ruby)
+  #:use-module (gnu packages sdl)
+  #:use-module (gnu packages serialization)
+  #:use-module (gnu packages telephony)
+  #:use-module (gnu packages tls)
+  #:use-module (gnu packages valgrind)
+  #:use-module (gnu packages video)
+  #:use-module (gnu packages vulkan)
+  #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xiph)
+  #:use-module (gnu packages xorg)
+  #:use-module (gnu packages xml)
+  #:use-module (srfi srfi-1))
+
+(define (qt5-urls component version)
+  "Return a list of URLs for VERSION of the Qt5 COMPONENT."
+  ;; We can't use a mirror:// scheme because these URLs are not exact copies:
+  ;; the layout differs between them.
+  (list (string-append "https://download.qt.io/official_releases/qt/"
+                       (version-major+minor version) "/" version
+                       "/submodules/" component "-everywhere-src-"
+                       version ".tar.xz")
+        (string-append "https://download.qt.io/archive/qt/"
+                       (version-major+minor version) "/" version
+                       "/submodules/" component "-everywhere-src-"
+                       version ".tar.xz")
+        (let ((directory (string-append "qt5" (string-drop component 2))))
+          (string-append "http://sources.buildroot.net/" directory "/"
+                         component "-everywhere-src-" version ".tar.xz"))
+        (string-append "https://distfiles.macports.org/qt5/"
+                       component "-everywhere-src-" version ".tar.xz")))
+
+(define-public qtbase-with-bundled-sqlite
+  (package (inherit qtbase-5)
+    (name "qtbase-with-bundled-sqlite")
+    (source (origin
+              (inherit (package-source qtbase-5))
+              (snippet
+                ;; corelib uses bundled harfbuzz, md4, md5, sha3
+                '(begin
+                  (with-directory-excursion "src/3rdparty"
+                    (for-each delete-file-recursively
+                              (list "double-conversion" "freetype" "harfbuzz-ng"
+                                    "libpng" "libjpeg" "pcre2" "xcb" "zlib"))
+                  #t)))))
+    (arguments (substitute-keyword-arguments (package-arguments qtbase-5)
+      ((#:phases phases '%standard-phases)
+      `(modify-phases ,phases
+         (replace 'configure
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out")))
+               (substitute* "configure"
+                 (("/bin/pwd") (which "pwd")))
+               (substitute* "src/corelib/global/global.pri"
+                 (("/bin/ls") (which "ls")))
+               ;; The configuration files for other Qt5 packages are searched
+               ;; through a call to "find_package" in Qt5Config.cmake, which
+               ;; disables the use of CMAKE_PREFIX_PATH via the parameter
+               ;; "NO_DEFAULT_PATH". Re-enable it so that the different
+               ;; components can be installed in different places.
+               (substitute* (find-files "." ".*\\.cmake")
+                 (("NO_DEFAULT_PATH") ""))
+               ;; do not pass "--enable-fast-install", which makes the
+               ;; configure process fail
+               (invoke
+                 "./configure"
+                 "-verbose"
+                 "-prefix" out
+                 "-docdir" (string-append out "/share/doc/qt5")
+                 "-headerdir" (string-append out "/include/qt5")
+                 "-archdatadir" (string-append out "/lib/qt5")
+                 "-datadir" (string-append out "/share/qt5")
+                 "-examplesdir" (string-append
+                                  out "/share/doc/qt5/examples")
+                 "-opensource"
+                 "-confirm-license"
+
+                 ;; These features require higher versions of Linux than the
+                 ;; minimum version of the glibc.  See
+                 ;; src/corelib/global/minimum-linux_p.h.  By disabling these
+                 ;; features Qt5 applications can be used on the oldest
+                 ;; kernels that the glibc supports, including the RHEL6
+                 ;; (2.6.32) and RHEL7 (3.10) kernels.
+                 "-no-feature-getentropy"  ; requires Linux 3.17
+                 "-no-feature-renameat2"   ; requires Linux 3.16
+
+                 ;; Do not build examples; if desired, these could go
+                 ;; into a separate output, but for the time being, we
+                 ;; prefer to save the space and build time.
+                 "-no-compile-examples"
+                 ;; Most "-system-..." are automatic, but some use
+                 ;; the bundled copy by default.
+                 ; "-system-sqlite"
+                 "-system-harfbuzz"
+                 "-system-pcre"
+                 ;; explicitly link with openssl instead of dlopening it
+                 "-openssl-linked"
+                 ;; explicitly link with dbus instead of dlopening it
+                 "-dbus-linked"
+                 ;; don't use the precompiled headers
+                 "-no-pch"
+                 ;; drop special machine instructions that do not have
+                 ;; runtime detection
+                 ,@(if (string-prefix? "x86_64"
+                                       (or (%current-target-system)
+                                           (%current-system)))
+                     '()
+                     '("-no-sse2"))
+                 "-no-mips_dsp"
+                 "-no-mips_dspr2"))))
+             ))))
+	))
+
+(define-public qt-location-plugin-googlemap
+  (package
+    (name "qt-location-plugin-googlemap")
+    (version "0.0.0.2")
+    (source
+     (origin
+       (method url-fetch)
+        (uri (string-append
+                 "https://github.com/vladest/googlemaps/archive/refs/tags/v." version ".tar.gz"))
+        (sha256
+         (base32 "1w2vgall1alc2mw5vd4c0wfxa75vri4q1qqwhvrdyxbyj6azkhma"))))
+    (arguments
+     `(#:tests? #f ; no tests))
+       #:phases
+       (modify-phases %standard-phases
+         (replace 'configure
+           (lambda* (#:key outputs #:allow-other-keys)
+             (substitute* "googlemaps.pro"
+               (("\\$\\$\\[QT_INSTALL_PLUGINS\\]") 
+                (string-append (assoc-ref outputs "out") "/lib/qt5/plugins")))
+             (invoke "qmake" "googlemaps.pro" ))))))
+    (build-system qt-build-system)
+    (inputs
+     (list qtbase-5
+           qtlocation
+           qtdeclarative-5))
+    (native-inputs
+      (list pkg-config qttools-5))
+    (home-page "https://github.com/vladest/googlemaps")
+    (synopsis "Google Maps plugin for QtLocation")
+    (description "GoogleMaps plugin for QtLocation module")
+    (license license:gpl3+)))

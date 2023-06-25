@@ -1,0 +1,11 @@
+;;; SPDX-License-Identifier: GPL-3.0-or-later
+;; -*- mode: scheme; -*-
+
+(channel
+ (version 0)
+ (name 'pantherx)
+ (url "https://channels.pantherx.org/git/panther.git")
+ (dependencies
+  (channel
+   (name nongnu)
+   (url "https://channels.pantherx.org/git/nonguix.git"))))

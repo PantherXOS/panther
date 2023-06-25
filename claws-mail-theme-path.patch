@@ -1,0 +1,20 @@
+diff --git a/src/stock_pixmap.c b/src/stock_pixmap.c
+index c8e702d75..36c466f22 100644
+--- a/src/stock_pixmap.c
++++ b/src/stock_pixmap.c
+@@ -827,6 +827,15 @@ GList *stock_pixmap_themes_list_new(void)
+ 	stock_pixmap_find_themes_in_dir(&list, userthemes);
+ 	stock_pixmap_find_themes_in_dir(&list, systemthemes);
+ 
++	GList *itt = NULL;
++	const gchar * const *sysdirs;
++	sysdirs = g_get_system_data_dirs();
++	for (; *sysdirs; sysdirs++) {
++		userthemes   = g_strconcat(*sysdirs, G_DIR_SEPARATOR_S,
++					   "claws-mail/themes", NULL);
++		stock_pixmap_find_themes_in_dir(&list, userthemes);
++	}
++	
+ 	g_free(userthemes);
+ 	g_free(systemthemes);
+ 	return list;
