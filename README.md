@@ -1,6 +1,9 @@
 # Guix Channel: PantherX OS Packages
 
 This repository contains package defintions for PantherX OS.
+
+This is a fork of our original package repository [guix-pantherx](https://git.pantherx.org/development/guix-pantherx) to resolve authentication issues (many of the commits weren't signed) and reduce the size which had blown up to 700+ MB.
+
 ## Branches
 
 - `master` Development
@@ -12,11 +15,11 @@ This repository contains package defintions for PantherX OS.
 ```scheme
 (cons* (channel
         (name 'pantherx)
-        (url "https://channels.pantherx.org/git/pantherx.git")
+        (url "https://channels.pantherx.org/git/panther.git")
         ;; Enable signature verification:
         (introduction
          (make-channel-introduction
-          ""
+          "54b4056ac571611892c743b65f4c47dc298c49da"
           (openpgp-fingerprint
            "A36A D41E ECC7 A871 1003  5D24 524F EB1A 9D33 C9CB"))))
        %default-channels)
