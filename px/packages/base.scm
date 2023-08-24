@@ -14,6 +14,7 @@
   #:use-module (gnu packages glib)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages libusb)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages openbox)
   #:use-module (gnu packages screen)
@@ -51,8 +52,9 @@
 
 (define %px-core-packages
   (append (list px                                ;; User and system updates
-                px-install px-setup-assistant     ;; System installation
+                ;; px-setup-assistant             ;; System installation
                 gnutls nss-certs                  ;; TLS library and NNS certificates
+                libimobiledevice                  ;; iPhone tethering
                 screen)
           %base-packages))
 
