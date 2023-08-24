@@ -31,6 +31,7 @@
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages image)
   #:use-module (gnu packages jami)
+  #:use-module (gnu packages kde-pim)
   #:use-module (gnu packages kde-frameworks)
   #:use-module (gnu packages kde-plasma)
   #:use-module (gnu packages kde-utils)
@@ -338,6 +339,8 @@
         print-manager
         ;; CLipboard manager
         copyq
+        ;; PGP
+        kleopatra
 
         ;; U2F
         pam-u2f
