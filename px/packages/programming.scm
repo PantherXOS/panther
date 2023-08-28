@@ -40,7 +40,7 @@
 (define-public vscodium
   (package
     (name "vscodium")
-    (version "1.77.3.23102")
+    (version "1.81.1.23222")
     (source #f)
     (build-system binary-build-system)
     (arguments
@@ -117,7 +117,7 @@
      `(("vscodium"
         ,(make-vscodium-release-asset
           version "VSCodium"
-          "049vn3gwwl0sxf8hvd8raaamy9f0x2z9p3sz8xzafa1h129iiybr"))
+          "0wx53ajjwil82s3nl6wvpdf01mh33yqasf1ia54s1rfzz10fa1m6"))
        ("gcc:lib" ,gcc "lib")
        ("gcc" ,gcc "lib")
        ("glib" ,glib)
