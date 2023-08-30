@@ -212,21 +212,6 @@
     (description "Lightweight and cross-platform clipboard history applet.")
     (license license:gpl2+)))
 
-
-(define-public px-network-manager-applet
-  (package
-   (inherit network-manager-applet)
-   (name "px-network-manager-applet")
-   (arguments
-    (substitute-keyword-arguments (package-arguments network-manager-applet)
-      ((#:phases phases)
-       `(modify-phases ,phases
-          (add-after 'unpack 'patch-menu-item
-            (lambda _
-              (substitute* '("nm-connection-editor.desktop.in")
-                           (("Name=Advanced Network Configuration") "Name=Network"))
-              #t))))))))
-
 (define-public cpputilities
   (package
     (name "cpputilities")

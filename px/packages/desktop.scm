@@ -282,13 +282,11 @@
 ;;
 
 (define %common-desktop-applications
-  (list ; px-backup
+  (list ;; Default applications and so on...
         ; px-contacts
-        px-first-login-welcome-screen
-        ;; Default applications and so on...
-        px-desktop-wiki
-        px-software
+        ; px-backup
         ; px-hub-gui
+        px-software
         px-software-assets-meta
         
         ;; Browser
@@ -299,7 +297,6 @@
 
         ;; Office
         libreoffice
-        speedcrunch
         aspell
         aspell-dict-en
         aspell-dict-de ;; :)
@@ -324,22 +321,14 @@
         ;; WIP
         ;; lxqt-arc-dark-theme
 
-        ;; Multimedia
-        px-image-viewer
-        px-music-player
-        px-video-player
-
         ;; Utils
         albert-launcher
         ;; Userspace virtual file system for GIO
         gvfs
-        lxmenu-data
-        flameshot
-        pinentry-qt
         print-manager
-        ;; CLipboard manager
-        copyq
+
         ;; PGP
+        ;; Does not work on Gnome wayland
         kleopatra
 
         ;; U2F
@@ -364,62 +353,91 @@
         gnome-keyring
         ;; seahorse
 
-        px-user-services
-
         ;; Bluetooth
-        blueman
-
-        ;; Account Service Plugins
-	      ;; px-accounts-service-plugin-etesync  ;; TODO: uncomment whenever we had a working package for `px-contact-calendar`
-	      ; px-accounts-service-plugin-activity-watch
-        ; px-accounts-service-plugin-claws-mail
-        ; px-accounts-service-plugin-github
-        ; px-accounts-service-plugin-gitlab
-        ; px-accounts-service-plugin-oauth2-github
-        ; px-accounts-service-plugin-oauth2-mastodon
-        ; px-accounts-service-plugin-oauth2-google
-        ; px-accounts-service-providers-mail
-        ; px-accounts-service-plugin-imap
-        ; px-accounts-service-plugin-maestral
-        ; px-accounts-service-plugin-smtp
-        ; px-accounts-service-plugin-carddav
-        ; px-accounts-service-plugin-s3
-        ; px-accounts-service-plugin-backup-local
-        ; px-accounts-service-plugin-etherscan
-        ; px-accounts-service-plugin-blockio
-        ; px-accounts-service-plugin-cryptocurrency
-        ; px-accounts-service-plugin-discourse
-
-        ;; Hub Service Plugins
-        ;; px-hub-service-plugin-claws-mail
-        ; px-hub-service-plugin-github
-        ; px-hub-service-plugin-gitlab
-        ; px-hub-service-plugin-discourse
-        ; px-hub-service-plugin-mastodon
-
-        ;; Time Tracking Plugins
-        ; px-time-tracking-plugin-gitlab
-
-        ;; Settings Service Plugins
-        ; px-settings-service-plugin-accounts
-        px-settings-service-plugin-backup
-        px-settings-service-plugin-desktop-search
-        px-settings-service-plugin-maintenance
-        px-settings-service-plugin-software
-        px-settings-service-plugin-theme
-        px-settings-service-plugin-theme-dark-bright))
+        blueman))
 
 (define %gtk-desktop-applications
-  (list ))
+  (list 
+
+      ;; Excludes syncthingtray
+      ;; Does not work on Gnome wayland
+      px-user-services-gtk
+      syncthing-gtk))
 
 (define %qt-desktop-applications
   (list
+      ;; Includes syncthingtray (QT)
+      px-user-services
+
+      ;; Default applications and so on...
+      px-first-login-welcome-screen
+      px-desktop-wiki
       px-about
       px-file-archiver
       px-settings-ui
-      px-network-manager-applet
+
+      ;; Office
+      speedcrunch
+
+      ;; Multimedia
+      px-image-viewer
+      px-music-player
+      px-video-player
+
+      ;; Connectivity
+      ;; This package contains a systray applet for NetworkManager
+      ;; Does not work on Gnome wayland
+      network-manager-applet
       featherpad
-      qpdfview))
+      qpdfview
+
+      ;; Utils
+      flameshot
+      pinentry-qt
+      lxmenu-data
+
+      ;; Clipboard manager
+      copyq
+
+      ;; Account Service Plugins
+      ;; px-accounts-service-plugin-etesync  ;; TODO: uncomment whenever we had a working package for `px-contact-calendar`
+      ; px-accounts-service-plugin-activity-watch
+      ; px-accounts-service-plugin-claws-mail
+      ; px-accounts-service-plugin-github
+      ; px-accounts-service-plugin-gitlab
+      ; px-accounts-service-plugin-oauth2-github
+      ; px-accounts-service-plugin-oauth2-mastodon
+      ; px-accounts-service-plugin-oauth2-google
+      ; px-accounts-service-providers-mail
+      ; px-accounts-service-plugin-imap
+      ; px-accounts-service-plugin-maestral
+      ; px-accounts-service-plugin-smtp
+      ; px-accounts-service-plugin-carddav
+      ; px-accounts-service-plugin-s3
+      ; px-accounts-service-plugin-backup-local
+      ; px-accounts-service-plugin-etherscan
+      ; px-accounts-service-plugin-blockio
+      ; px-accounts-service-plugin-cryptocurrency
+      ; px-accounts-service-plugin-discourse
+
+      ;; Hub Service Plugins
+      ;; px-hub-service-plugin-claws-mail
+      ; px-hub-service-plugin-github
+      ; px-hub-service-plugin-gitlab
+      ; px-hub-service-plugin-discourse
+      ; px-hub-service-plugin-mastodon
+
+      ;; Time Tracking Plugins
+      ; px-time-tracking-plugin-gitlab
+    
+      ;; Settings Service Plugins
+      ; px-settings-service-plugin-accounts
+      px-settings-service-plugin-backup
+      px-settings-service-plugin-desktop-search
+      px-settings-service-plugin-maintenance
+      px-settings-service-plugin-software
+      px-settings-service-plugin-theme
+      px-settings-service-plugin-theme-dark-bright))
 
 ; (define %pantherx-desktop-i3
 ;   (list i3-wm i3lock i3lock-fancy i3status
