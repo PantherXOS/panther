@@ -50,6 +50,7 @@
   #:use-module (gnu packages xfce)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages pdf)
+  #:use-module (gnu packages syncthing)
   #:use-module (gnu packages xdisorg) ;; copyq
   #:use-module (nongnu packages compression)
   #:use-module (nongnu packages mozilla)
@@ -217,7 +218,7 @@
 ;; Desktop Configuration
 ;;
 
-;; This goes straight into px/services/desktop
+;; This goes straight into px/services/desktop (only LXQt)
 (define-public px-desktop-defaults
   (package
    (name "px-desktop-defaults")
@@ -327,10 +328,6 @@
         gvfs
         print-manager
 
-        ;; PGP
-        ;; Does not work on Gnome wayland
-        kleopatra
-
         ;; U2F
         pam-u2f
         libu2f-host
@@ -362,7 +359,10 @@
       ;; Excludes syncthingtray
       ;; Does not work on Gnome wayland
       px-user-services-gtk
-      syncthing-gtk))
+      syncthing-gtk
+      
+      ;; PGP
+      seahorse))
 
 (define %qt-desktop-applications
   (list
@@ -395,6 +395,9 @@
       flameshot
       pinentry-qt
       lxmenu-data
+
+      ;; PGP
+      kleopatra
 
       ;; Clipboard manager
       copyq
