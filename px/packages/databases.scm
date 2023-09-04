@@ -38,7 +38,6 @@
   #:use-module (nonguix build-system binary)
   #:use-module (px packages common)
   #:use-module (px packages python-xyz)
-  #:use-module (px packages tls)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (ice-9 match))
