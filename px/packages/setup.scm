@@ -103,12 +103,12 @@
 (define-public px-install
   (package
    (name "px-install")
-   (version "0.1.2")
+   (version "0.1.3")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version ".tgz"))
-     (sha256 (base32 "108wm8dk0fcvghfarrs1kf6y21ggz3mdiyz3w3pn2skfvlisnhg6"))))
+     (sha256 (base32 "0gm63bvk3csav7k1pvrv6kp9vagjz7lqv6nnjkn2j680nqc7w86b"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f))
