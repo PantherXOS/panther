@@ -173,7 +173,7 @@
 (define-public vscode
   (package
     (name "vscode")
-    (version "1.81.1")
+    (version "1.82.2")
     (source #f)
     (build-system binary-build-system)
     (arguments
@@ -249,7 +249,7 @@
      `(("vscode"
         ,(make-vscode-release-asset
           version "vscode"
-          "0j3lmyj77qalhn8hrgfg3zgw6jqv8rscfy16vhkl0ir2xnmb19jf"))
+          "0i6zk4zkwcw5lnzhg7vvnsw17nar97bbq3iishag9cpjqs9jpq4z"))
        ("gcc:lib" ,gcc "lib")
        ("gcc" ,gcc "lib")
        ("glib" ,glib)
