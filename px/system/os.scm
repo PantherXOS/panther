@@ -37,7 +37,7 @@
 
             ;; %px-substitute-server-url
             ;; %px-substitute-server-key
-            ;; apply-px-substitute-server
+            apply-px-substitute-server
             ))
 
 ;;;
