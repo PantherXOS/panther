@@ -180,10 +180,7 @@ rules."
   ;; Since GDM depends on Rust (gdm -> gnome-shell -> gjs -> mozjs -> rust)
   ;; and Rust is currently unavailable on non-x86_64 platforms, default to
   ;; SDDM there (FIXME).
-  (cons*  (service sddm-service-type)
-
-          ;; Screen lockers are a pretty useful thing and these are small.
-          (service screen-locker-service-type
+  (cons*  (service screen-locker-service-type
             (screen-locker-configuration
               (name "xlock")
               (program (file-append xlockmore "/bin/xlock"))))
