@@ -159,19 +159,6 @@
         (uri (string-append "https://source.pantherx.org/" name "_" version ".tgz"))
         (sha256 (base32 "0p8hi95mvb516pvgxq4j6wybp336748m97b3kch0p1m296y6mvzw"))))
     (build-system qt-build-system)
-    (arguments
-     `(#:tests? #f ; no tests
-       #:phases
-       (modify-phases %standard-phases
-         (add-after 'unpack 'patch-source
-           (lambda* (#:key inputs outputs #:allow-other-keys)
-             (substitute* "mainwindow.cpp"
-               (("matrix-call-auto-accept-load-params.py") 
-                (string-append (assoc-ref outputs "out") "/bin/matrix-call-auto-accept-load-params.py")))
-             (substitute* "scripts/matrix-call-auto-accept-load-params.py"
-               (("matrix-client-call-auto-accept") 
-                (string-append (assoc-ref inputs "matrix-client-call-auto-accept") 
-                  "/bin/matrix-client-call-auto-accept"))))))))
     (native-inputs
       (list qttools-5
             pkg-config
