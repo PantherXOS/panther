@@ -152,12 +152,12 @@
 (define-public px-terminal-launcher
   (package
     (name "px-terminal-launcher")
-    (version "v0.2.0")
+    (version "v0.2.1")
     (source
       (origin
         (method url-fetch)
         (uri (string-append "https://source.pantherx.org/" name "_" version ".tgz"))
-        (sha256 (base32 "0mvs1nhsq1ivm812w8f1blki7vg7sng5d6s39zqjmcgys7p78lxd"))))
+        (sha256 (base32 "0p8hi95mvb516pvgxq4j6wybp336748m97b3kch0p1m296y6mvzw"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f ; no tests
