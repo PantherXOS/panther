@@ -167,6 +167,7 @@
     (inputs
      (list capnproto-0.9
            qtbase-5
+           qtsvg-5
            qtcharts
            px-auth-library-cpp
            matrix-client-call-auto-accept
