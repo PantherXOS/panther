@@ -170,7 +170,6 @@
            qtsvg-5
            qtcharts
            px-auth-library-cpp
-           matrix-client-call-auto-accept
            networkmanager-qt))
     (propagated-inputs (list px-icons))
     (home-page "https://www.pantherx.dev")
