@@ -465,13 +465,13 @@ configuration file from commandline args and upload results to the server")
 (define-public bluetooth-client-manager-service
   (package
    (name "bluetooth-client-manager-service")
-   (version "0.1.9")
+   (version "0.1.10")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version ".tgz"))
      (sha256
-      (base32 "03j5ipswkj32hda6wwpsj3f3z3sp4dgi0a5val7g5q98nnpcqgqr"))))
+      (base32 "1rryll9pic2k5gqdhyrxiff20dgs4xs8j2213vy5l1p4ahinlwrf"))))
    (build-system cmake-build-system)
    (native-inputs `(("pkg-config" ,pkg-config)))
    (inputs `(("bluez-qt" ,bluez-qt)
