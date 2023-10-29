@@ -152,18 +152,17 @@
 (define-public px-terminal-launcher
   (package
     (name "px-terminal-launcher")
-    (version "v0.2.2")
+    (version "v0.2.3")
     (source
       (origin
         (method url-fetch)
         (uri (string-append "https://source.pantherx.org/" name "_" version ".tgz"))
-        (sha256 (base32 "1063czlvif90g9rq2kinlq9gh5r27qj3h3pznm0wm78v2xdfirb3"))))
+        (sha256 (base32 "0fqlzbipnddn9cd0amjn9py7qzwnk5ir674lshpf7rsnv7fasalw"))))
     (build-system qt-build-system)
     (native-inputs
       (list qttools-5
             pkg-config
-            extra-cmake-modules)
-      )
+            extra-cmake-modules))
     (inputs
      (list capnproto-0.9
            qtbase-5
