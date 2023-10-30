@@ -163,14 +163,14 @@ notification, emojis, E2E encryption, and voip calls.")
 (define-public matrix-client-gui-library
   (package
     (name "matrix-client-gui-library")
-    (version "0.1.53")
+    (version "0.1.54")
     (source
      (origin
        (method url-fetch)
         (uri (string-append
                  "https://source.pantherx.org/matrix-client_" version ".tgz"))
         (sha256
-         (base32 "0gyqqd7cjp8dsyz37mjxn5mq7s7jgfmfvzdafwsin95izppwswxb"))))
+         (base32 "0wlknihv96v98j0j36a5q9j9qrgsg4z3mmz47ccnjmc30cyb9raw"))))
     (arguments
      `(#:tests? #f ; no tests
        #:phases
