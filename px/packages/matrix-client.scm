@@ -246,14 +246,14 @@ notification, emojis, E2E encryption, and voip calls.")
   (package
     (inherit matrix-client-gui-library)
     (name "matrix-client-call-auto-accept")
-    (version "0.0.9")
+    (version "0.0.10")
     (source
      (origin
        (method url-fetch)
         (uri (string-append
                  "https://source.pantherx.org/" name "_" version ".tgz"))
         (sha256
-         (base32 "087jkgjxmfv1n26qzz67zkpwj2g605mvmwb57zx5p5jz8gaz4vgx"))))
+         (base32 "1lksipvbdly8cxwndb4yflcmi177jir1ii04nr474m615wl0hw8b"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f))
