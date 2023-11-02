@@ -83,13 +83,13 @@ communicates with the readers through the PC/SC Lite resource manager (pcscd).")
 (define-public id-card-reader
   (package
    (name "id-card-reader")
-   (version "0.1.26")
+   (version "0.1.27")
    (source
     (origin
      (method url-fetch)
      (uri (string-append
            "https://source.pantherx.org/" name "_v" version ".tgz"))
-     (sha256 (base32 "1irmxkgcjd61c36r25fydjpaw9sgvg4phbg6gcrwc71wcpl7ap9x"))))
+     (sha256 (base32 "0xkly0qhgr96y6qk4h24a5llm6yl650ad26i2nbilzx1csyxryf2"))))
    (build-system python-build-system)	
    (arguments
     `(#:tests? #f))
