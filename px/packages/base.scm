@@ -9,7 +9,7 @@
   #:use-module (gnu packages admin)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages curl)
-  #:use-module (gnu packages dunst)
+  #:use-module (gnu packages wm)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages glib)
   #:use-module (gnu packages gnome)
@@ -33,7 +33,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:export (%px-core-packages
-  
+
             %px-desktop-packages-gtk
             %px-desktop-packages-qt
             %px-desktop-packages
