@@ -1,6 +1,7 @@
 (define-module (px packages tpm)
   #:use-module (gnu packages)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module ((guix licenses)
+                #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix gexp)
@@ -48,7 +49,6 @@
   #:use-module (gnu packages web)
   #:use-module (gnu packages xml))
 
-
 (define-public tpm2-tss-openssl-1.1
   (package
     (name "tpm2-tss")
@@ -57,15 +57,16 @@
      (origin
        (method url-fetch)
        (uri (string-append "https://github.com/tpm2-software/tpm2-tss"
-                           "/releases/download/" version "/tpm2-tss-" version
+                           "/releases/download/"
+                           version
+                           "/tpm2-tss-"
+                           version
                            ".tar.gz"))
        (sha256
         (base32 "05xynpwq851fp8f5fy7ac0blvz8mr5m5cbqj3gslgbwv63kjnfbq"))))
     (build-system gnu-build-system)
-    (native-inputs
-     (list pkg-config))
-    (inputs
-     (list curl json-c openssl-1.1))
+    (native-inputs (list pkg-config))
+    (inputs (list curl json-c openssl-1.1))
     (home-page "https://tpm2-software.github.io/")
     (synopsis "OSS Implementation of the TCG TPM2 Software Stack (TSS2)")
     (description
@@ -79,55 +80,68 @@ and libtss2-tcti-mssim.")
   (package
     (name "tpm2-tss-engine")
     (version "1.1.0")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://github.com/tpm2-software/tpm2-tss-engine/archive/v" version ".tar.gz"))
-              (sha256
-               (base32
-                "0xby0jhdpp9jlwd84dp97y7fx7swww1b1k5srr9k64akbnrgwpz0"))))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/tpm2-software/tpm2-tss-engine/archive/v"
+             version ".tar.gz"))
+       (sha256
+        (base32 "0xby0jhdpp9jlwd84dp97y7fx7swww1b1k5srr9k64akbnrgwpz0"))))
     (build-system gnu-build-system)
     (arguments
-     `(#:tests? #f                      ; only manual test scripts
-       #:configure-flags (list (string-append "--with-enginesdir=" (assoc-ref %outputs "out") "/lib/engines-1.1/"))
-       #:phases
-        (modify-phases %standard-phases
-         (add-after 'install 'setting-env-vars-install-openssl-conf
-           (lambda* (#:key outputs #:allow-other-keys)
-             (let ((out              (assoc-ref outputs "out"))
-                   (tpm2-tss         (assoc-ref %build-inputs "tpm2-tss"))
-                   (engine-path      (string-append (assoc-ref %outputs "out") "/lib/engines-1.1/"))
-                   (opensslconf-file "openssl.conf.sample")
-                   (opensslconf-path (string-append (assoc-ref %outputs "out") "/etc/")))
-                        (wrap-program (string-append out "/bin/tpm2tss-genkey") 
-                          `("OPENSSL_ENGINES" ":" prefix (,engine-path)))
-                        ;;(wrap-program (string-append out "/bin/tpm2tss-genkey") 
-                        ;;  `("TPM2TSSENGINE_TCTI" ":" prefix (,(string-append tpm2-tss "/lib/libtss2-tcti-device.so:/dev/tpm0"))))
-                        ;;(wrap-program (string-append out "/bin/tpm2tss-genkey") 
-                        ;;  `("TPM2TOOLS_TCTI" ":" prefix (,(string-append tpm2-tss "/lib/libtss2-tcti-device.so:/dev/tpm0"))))
+     `(#:tests? #f ;only manual test scripts
+       #:configure-flags (list (string-append "--with-enginesdir="
+                                              (assoc-ref %outputs "out")
+                                              "/lib/engines-1.1/"))
+       #:phases (modify-phases %standard-phases
+                  (add-after 'install 'setting-env-vars-install-openssl-conf
+                    (lambda* (#:key outputs #:allow-other-keys)
+                      (let ((out (assoc-ref outputs "out"))
+                            (tpm2-tss (assoc-ref %build-inputs "tpm2-tss"))
+                            (engine-path (string-append (assoc-ref %outputs
+                                                                   "out")
+                                                        "/lib/engines-1.1/"))
+                            (opensslconf-file "openssl.conf.sample")
+                            (opensslconf-path (string-append (assoc-ref
+                                                              %outputs "out")
+                                                             "/etc/")))
+                        (wrap-program (string-append out "/bin/tpm2tss-genkey")
+                          `("OPENSSL_ENGINES" ":" prefix
+                            (,engine-path)))
+                        ;; (wrap-program (string-append out "/bin/tpm2tss-genkey")
+                        ;; `("TPM2TSSENGINE_TCTI" ":" prefix (,(string-append tpm2-tss "/lib/libtss2-tcti-device.so:/dev/tpm0"))))
+                        ;; (wrap-program (string-append out "/bin/tpm2tss-genkey")
+                        ;; `("TPM2TOOLS_TCTI" ":" prefix (,(string-append tpm2-tss "/lib/libtss2-tcti-device.so:/dev/tpm0"))))
                         (mkdir-p opensslconf-path)
-                        (substitute* opensslconf-file (("/usr") out))
-                        (substitute* opensslconf-file (("default_algorithms") "#default_algorithms"))
-                        (copy-file opensslconf-file (string-append opensslconf-path "openssl-tss2.conf"))
-               #t))))))
-    (native-inputs
-     `(("autoconf" ,autoconf)
-       ("autoconf-archive" ,autoconf-archive)
-       ("automake" ,automake)
-       ("bash" ,bash)
-       ("curl" ,curl)
-       ("doxygen" ,doxygen)
-       ("json-c" ,json-c)
-       ("libgcrypt" ,libgcrypt)
-       ("libtool" ,libtool)
-       ("m4" ,m4)
-       ("pkg-config" ,pkg-config)
-       ("openssl" ,openssl-1.1)
-       ("patchelf" ,patchelf)))
-    (inputs
-     `(("tpm2-tss" ,tpm2-tss-openssl-1.1)
-      ("bash-minimal" ,bash-minimal)))
+                        (substitute* opensslconf-file
+                          (("/usr")
+                           out))
+                        (substitute* opensslconf-file
+                          (("default_algorithms")
+                           "#default_algorithms"))
+                        (copy-file opensslconf-file
+                                   (string-append opensslconf-path
+                                                  "openssl-tss2.conf"))
+                        #t))))))
+    (native-inputs `(("autoconf" ,autoconf)
+                     ("autoconf-archive" ,autoconf-archive)
+                     ("automake" ,automake)
+                     ("bash" ,bash)
+                     ("curl" ,curl)
+                     ("doxygen" ,doxygen)
+                     ("json-c" ,json-c)
+                     ("libgcrypt" ,libgcrypt)
+                     ("libtool" ,libtool)
+                     ("m4" ,m4)
+                     ("pkg-config" ,pkg-config)
+                     ("openssl" ,openssl-1.1)
+                     ("patchelf" ,patchelf)))
+    (inputs `(("tpm2-tss" ,tpm2-tss-openssl-1.1)
+              ("bash-minimal" ,bash-minimal)))
     (home-page "https://github.com/tpm2-software/tpm2-tss-engine")
-    (synopsis "The tpm2-tss-engine project implements a cryptographic engine for OpenSSL for Trusted Platform Module (TPM 2.0) using the tpm2-tss software stack that follows the Trusted Computing Groups (TCG) TPM Software Stack (TSS 2.0).")
+    (synopsis
+     "The tpm2-tss-engine project implements a cryptographic engine for OpenSSL for Trusted Platform Module (TPM 2.0) using the tpm2-tss software stack that follows the Trusted Computing Groups (TCG) TPM Software Stack (TSS 2.0).")
     (description
      "The tpm2-tss-engine project implements a cryptographic engine for OpenSSL for Trusted Platform Module (TPM 2.0) using the tpm2-tss software stack that follows the Trusted Computing Groups (TCG) TPM Software Stack (TSS 2.0).")
     (license license:bsd-2)))
@@ -136,34 +150,35 @@ and libtss2-tcti-mssim.")
   (package
     (name "tpm2-tools")
     (version "4.3.1")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://github.com/tpm2-software/tpm2-tools/archive/" version ".tar.gz"))
-              (sha256
-               (base32
-                "1sfrgzwhpbilk29lh233k0wncd0b5v12w2bz4h8n7nclcdlhw449"))))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/tpm2-software/tpm2-tools/archive/" version
+             ".tar.gz"))
+       (sha256
+        (base32 "1sfrgzwhpbilk29lh233k0wncd0b5v12w2bz4h8n7nclcdlhw449"))))
     (build-system gnu-build-system)
     (arguments
-     `(#:tests? #f                      ; only manual test scripts
-       #:configure-flags (list "--enable-tctienvvar")
-       ))
-    (native-inputs
-     `(("autoconf" ,autoconf)
-       ("autoconf-archive" ,autoconf-archive)
-       ("automake" ,automake)
-       ("bash" ,bash)
-       ("curl" ,curl)
-       ("doxygen" ,doxygen)
-       ("json-c" ,json-c)
-       ("libgcrypt" ,libgcrypt)
-       ("libtool" ,libtool)
-       ("m4" ,m4)
-       ("pkg-config" ,pkg-config)
-       ("openssl" ,openssl-1.1)
-       ("libuuid" ,util-linux "lib")
-       ("tpm2-tss" ,tpm2-tss-openssl-1.1)))
+     `(#:tests? #f ;only manual test scripts
+       #:configure-flags (list "--enable-tctienvvar")))
+    (native-inputs `(("autoconf" ,autoconf)
+                     ("autoconf-archive" ,autoconf-archive)
+                     ("automake" ,automake)
+                     ("bash" ,bash)
+                     ("curl" ,curl)
+                     ("doxygen" ,doxygen)
+                     ("json-c" ,json-c)
+                     ("libgcrypt" ,libgcrypt)
+                     ("libtool" ,libtool)
+                     ("m4" ,m4)
+                     ("pkg-config" ,pkg-config)
+                     ("openssl" ,openssl-1.1)
+                     ("libuuid" ,util-linux "lib")
+                     ("tpm2-tss" ,tpm2-tss-openssl-1.1)))
     (home-page "https://github.com/tpm2-software/tpm2-tools")
-    (synopsis "The source repository for the Trusted Platform Module (TPM2.0) tools ")
+    (synopsis
+     "The source repository for the Trusted Platform Module (TPM2.0) tools ")
     (description
      "The source repository for the Trusted Platform Module (TPM2.0) tools ")
     (license license:lgpl2.1+)))
@@ -172,24 +187,25 @@ and libtss2-tcti-mssim.")
   (package
     (name "tpm2-abrmd")
     (version "2.4.0")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://github.com/tpm2-software/tpm2-abrmd/archive/refs/tags/" version ".tar.gz"))
-              (sha256
-               (base32
-                "14sj4cbw7myx1fkzz9ya4gc06rzm6x7hy9jd9im8wc2a1r3141k2"))))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/tpm2-software/tpm2-abrmd/archive/refs/tags/"
+             version ".tar.gz"))
+       (sha256
+        (base32 "14sj4cbw7myx1fkzz9ya4gc06rzm6x7hy9jd9im8wc2a1r3141k2"))))
     (build-system gnu-build-system)
-    (native-inputs
-     `(("autoconf" ,autoconf)
-       ("autoconf-archive" ,autoconf-archive)
-       ("automake" ,automake)
-       ("glib" ,glib "bin")
-       ("glib" ,glib)
-       ("git" ,git)
-       ("libtool" ,libtool)
-       ("pkg-config" ,pkg-config)
-       ("tpm2-tss" ,tpm2-tss)
-       ("which" ,which)))
+    (native-inputs `(("autoconf" ,autoconf)
+                     ("autoconf-archive" ,autoconf-archive)
+                     ("automake" ,automake)
+                     ("glib" ,glib "bin")
+                     ("glib" ,glib)
+                     ("git" ,git)
+                     ("libtool" ,libtool)
+                     ("pkg-config" ,pkg-config)
+                     ("tpm2-tss" ,tpm2-tss)
+                     ("which" ,which)))
     (home-page "https://github.com/tpm2-software/tpm2-abrmd")
     (synopsis "TPM2 Access Broker & Resource Manager")
     (description
@@ -203,33 +219,31 @@ and libtss2-tcti-mssim.")
   (package
     (name "tpm2-pkcs11")
     (version "1.7.0")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://github.com/tpm2-software/tpm2-pkcs11/archive/refs/tags/" version ".tar.gz"))
-              (sha256
-               (base32
-                "0kkzzdxiz1389jl4rabh739m99x1jh42xagq4sycn5s8kvik1sa5"))))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/tpm2-software/tpm2-pkcs11/archive/refs/tags/"
+             version ".tar.gz"))
+       (sha256
+        (base32 "0kkzzdxiz1389jl4rabh739m99x1jh42xagq4sycn5s8kvik1sa5"))))
     (build-system gnu-build-system)
     (arguments
-     `(#:tests? #f                      ; only manual test scripts
-      ;  #:configure-flags (list "--enable-tctienvvar")
+     `(#:tests? #f ;only manual test scripts
+       ;; #:configure-flags (list "--enable-tctienvvar")
        ))
-    (native-inputs
-     `(
-       ("autoconf" ,autoconf)
-       ("autoconf-archive" ,autoconf-archive)
-       ("automake" ,automake)
-       ("libtool" ,libtool)
-       ("m4" ,m4)
-       ("pkg-config" ,pkg-config)))
-    (inputs
-     `(("libyaml" ,libyaml)
-       ("sqlite" ,sqlite)
-       ("openssl" ,openssl)
-       ("tpm2-abrmd" ,tpm2-abrmd)
-       ("tpm2-tools" ,tpm2-tools)
-       ("tpm2-tss" ,tpm2-tss)
-       ))
+    (native-inputs `(("autoconf" ,autoconf)
+                     ("autoconf-archive" ,autoconf-archive)
+                     ("automake" ,automake)
+                     ("libtool" ,libtool)
+                     ("m4" ,m4)
+                     ("pkg-config" ,pkg-config)))
+    (inputs `(("libyaml" ,libyaml)
+              ("sqlite" ,sqlite)
+              ("openssl" ,openssl)
+              ("tpm2-abrmd" ,tpm2-abrmd)
+              ("tpm2-tools" ,tpm2-tools)
+              ("tpm2-tss" ,tpm2-tss)))
     (home-page "https://github.com/tpm2-software/tpm2-pkcs11")
     (synopsis "A PKCS#11 interface for TPM2 hardware")
     (description

@@ -32,21 +32,20 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:export (%px-core-services
-
             ;; for custom desktops (for ex. xfce)
             ;; without lxqt
-            ; %px-desktop-services-base
+            ;; %px-desktop-services-base
             
             %px-desktop-services
             %px-desktop-ee-services
-            
+
             %px-server-services
             %px-server-ee-services
 
             %px-core-arm-services
-            %px-gui-arm-services            
+            %px-gui-arm-services
             %px-desktop-arm-services)
-  
+
   #:re-export (px-desktop-service-type))
 
 ;;;
@@ -56,10 +55,8 @@
 ;;;
 
 (define %px-core-services
-  (append
-   (list (service dhcp-client-service-type)
-         (service ntp-service-type))
-   %base-services))
+  (append (list (service dhcp-client-service-type)
+                (service ntp-service-type)) %base-services))
 
 ;;;
 ;;;
@@ -69,8 +66,7 @@
 ;;;
 
 (define %px-desktop-services
-  (append
-         %px-desktop-services-base))
+  (append %px-desktop-services-base))
 
 ;;;
 ;;;
@@ -82,8 +78,7 @@
   (append (list (service px-device-identity-service-type)
                 (service px-user-identity-service-type)
                 ;; Desktop
-                (service px-desktop-service-type))
-          %px-desktop-services-base))
+                (service px-desktop-service-type)) %px-desktop-services-base))
 
 ;;;
 ;;; SERVER
@@ -93,22 +88,19 @@
 
 (define %px-server-services
   (append (list
-            ;; OpenSSH is enabled by default but only with SSH key
-            (service openssh-service-type
-                    (openssh-configuration
-                     (permit-root-login 'prohibit-password)))
+           ;; OpenSSH is enabled by default but only with SSH key
+           (service openssh-service-type
+                    (openssh-configuration (permit-root-login 'prohibit-password)))
 
-            ;; Time service
-            (service ntp-service-type)
-            ;; Firewall
-            (service nftables-service-type)
-            ;; DHCP
-            (service dhcp-client-service-type))
-          %base-services))
+           ;; Time service
+           (service ntp-service-type)
+           ;; Firewall
+           (service nftables-service-type)
+           ;; DHCP
+           (service dhcp-client-service-type)) %base-services))
 
 (define %px-server-ee-services
-  (append (list (service px-device-identity-service-type))
-          %px-server-services))
+  (append (list (service px-device-identity-service-type)) %px-server-services))
 
 ;;;
 ;;; ARM-SPECIFIC
@@ -116,54 +108,49 @@
 
 (define %px-core-arm-services
   (cons*
-    ;; networking
-    (service wpa-supplicant-service-type)
-    (service network-manager-service-type)
-    (service modem-manager-service-type)
-    (service usb-modeswitch-service-type)
-    (service ntp-service-type)
+   ;; networking
+   (service wpa-supplicant-service-type)
+   (service network-manager-service-type)
+   (service modem-manager-service-type)
+   (service usb-modeswitch-service-type)
+   (service ntp-service-type)
 
-    ;; remote access
-    (service openssh-service-type
-      (openssh-configuration
-        (x11-forwarding? #t)
-        (permit-root-login #t)))
+   ;; remote access
+   (service openssh-service-type
+            (openssh-configuration (x11-forwarding? #t)
+                                   (permit-root-login #t)))
 
-    %base-services))
+   %base-services))
 
 (define %px-gui-arm-services
-  (cons*
-    (service slim-service-type
-      (slim-configuration
-        (vt "vt7")
-        (auto-login? #t)
-        (auto-login-session (file-append openbox "/bin/openbox-session"))
-        (default-user "default")))
-    (service avahi-service-type)
-    (service udisks-service-type)
-    (service upower-service-type)
-    (service accountsservice-service-type)
-    (service polkit-service-type)
-    (service elogind-service-type)
-    (service dbus-root-service-type)
-    polkit-wheel-service
-    polkit-network-manager-service  ;; control network without sudo
-    polkit-elogind-service          ;; reboot without sudo
-
-    (service pulseaudio-service-type)
-    (service alsa-service-type)
-    %px-core-arm-services))
+  (cons* (service slim-service-type
+                  (slim-configuration (vt "vt7")
+                                      (auto-login? #t)
+                                      (auto-login-session (file-append openbox
+                                                           "/bin/openbox-session"))
+                                      (default-user "default")))
+         (service avahi-service-type)
+         (service udisks-service-type)
+         (service upower-service-type)
+         (service accountsservice-service-type)
+         (service polkit-service-type)
+         (service elogind-service-type)
+         (service dbus-root-service-type)
+         polkit-wheel-service
+         polkit-network-manager-service ;control network without sudo
+         polkit-elogind-service ;reboot without sudo
+         
+         (service pulseaudio-service-type)
+         (service alsa-service-type)
+         %px-core-arm-services))
 
 (define %px-desktop-arm-services
-  (append
-   (list (service dhcp-client-service-type)
-         (service sddm-service-type
-                  (sddm-configuration
-                   (minimum-uid 1000)
-                   (theme "px-sddm-theme")))
-         (service px-desktop-service-type
-                  (px-desktop-configuration
-                   (lxqt lxqt-modified)
-                   (default-packages '()))))
-   (modify-services %desktop-services
-                    (delete network-manager-service-type))))
+  (append (list (service dhcp-client-service-type)
+                (service sddm-service-type
+                         (sddm-configuration (minimum-uid 1000)
+                                             (theme "px-sddm-theme")))
+                (service px-desktop-service-type
+                         (px-desktop-configuration (lxqt lxqt-modified)
+                                                   (default-packages '()))))
+          (modify-services %desktop-services
+            (delete network-manager-service-type))))

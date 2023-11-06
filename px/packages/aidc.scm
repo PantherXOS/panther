@@ -1,7 +1,8 @@
 (define-module (px packages aidc)
   #:use-module (gnu packages)
   #:use-module (guix gexp)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module ((guix licenses)
+                #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
@@ -12,7 +13,6 @@
   #:use-module (gnu packages glib)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages image)
-  #:use-module (gnu packages perl)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
@@ -29,17 +29,18 @@
     (package
       (name "zxing-cpp-08978e2")
       (version (git-version "1.2.0" revision commit))
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/nu-book/zxing-cpp")
-                      (commit commit)))
-                (file-name (git-file-name name version))
-                (sha256
-                 (base32
-                  "13wzs7dhb7vv7j9i40gib4ns9bfsp4kkdx4gkgykgqqb4imvvvvp"))))
-      (arguments '(#:tests? #f
-              #:configure-flags '("-DBUILD_BLACKBOX_TESTS=OFF")))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/nu-book/zxing-cpp")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "13wzs7dhb7vv7j9i40gib4ns9bfsp4kkdx4gkgykgqqb4imvvvvp"))))
+      (arguments
+       '(#:tests? #f
+         #:configure-flags '("-DBUILD_BLACKBOX_TESTS=OFF")))
       (build-system cmake-build-system)
       (native-inputs (list fmt-8 googletest))
       (synopsis "C++ port of ZXing")
@@ -53,31 +54,29 @@
     (package
       (name "scodes")
       (version (git-version "0.0" revision commit))
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/scytheStudio/SCodes")
-                      (commit commit)))
-                (file-name (git-file-name name version))
-                (patches
-                  (search-patches "scodes-zxing-path.patch"))
-                (sha256
-                 (base32
-                  "0vbbz8z04c3w370vbjq85xd9kkykcb0xm3rrkcb71k0ycrrhc183"))))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/scytheStudio/SCodes")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (patches (search-patches "scodes-zxing-path.patch"))
+         (sha256
+          (base32 "0vbbz8z04c3w370vbjq85xd9kkykcb0xm3rrkcb71k0ycrrhc183"))))
       (build-system cmake-build-system)
       (arguments
-       `(#:tests? #f ; no test suite
-         #:phases
-         (modify-phases %standard-phases
-           (add-after 'unpack 'zxing-path-patch
-             (lambda* (#:key inputs #:allow-other-keys)
-               (let ((zxing-cpp-08978e2 (assoc-ref inputs "zxing-cpp-08978e2")))
-                     (chdir "src")
-                     (substitute* "CMakeLists.txt"
-                      (("/usr/local/include/ZXing")
-                       (string-append zxing-cpp-08978e2 "/include/ZXing")))
-                     (invoke "cat" "CMakeLists.txt")
-                  #t))))))
+       `(#:tests? #f ;no test suite
+         #:phases (modify-phases %standard-phases
+                    (add-after 'unpack 'zxing-path-patch
+                      (lambda* (#:key inputs #:allow-other-keys)
+                        (let ((zxing-cpp-08978e2 (assoc-ref inputs
+                                                  "zxing-cpp-08978e2")))
+                          (chdir "src")
+                          (substitute* "CMakeLists.txt"
+                            (("/usr/local/include/ZXing")
+                             (string-append zxing-cpp-08978e2 "/include/ZXing")))
+                          (invoke "cat" "CMakeLists.txt") #t))))))
       (inputs (list qtbase-5
                     qtdeclarative-5
                     qtmultimedia-5
@@ -85,10 +84,8 @@
                     qtquickcontrols2-5
                     stb-image
                     stb-image-write
-                    zxing-cpp-08978e2 
-                    ))
+                    zxing-cpp-08978e2))
       (synopsis "Qt & Qml wrapper for ZXing library")
       (description "Qt & Qml wrapper for ZXing library")
       (home-page "https://github.com/scytheStudio/SCodes")
       (license license:asl2.0))))
-      

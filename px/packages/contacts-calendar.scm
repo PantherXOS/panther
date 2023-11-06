@@ -1,6 +1,7 @@
 (define-module (px packages contacts-calendar)
   #:use-module (guix licenses)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module ((guix licenses)
+                #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (gnu packages)
@@ -35,7 +36,9 @@
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/px-contacts-calendar-service_v" version ".tgz"))
+       (uri (string-append
+             "https://source.pantherx.org/px-contacts-calendar-service_v"
+             version ".tgz"))
        (sha256
         (base32 "1hllxmh6w6bj4d0sbzdxmvs3n8m0q1w2d812m1vr5v4pr8xj2w5q"))))))
 
@@ -46,30 +49,32 @@
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/px-contacts-calendar_v" version ".tgz"))
+       (uri (string-append
+             "https://source.pantherx.org/px-contacts-calendar_v" version
+             ".tgz"))
        (sha256
         (base32 "1mrp683izfnqp9pvgl44kwm9vd29fv8d515vd5r2ihn5sa39sfdz"))))
     (build-system python-build-system)
     (arguments
      '(#:tests? #f
-       #:phases
-       (modify-phases %standard-phases
-         (delete 'sanity-check))))
-    (inputs
-      `(("python-cryptography" ,python-cryptography)
-        ("python-etebase" ,python-etebase)
-        ("python-lxml" ,python-lxml)
-        ("python-requests" ,python-requests-2.23)
-        ("python-pysocks" ,python-pysocks)
-        ("python-urllib3" ,python-urllib3)
-        ("python-vobject" ,python-vobject)
-        ("python-peewee" ,python-peewee)
-        ("python-pycapnp" ,python-pycapnp)
-        ("python-pyyaml" ,python-pyyaml-v5.3.1)
-        ("python-appdirs" ,python-appdirs)))
-    (home-page "https://git.pantherx.org/development/applications/px-contacts-calendar")
+       #:phases (modify-phases %standard-phases
+                  (delete 'sanity-check))))
+    (inputs `(("python-cryptography" ,python-cryptography)
+              ("python-etebase" ,python-etebase)
+              ("python-lxml" ,python-lxml)
+              ("python-requests" ,python-requests-2.23)
+              ("python-pysocks" ,python-pysocks)
+              ("python-urllib3" ,python-urllib3)
+              ("python-vobject" ,python-vobject)
+              ("python-peewee" ,python-peewee)
+              ("python-pycapnp" ,python-pycapnp)
+              ("python-pyyaml" ,python-pyyaml-v5.3.1)
+              ("python-appdirs" ,python-appdirs)))
+    (home-page
+     "https://git.pantherx.org/development/applications/px-contacts-calendar")
     (synopsis "Sync and access PIM related data like contacts and calendar.")
-    (description "Sync and access PIM related data like contacts and calendar.")
+    (description
+     "Sync and access PIM related data like contacts and calendar.")
     (license license:expat)))
 
 (define-public px-contacts
@@ -77,24 +82,21 @@
     (name "px-contacts")
     (version "0.0.1")
     (source
-      (origin
-        (method url-fetch)
-        (uri (string-append
-          "https://source.pantherx.org/" name "_" version ".tgz"))
-        (sha256
-          (base32
-             "0vsnyi4m8r92qfrslv8060813fzr6svcghn37i3ib37wf3nv0rzr"))))
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://source.pantherx.org/" name "_" version
+                           ".tgz"))
+       (sha256
+        (base32 "0vsnyi4m8r92qfrslv8060813fzr6svcghn37i3ib37wf3nv0rzr"))))
     (build-system cmake-build-system)
     (arguments
-      `(
-        #:tests? #f))
-    (inputs `(
-              ("capnproto" ,capnproto-0.9)
+     `(#:tests? #f))
+    (inputs `(("capnproto" ,capnproto-0.9)
               ("px-gui-library" ,px-gui-library)
               ("qtbase" ,qtbase-5)))
-    (native-inputs `(
-	      ("pkg-config" ,pkg-config)))
+    (native-inputs `(("pkg-config" ,pkg-config)))
     (home-page "https://www.pantherx.org/")
     (synopsis "PantherX Contacts Management Application")
-    (description "This package provides a gui application to manage you contacts.")
+    (description
+     "This package provides a gui application to manage you contacts.")
     (license license:expat)))

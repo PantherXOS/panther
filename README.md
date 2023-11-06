@@ -38,6 +38,12 @@ $ export GUIX_PACKAGE_PATH=/root/panther
 $ guix package -i packagename
 ```
 
+Format and lint the file before commit:
+
+```bash
+guix style --whole-file px/packages/tools.scm
+```
+
 ### Automatically Publish Source Code
 
 1. Creates archive of your repository
@@ -63,7 +69,6 @@ Add a new file `.gitlab-ci.yml` with the following contents:
 # GitLab provided templates
 include:
   - template: SAST.gitlab-ci.yml
-  - template: Code-Quality.gitlab-ci.yml
   - template: License-Scanning.gitlab-ci.yml
 
 # Git submodules

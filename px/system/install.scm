@@ -1,9 +1,5 @@
-;;; PantherX disk image configuration file
-;;;
-;;; Author: Reza Alizadeh Majd <r.majd@PantherX.org>
-;;; Version: 1.0.0
-;;; Time-stamp: <2022-02-09 21:33:50 reza>
-
+;; PantherX disk image configuration file
+;; Reza Alizadeh Majd <r.majd@PantherX.org>
 ;; Generate a bootable image (e.g. for USB sticks, etc.) with:
 ;; $ guix system disk-image path/to/px-install.scm
 ;; Using Guix time-machine

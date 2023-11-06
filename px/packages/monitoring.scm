@@ -1,8 +1,9 @@
-;;; Author: Fakhri Sajadi (f.sajadi@pantherx.org)
+;;; Fakhri Sajadi (f.sajadi@pantherx.org)
 ;;;
 
 (define-module (px packages monitoring)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module ((guix licenses)
+                #:prefix license:)
   #:use-module (guix download)
   #:use-module (guix packages)
   #:use-module (guix build-system gnu)
@@ -31,37 +32,29 @@
     (name "monit")
     (version "5.25.3")
     (source
-      (origin
-        (method url-fetch)
-        (uri (string-append
-          "https://mmonit.com/monit/dist/monit-" 
-          version 
-          ".tar.gz"))
-        (sha256
-          (base32
-            "0s8577ixcmx45b081yx6cw54iq7m5yzpq3ir616qc84xhg45h0n1"))))
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://mmonit.com/monit/dist/monit-" version
+                           ".tar.gz"))
+       (sha256
+        (base32 "0s8577ixcmx45b081yx6cw54iq7m5yzpq3ir616qc84xhg45h0n1"))))
     (build-system gnu-build-system)
     (arguments
-      `(
-        #:configure-flags '("--without-pam" "--without-ssl")
-        #:phases
-          (modify-phases %standard-phases
-            (add-after 'unpack 'fix-source
-              (lambda _ 
-                (invoke "ls" "-la")
-					    )))))
-	(inputs `(
-              ("zlib", zlib)))
+     `(#:configure-flags '("--without-pam" "--without-ssl")
+       #:phases (modify-phases %standard-phases
+                  (add-after 'unpack 'fix-source
+                    (lambda _
+                      (invoke "ls" "-la"))))))
+    (inputs `(("zlib" ,zlib)))
 
-	(native-inputs `(
-	      ("autoconf", autoconf)
-	      ("automake", automake)
-		  ("libtool" ,libtool)
-	      ("pkg-config", pkg-config)
-		))
+    (native-inputs `(("autoconf" ,autoconf)
+                     ("automake" ,automake)
+                     ("libtool" ,libtool)
+                     ("pkg-config" ,pkg-config)))
     (home-page "https://mmonit.com")
     (synopsis "Pro-active Monitoring")
-    (description "M/Monit can monitor and manage distributed computer systems, conduct automatic maintenance and repair and execute meaningful causal actions in error situations.")
+    (description
+     "M/Monit can monitor and manage distributed computer systems, conduct automatic maintenance and repair and execute meaningful causal actions in error situations.")
     (license license:expat)))
 
 (define-public px-org-remote-status-service
@@ -69,38 +62,32 @@
     (name "px-org-remote-status-service")
     (version "0.3.3")
     (source
-      (origin
-        (method url-fetch)
-        (uri (string-append
-              "https://source.pantherx.org/px-org-remote-status-service_v"
-              version ".tgz"
-              ))
-        (sha256
-         (base32
-          "005n1vvsq25bm1axkhs1vvyzclgabqlkymzlsvjkci2bvv0iya89"))))
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://source.pantherx.org/px-org-remote-status-service_v"
+             version ".tgz"))
+       (sha256
+        (base32 "005n1vvsq25bm1axkhs1vvyzclgabqlkymzlsvjkci2bvv0iya89"))))
     (build-system cmake-build-system)
     (arguments
-      `(
-        #:tests? #f))
-    (inputs
-     `(("sqlite", sqlite)
-       ("curl", curl)
-       ("restclient-cpp", restclient-cpp)
-       ("zlib", zlib)
-       ("yaml-cpp", yaml-cpp)
-       ("qtbase" ,qtbase-5)
-       ("capnproto", capnproto)
-       ("px-auth-library-cpp" ,px-auth-library-cpp)))
-    (native-inputs
-     `(("pkg-config", pkg-config)))
-    (propagated-inputs
-     `(("monit", monit)
-        ("sysstat", sysstat)
-        ("lshw",  lshw)
-        ("coreutils", coreutils)
-        ("curl", curl)
-        ("util-linux+udev", util-linux+udev)
-       ("px-device-identity" ,px-device-identity)))
+     `(#:tests? #f))
+    (inputs `(("sqlite" ,sqlite)
+              ("curl" ,curl)
+              ("restclient-cpp" ,restclient-cpp)
+              ("zlib" ,zlib)
+              ("yaml-cpp" ,yaml-cpp)
+              ("qtbase" ,qtbase-5)
+              ("capnproto" ,capnproto)
+              ("px-auth-library-cpp" ,px-auth-library-cpp)))
+    (native-inputs `(("pkg-config" ,pkg-config)))
+    (propagated-inputs `(("monit" ,monit)
+                         ("sysstat" ,sysstat)
+                         ("lshw" ,lshw)
+                         ("coreutils" ,coreutils)
+                         ("curl" ,curl)
+                         ("util-linux+udev" ,util-linux+udev)
+                         ("px-device-identity" ,px-device-identity)))
 
     (home-page "https://www.pantherx.org/")
     (synopsis "PantherX Remote Status Monitoring Service")

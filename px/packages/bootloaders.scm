@@ -1,5 +1,5 @@
 ;;; Bootloader definitions for PantherX OS
-;;; Author: Reza Alizadeh Majd <r.majd@pantherx.org>
+;;; Reza Alizadeh Majd <r.majd@pantherx.org>
 ;;;
 
 (define-module (px packages bootloaders)
@@ -11,8 +11,8 @@
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix utils)
-  ; #:export (u-boot-khadas-edge-rk3399-bootloader)
-)
+  ;; #:export (u-boot-khadas-edge-rk3399-bootloader)
+  )
 
 ;;; required items:
 ;;;   1. bootloader package
@@ -41,7 +41,6 @@
 ;        `(("firmware" ,arm-trusted-firmware-rk3399)
 ;         ,@(package-native-inputs base))))))
 
-
 ; (define install-khadas-edge-rk3399-u-boot
 ;   #~(lambda (bootloader root-index image)
 ;       (let ((idb (string-append bootloader "/libexec/idbloader.img"))
@@ -58,7 +57,6 @@
 ;     (inherit u-boot-bootloader)
 ;     (package u-boot-khadas-edge-rk3399)
 ;     (disk-image-installer install-khadas-edge-rk3399-u-boot)))
-
 
 (define-public u-boot-rpi-arm64
   (make-u-boot-package "rpi_arm64" "aarch64-linux-gnu"))
