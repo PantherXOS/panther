@@ -83,14 +83,14 @@
 (define-public matrix-client-library
   (package
     (name "matrix-client-library")
-    (version "0.1.36")
+    (version "0.1.43")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_" version
                            ".tgz"))
        (sha256
-        (base32 "1x5788zky49cw981gvlsyxypm7vc74950p7n2bf66l4mby8cgp0q"))))
+        (base32 "1j9jywp29v5rjlpvf9lc223136yjlymazxs4xksl13xn80m8q8y4"))))
     (build-system cmake-build-system)
     (arguments
      `(#:tests? #f
