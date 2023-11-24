@@ -1,0 +1,37 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c2b3f35..4902d97 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -37,11 +37,11 @@ target_include_directories(goveebttemplogger PUBLIC
+                            ${EXTRA_INCLUDES}
+                            )
+ 
+-add_custom_command(TARGET goveebttemplogger POST_BUILD
+-    COMMAND sudo setcap 'cap_net_raw,cap_net_admin+eip' $<TARGET_FILE:goveebttemplogger>
+-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+-    COMMENT "Setting Raw Priveleges on $<TARGET_FILE:goveebttemplogger>"
+-)
++# add_custom_command(TARGET goveebttemplogger POST_BUILD
++#     COMMAND sudo setcap 'cap_net_raw,cap_net_admin+eip' $<TARGET_FILE:goveebttemplogger>
++#     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
++#     COMMENT "Setting Raw Priveleges on $<TARGET_FILE:goveebttemplogger>"
++# )
+ 
+ add_executable(gvh-organizelogs gvh-organizelogs.cpp goveebttemplogger-version.h)
+ target_link_libraries(gvh-organizelogs -lbluetooth -lstdc++fs)
+@@ -62,12 +62,12 @@ add_test(NAME gvh-organizelogs COMMAND gvh-organizelogs --help)
+ 
+ install(TARGETS goveebttemplogger gvh-organizelogs
+     DESTINATION bin
+-    RUNTIME DESTINATION "/usr/local/bin/"
+-    LIBRARY DESTINATION "/usr/local/lib/"
++    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
++    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+ )
+ 
+ install(FILES goveebttemplogger.service
+-    DESTINATION "/usr/local/lib/systemd/system"
++    DESTINATION "${CMAKE_INSTALL_PREFIX}/systemd/system"
+     COMPONENT "goveebttemplogger"
+ )
+ 
