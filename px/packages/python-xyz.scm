@@ -34,6 +34,7 @@
   #:use-module (gnu packages ghostscript)
   #:use-module (gnu packages image)
   #:use-module (gnu packages libffi)
+  #:use-module (gnu packages libusb)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages compression))
 
@@ -854,3 +855,27 @@ than Python’s urllib2 library.")
        (uri (pypi-uri "lazy-object-proxy" version))
        (sha256
         (base32 "1znridhk878rpgn92jvyra2gg70bi4l03ciz1i5lwdwsv4rivcbz"))))))
+
+(define-public python-ckcc-protocol
+  (package
+    (name "python-ckcc-protocol")
+    (version "1.4.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "ckcc-protocol" version))
+       (sha256
+        (base32 "1rgcpckyz38nwx8szh8cdgcny9m82d35pgm619ca93ihwg9x94yd"))))
+    (build-system python-build-system)
+	(inputs (list python-hidapi
+	              python-ecdsa
+				  python-pyaes
+				  python-click))
+    (arguments
+     `(#:tests? #f))
+    (home-page "https://github.com/Coldcard/ckcc-protocol")
+    (synopsis "Python library for Coldcard")
+    (description "Python library and command line tool for 
+communicating with your Coldcard over USB")
+    (license license:expat)))
+
