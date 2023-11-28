@@ -246,6 +246,7 @@ rules."
 
          (ledger-wallet-service)
          (nitro-key-service)
+         (coinkite-service)
 
          ;; Power savings
          (service tlp-service-type)

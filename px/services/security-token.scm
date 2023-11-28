@@ -3,7 +3,7 @@
 
 (define-module (px services security-token)
   #:use-module (gnu services base)
-  #:export (ledger-wallet-service nitro-key-service))
+  #:export (ledger-wallet-service nitro-key-service yubikey-service coinkite-service))
 
 ;;;
 ;;; Ledger hardware wallet definitions
@@ -113,3 +113,11 @@ KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0664\", GROUP=\"users\", ATTR
 
 (define (yubikey-service)
   (udev-rules-service 'yubikey %yubikey-udev-rule))
+
+(define %coinkite-udev-rule
+  (udev-rule "51-coinkite.rules"
+   "
+KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0666\", GROUP=\"users\", ATTRS{idVendor}==\"d13e\", ATTRS{idProduct}==\"cc10\""))
+
+(define (coinkite-service)
+  (udev-rules-service 'coinkite %coinkite-udev-rule))
