@@ -12,6 +12,7 @@
   #:use-module (gnu packages protobuf)
   #:use-module (gnu packages qt)
   #:use-module (gnu packages aidc)
+  #:use-module (gnu packages serialization)
   #:use-module (px packages python-xyz))
 
 (define-public electrum-cc
@@ -36,4 +37,5 @@
            python-qdarkstyle
            python-qrcode
            zbar
-		   python-ckcc-protocol))))
+           python-ckcc-protocol
+           python-cbor))))
