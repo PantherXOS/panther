@@ -98,7 +98,7 @@ LABEL=\"gnupg_rules_end\"
 KERNEL==\"sd?1\", ATTRS{idVendor}==\"20a0\", ATTRS{idProduct}==\"4109\", SYMLINK+=\"nitrospace\""))
 
 (define (nitro-key-service)
-  (udev-rules-service 'nitro %nitro-key-udev-rule))
+  (udev-rules-service 'nitro %nitro-key-udev-rule #:groups '("plugdev")))
 
 ;;;
 ;;; YubiKey definitions
@@ -108,16 +108,15 @@ KERNEL==\"sd?1\", ATTRS{idVendor}==\"20a0\", ATTRS{idProduct}==\"4109\", SYMLINK
 
 (define %yubikey-udev-rule
   (udev-rule "10-security-key.rules"
-   "
-KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0664\", GROUP=\"users\", ATTRS{idVendor}==\"2581\", ATTRS{idProduct}==\"f1d0\""))
+   "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0664\", GROUP=\"plugdev\", ATTRS{idVendor}==\"2581\", ATTRS{idProduct}==\"f1d0\""))
 
 (define (yubikey-service)
-  (udev-rules-service 'yubikey %yubikey-udev-rule))
+  (udev-rules-service 'yubikey %yubikey-udev-rule #:groups '("plugdev")))
 
 (define %coinkite-udev-rule
   (udev-rule "51-coinkite.rules"
-   "
-KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0666\", GROUP=\"users\", ATTRS{idVendor}==\"d13e\", ATTRS{idProduct}==\"cc10\""))
+   "SUBSYSTEM==\"usb\", MODE=\"0666\", GROUP=\"plugdev\", ATTRS{idVendor}==\"d13e\", ATTRS{idProduct}==\"cc10\"
+KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0666\", GROUP=\"plugdev\", ATTRS{idVendor}==\"d13e\", ATTRS{idProduct}==\"cc10\""))
 
 (define (coinkite-service)
-  (udev-rules-service 'coinkite %coinkite-udev-rule))
+  (udev-rules-service 'coinkite %coinkite-udev-rule #:groups '("plugdev")))
