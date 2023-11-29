@@ -79,15 +79,20 @@ and libtss2-tcti-mssim.")
 (define-public tpm2-tss-engine
   (package
     (name "tpm2-tss-engine")
-    (version "1.1.0")
+    (version "1.2.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append
-             "https://github.com/tpm2-software/tpm2-tss-engine/archive/v"
+             "https://github.com/tpm2-software/tpm2-tss-engine/archive/refs/tags/"
              version ".tar.gz"))
        (sha256
-        (base32 "0xby0jhdpp9jlwd84dp97y7fx7swww1b1k5srr9k64akbnrgwpz0"))))
+        (base32 "1cjfj0gl6d9kmc18h54kfs065lx3qyfjm8cj9hzjmkwin6m726rb"))
+       (modules '((guix build utils)))
+       (snippet '(begin
+                   (substitute* "bootstrap"
+                     (("git describe --tags --always --dirty > VERSION")
+                      "echo" version "> VERSION"))))))
     (build-system gnu-build-system)
     (arguments
      `(#:tests? #f ;only manual test scripts
@@ -140,24 +145,32 @@ and libtss2-tcti-mssim.")
     (inputs `(("tpm2-tss" ,tpm2-tss-openssl-1.1)
               ("bash-minimal" ,bash-minimal)))
     (home-page "https://github.com/tpm2-software/tpm2-tss-engine")
-    (synopsis
-     "The tpm2-tss-engine project implements a cryptographic engine for OpenSSL for Trusted Platform Module (TPM 2.0) using the tpm2-tss software stack that follows the Trusted Computing Groups (TCG) TPM Software Stack (TSS 2.0).")
+    (synopsis "OpenSSL Engine for TPM2 devices")
     (description
-     "The tpm2-tss-engine project implements a cryptographic engine for OpenSSL for Trusted Platform Module (TPM 2.0) using the tpm2-tss software stack that follows the Trusted Computing Groups (TCG) TPM Software Stack (TSS 2.0).")
+     "The tpm2-tss-engine project implements a cryptographic engine for OpenSSL
+for Trusted Platform Module (TPM 2.0) using the tpm2-tss software stack that
+follows the Trusted Computing Groups (TCG) TPM Software Stack (TSS 2.0).")
     (license license:bsd-2)))
 
 (define-public tpm2-tools
   (package
     (name "tpm2-tools")
-    (version "4.3.1")
+    (version "5.6")
     (source
      (origin
        (method url-fetch)
+       ;; 1qpqpjcps25as7sif7pa0yqz17562gp6d38v14hcxcxgnp3zlsbi
        (uri (string-append
-             "https://github.com/tpm2-software/tpm2-tools/archive/" version
-             ".tar.gz"))
+             "https://github.com/tpm2-software/tpm2-tools/archive/refs/tags/"
+             version ".tar.gz"))
        (sha256
-        (base32 "1sfrgzwhpbilk29lh233k0wncd0b5v12w2bz4h8n7nclcdlhw449"))))
+        (base32 "1qpqpjcps25as7sif7pa0yqz17562gp6d38v14hcxcxgnp3zlsbi"))
+
+       (modules '((guix build utils)))
+       (snippet '(begin
+                   (substitute* "bootstrap"
+                     (("git describe --tags --always --dirty > VERSION")
+                      "echo" version " > VERSION"))))))
     (build-system gnu-build-system)
     (arguments
      `(#:tests? #f ;only manual test scripts
@@ -177,10 +190,8 @@ and libtss2-tcti-mssim.")
                      ("libuuid" ,util-linux "lib")
                      ("tpm2-tss" ,tpm2-tss-openssl-1.1)))
     (home-page "https://github.com/tpm2-software/tpm2-tools")
-    (synopsis
-     "The source repository for the Trusted Platform Module (TPM2.0) tools ")
-    (description
-     "The source repository for the Trusted Platform Module (TPM2.0) tools ")
+    (synopsis "Trusted Platform Module (TPM2.0) tools")
+    (description "TPM (Trusted Platform Module) 2.0 tools based on tpm2-tss")
     (license license:lgpl2.1+)))
 
 (define-public tpm2-abrmd
@@ -204,15 +215,15 @@ and libtss2-tcti-mssim.")
                      ("git" ,git)
                      ("libtool" ,libtool)
                      ("pkg-config" ,pkg-config)
-                     ("tpm2-tss" ,tpm2-tss)
+                     ("tpm2-tss" ,tpm2-tss-openssl-1.1)
                      ("which" ,which)))
     (home-page "https://github.com/tpm2-software/tpm2-abrmd")
     (synopsis "TPM2 Access Broker & Resource Manager")
     (description
      "This is a system daemon implementing the TPM2 access broker (TAB) 
-     & Resource Manager (RM) spec from the TCG. The daemon (tpm2-abrmd) is 
-     implemented using Glib and the GObject system. In this documentation and in the code 
-     we use tpm2-abrmd and tabrmd interchangeably.")
+& Resource Manager (RM) spec from the TCG. The daemon (tpm2-abrmd) is 
+implemented using Glib and the GObject system. In this documentation and in the code 
+we use tpm2-abrmd and tabrmd interchangeably.")
     (license license:bsd-2)))
 
 (define-public tpm2-pkcs11
@@ -226,7 +237,13 @@ and libtss2-tcti-mssim.")
              "https://github.com/tpm2-software/tpm2-pkcs11/archive/refs/tags/"
              version ".tar.gz"))
        (sha256
-        (base32 "0kkzzdxiz1389jl4rabh739m99x1jh42xagq4sycn5s8kvik1sa5"))))
+        (base32 "0kkzzdxiz1389jl4rabh739m99x1jh42xagq4sycn5s8kvik1sa5"))
+
+       (modules '((guix build utils)))
+       (snippet '(begin
+                   (substitute* "bootstrap"
+                     (("git describe --tags --always --dirty > VERSION")
+                      "echo" version " > VERSION"))))))
     (build-system gnu-build-system)
     (arguments
      `(#:tests? #f ;only manual test scripts
@@ -240,14 +257,14 @@ and libtss2-tcti-mssim.")
                      ("pkg-config" ,pkg-config)))
     (inputs `(("libyaml" ,libyaml)
               ("sqlite" ,sqlite)
-              ("openssl" ,openssl)
+              ("openssl" ,openssl-1.1)
               ("tpm2-abrmd" ,tpm2-abrmd)
               ("tpm2-tools" ,tpm2-tools)
-              ("tpm2-tss" ,tpm2-tss)))
+              ("tpm2-tss" ,tpm2-tss-openssl-1.1)))
     (home-page "https://github.com/tpm2-software/tpm2-pkcs11")
     (synopsis "A PKCS#11 interface for TPM2 hardware")
     (description
      "PKCS #11 is a Public-Key Cryptography Standard that defines a standard method 
-     to access cryptographic services from tokens/ devices such as hardware security modules (HSM), 
-     smart cards, etc. In this project we intend to use a TPM2 device as the cryptographic token.")
+to access cryptographic services from tokens/ devices such as hardware security modules (HSM), 
+smart cards, etc. In this project we intend to use a TPM2 device as the cryptographic token.")
     (license license:bsd-2)))
