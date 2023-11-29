@@ -291,7 +291,7 @@
         firefox
 
         ;; Connectivity
-        qbittorrent
+        ;; qbittorrent
 
         ;; Office
         libreoffice
