@@ -38,4 +38,5 @@
            python-qrcode
            zbar
            python-ckcc-protocol
-           python-cbor))))
+           python-cbor
+           python-pyaes))))
