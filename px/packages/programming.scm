@@ -36,7 +36,7 @@
 (define-public vscode
   (package
     (name "vscode")
-    (version "1.82.2")
+    (version "1.84.2")
     (source
      #f)
     (build-system binary-build-system)
@@ -154,7 +154,7 @@
                                                  out) ":"))))) #t)))))
     (native-inputs `(("tar" ,tar)))
     (inputs `(("vscode" ,(make-vscode-release-asset version "vscode"
-                          "0i6zk4zkwcw5lnzhg7vvnsw17nar97bbq3iishag9cpjqs9jpq4z"))
+                          "1vdgc4mnysij2sf87d5dfh0yw9j2a58lvmnwzzsj1icaydhkhfjy"))
               ("gcc:lib" ,gcc "lib")
               ("gcc" ,gcc "lib")
               ("glib" ,glib)
@@ -190,7 +190,8 @@
               ("bash-minimal" ,bash-minimal)))
     (home-page "https://code.visualstudio.com/")
     (synopsis
-     "Visual Studio Code is a code editor redefined and optimized for building and debugging modern web and cloud applications.")
+     "Code editor written in TypeScript and Electron")
     (description
-     "Visual Studio Code is a code editor redefined and optimized for building and debugging modern web and cloud applications.")
+     "Visual Studio Code is a code editor redefined and optimized for
+building and debugging modern web and cloud applications.")
     (license license:expat)))
