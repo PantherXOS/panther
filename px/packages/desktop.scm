@@ -38,6 +38,7 @@
   #:use-module (gnu packages libreoffice)
   #:use-module (gnu packages lxde)
   #:use-module (gnu packages lxqt)
+  #:use-module (gnu packages music)
   #:use-module (gnu packages mail)
   #:use-module (gnu packages maths)
   #:use-module (gnu packages openbox)
@@ -51,15 +52,15 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages pdf)
   #:use-module (gnu packages syncthing)
-  #:use-module (gnu packages xdisorg) ;copyq
+  #:use-module (gnu packages xdisorg)
   #:use-module (nongnu packages compression)
   #:use-module (nongnu packages mozilla)
   #:use-module (px packages accounts)
   #:use-module (px packages atril-thumbnailer)
-  #:use-module (px packages backup) ;px-backup
-  #:use-module (px packages common) ;capnproto
-  #:use-module (px packages contacts-calendar) ;px-contacts
-  #:use-module (px packages desktop-tools) ;px-about
+  #:use-module (px packages backup)
+  #:use-module (px packages common)
+  #:use-module (px packages contacts-calendar)
+  #:use-module (px packages desktop-tools)
   #:use-module (px packages document)
   #:use-module (px packages hub)
   #:use-module (px packages kde-frameworks)
@@ -78,7 +79,7 @@
   #:use-module (px packages backup)
   #:use-module (px packages user-services)
   #:use-module (px packages wiki)
-  #:use-module (px packages device) ;px-remote-access
+  #:use-module (px packages device)
   #:use-module (px packages time-tracking)
   #:use-module (srfi srfi-1)
   #:export (%common-desktop-applications 
@@ -127,28 +128,23 @@
                   (substitute* "config/pcmanfm-qt/lxqt/settings.conf.in"
                     (("Wallpaper=.*")
                      (string-append "Wallpaper=" wallpaper "\n")))
-                  (substitute* (find-files "pcmanfm/translations"
-                                           "\\.desktop.yaml")
-                    (("PCManFM-Qt File Manager")
-                     "File Manager"))
                   (substitute* '("config/pcmanfm-qt/lxqt/settings.conf.in")
                     (("WallpaperMode=stretch")
                      "WallpaperMode=zoom")
-                    ;; Patch FONT
+                    ;; Patch default font
                     (("Font=\"Sans Serif,10,-1,5,50,0,0,0,0,0\"")
                      "Font=\"IBM Plex Sans,10,-1,5,50,0,0,0,0,0,Regular\"")
-                    ;; Patch DEFAULT APPLICATIONS
+                    ;; Patch default applications
                     (("TerminalDirCommand=xterm")
                      "TerminalDirCommand=qterminal")
                     (("TerminalExecCommand=xterm")
                      "TerminalExecCommand=qterminal")
-                    ;; Patch TUMBNAILS
+                    ;; Patch thumbnail size
                     (("MaxThumbnailFileSize=4096")
-                     "MaxThumbnailFileSize=30720"))
-                  (substitute* '("config/CMakeLists.txt")
-                    (("\\$\\{CMAKE_INSTALL_DATADIR\\}")
-                     "etc/xdg")))))))))
+                     "MaxThumbnailFileSize=30720")))))))))
     (inputs (list libfm-qt qtbase-5 qtx11extras px-lxqt-themes))
+    (native-inputs
+     (list pkg-config qttools-5 lxqt-build-tools))
     (propagated-inputs `(("atril-thumbnailer" ,atril-thumbnailer)
                          ("ffmpegthumbnailer" ,ffmpegthumbnailer)
                          ("freetype" ,freetype)
@@ -192,15 +188,12 @@
                          ;; ("libqtxdg" ,libqtxdg)
                          ;; Apply default wallpaper and so on to pcmanfm-qt:
                          ("px-file-manager" ,px-file-manager)
-                         ;; Rename QTerminal to Terminal:
-                         ("px-terminal" ,px-terminal)
-                         ("px-icons" ,px-icons)
-                         ("px-lxqt-themes" ,px-lxqt-themes)
+                         ;; ("px-icons" ,px-icons)
+                         ;; ("px-lxqt-themes" ,px-lxqt-themes)
                          ;; "lxqt-panel"
                          ,@(fold alist-delete
                                  (package-propagated-inputs lxqt)
-                                 '("lximage-qt" "pcmanfm-qt" "qterminal"
-                                   "lxqt-themes" "breeze-icons"))))))
+                                 '("lximage-qt" "pcmanfm-qt"))))))
 
 ;;
 ;; Desktop Configuration
@@ -265,8 +258,9 @@
                      ("tar" ,tar)
                      ("gzip" ,compression:gzip)))
     (propagated-inputs `(("albert-launcher" ,albert-launcher)
-                         ("px-widget-style" ,px-widget-style)
-                         ("px-icons" ,px-icons)
+                         ;;("px-widget-style" ,px-widget-style) replaced with default 'breeze'
+						 ("breeze", breeze)
+						 ("px-icons" ,px-icons)
                          ("px-first-login-welcome-screen" ,px-first-login-welcome-screen)
                          ("px-openbox-theme" ,px-openbox-theme)
                          ("copyq" ,copyq)))
@@ -284,8 +278,8 @@
         ;; px-contacts
         ;; px-backup
         ;; px-hub-gui
-        px-software
-        px-software-assets-meta
+        ; px-software
+        ; px-software-assets-meta
 
         ;; Browser
         firefox
@@ -297,19 +291,16 @@
         libreoffice
         aspell
         aspell-dict-en
-        aspell-dict-de ;:)
+        aspell-dict-de
         aspell-dict-uk
 
         ;; Look and Feel
-        paper-icon-theme
-        sddm-darkine-theme
         px-sddm-theme
         xcursor-themes
         gnome-themes-standard
         font-liberation
         font-adobe-source-sans-pro
         font-adobe-source-code-pro
-        breeze-gtk
         font-cns11643-swjz ;?
         font-wqy-zenhei ;?
         font-ibm-plex
@@ -320,7 +311,6 @@
         ;; lxqt-arc-dark-theme
         
         ;; Utils
-        albert-launcher
         ;; Userspace virtual file system for GIO
         gvfs
         print-manager
@@ -363,6 +353,12 @@
 
 (define %qt-desktop-applications
   (list
+   ;; Primarily for LXQt
+	paper-icon-theme
+	sddm-darkine-theme
+    breeze-gtk
+   
+
    ;; Includes syncthingtray (QT)
    px-user-services
 
@@ -370,16 +366,16 @@
    px-first-login-welcome-screen
    px-desktop-wiki
    px-about
-   px-file-archiver
+   lxqt-archiver
    px-settings-ui
 
    ;; Office
    speedcrunch
 
    ;; Multimedia
-   px-image-viewer
-   px-music-player
-   px-video-player
+   qimgv
+   strawberry
+   mpv
 
    ;; Connectivity
    ;; This package contains a systray applet for NetworkManager
@@ -392,6 +388,8 @@
    flameshot
    pinentry-qt
    lxmenu-data
+
+   albert-launcher
 
    ;; PGP
    kleopatra

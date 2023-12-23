@@ -143,64 +143,6 @@
      "Albert is a desktop agnostic launcher. Its goals are usability and beauty, performance and extensibility. It is written in C++ and based on the Qt framework.")
     (license license:gpl3+)))
 
-(define-public px-file-archiver
-  (package
-    (inherit lxqt-archiver)
-    (name "px-file-archiver")
-    (version "0.5.0")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url (string-append "https://github.com/lxqt/lxqt-archiver.git"))
-             (commit version)))
-       (file-name (git-file-name "lxqt-archiver" version))
-       (sha256
-        (base32 "0qz3j0qby78ngck60rv7kgwygya8cr1v4kn575wrsg3w287v33qb"))))
-    (arguments
-     '(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'patch-app-name
-                    (lambda _
-                      (substitute* (find-files "src/translations"
-                                               "\\.desktop.yaml")
-                        (("LXQt File Archiver")
-                         "File Archiver")) #t)))))))
-
-(define-public px-image-viewer
-  (package
-    (inherit qimgv)
-    (name "px-image-viewer")
-    (arguments
-     '(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'patch-menu-item
-                    (lambda _
-                      (substitute* '("qimgv/distrib/qimgv.desktop")
-                        (("Name=qimgv")
-                         "Name=Pictures")) #t)))))))
-
-(define-public px-terminal
-  (package
-    (inherit qterminal)
-    (name "px-terminal")
-    (arguments
-     '(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'patch-menu-item
-                    (lambda _
-                      (substitute* (find-files "src/translations"
-                                               "\\.desktop.yaml")
-                        (("QTerminal")
-                         "Terminal"))
-                      (substitute* (find-files "src/translations"
-                                               "\\.desktop.yaml")
-                        (("Qterminal")
-                         "Terminal"))
-                      (substitute* '("CMakeLists.txt")
-                        (("qterminal-drop.desktop.in")
-                         "")) #t)))))))
-
 (define-public qlipper
   (package
     (name "qlipper")

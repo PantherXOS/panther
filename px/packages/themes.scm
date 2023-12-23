@@ -26,6 +26,7 @@
   #:use-module (gnu packages qt)
   #:use-module (gnu packages web))
 
+;; TODO: DROP IF OBSOLETE
 (define-public px-widget-style
   (package
     (name "px-widget-style")
@@ -261,6 +262,7 @@
     (description "Paper is an open source FreeDesktop icon project")
     (license license:expat)))
 
+;; TODO: DROP IF OBSOLETE
 (define-public px-lxqt-themes
   (package
     (name "px-lxqt-themes")
