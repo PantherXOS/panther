@@ -67,7 +67,6 @@
   #:use-module (px packages library)
   #:use-module (px packages lxqt-dev)
   #:use-module (px packages matrix-client)
-  #:use-module (px packages multimedia)
   #:use-module (px packages package-management)
   #:use-module (px packages pantherx-panel)
   #:use-module (px packages px-themes)

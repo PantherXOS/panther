@@ -21,7 +21,6 @@
   #:use-module (px packages activity)
   #:use-module (px packages desktop)
   #:use-module (px packages device)
-  #:use-module (px packages multimedia)
   #:use-module (px packages package-management)
   #:use-module (px packages setup)
   #:use-module (px packages themes)
@@ -57,15 +56,17 @@
           %px-core-packages))
 
 (define %px-desktop-packages-qt
-  (append %qt-desktop-applications %common-desktop-applications
+  (append %qt-desktop-applications
+          %common-desktop-applications
           %px-core-packages))
 
 (define %px-desktop-packages
   (append %px-desktop-packages-qt))
 
 (define %px-desktop-ee-packages
-  (append (list px-device-identity px-org-remote-user-activity-service)
-          %px-desktop-packages))
+  (append (list px-device-identity 
+                px-org-remote-user-activity-service)
+               %px-desktop-packages))
 
 ;;;
 ;;; SERVER
