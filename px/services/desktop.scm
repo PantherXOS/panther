@@ -38,7 +38,6 @@
   #:use-module (ice-9 match)
   #:export (px-desktop-configuration 
             px-desktop-configuration?
-            px-desktop-service-type
 
             polkit-network-manager-service
             polkit-elogind-service
@@ -46,37 +45,6 @@
             create-swap-space-service
 
             %px-desktop-services-base))
-
-;;
-;; PantherX desktop service type
-;;
-
-(define-record-type* <px-desktop-configuration> px-desktop-configuration
-                     make-px-desktop-configuration
-  px-desktop-configuration?
-  (lxqt px-config-package
-        (default lxqt-modified))
-  (default-packages px-config-default-packages
-                    (default (list px-desktop-defaults))))
-
-(define (px-desktop-polkit-settings config)
-  "Return the list of LXQt dependencies that provide polkit actions and
-rules."
-  (list lxqt-admin))
-
-(define px-desktop-profile-packages
-  (lambda (config)
-    (append (list (px-config-package config))
-            (px-config-default-packages config))))
-
-(define px-desktop-service-type
-  (service-type (name 'px-desktop)
-                (extensions (list (service-extension polkit-service-type
-                                   px-desktop-polkit-settings)
-                                  (service-extension profile-service-type
-                                   px-desktop-profile-packages)))
-                (default-value (px-desktop-configuration))
-                (description "Run LXQt desktop environment on PantherX.")))
 
 ;;
 ;; allow netdev group to control network manger

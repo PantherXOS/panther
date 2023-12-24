@@ -65,10 +65,8 @@
   #:use-module (px packages hub)
   #:use-module (px packages kde-frameworks)
   #:use-module (px packages library)
-  #:use-module (px packages lxqt-dev)
   #:use-module (px packages matrix-client)
   #:use-module (px packages package-management)
-  #:use-module (px packages pantherx-panel)
   #:use-module (px packages px-themes)
   #:use-module (px packages settings)
   #:use-module (px packages setup)
@@ -83,72 +81,8 @@
   #:use-module (srfi srfi-1)
   #:export (%common-desktop-applications 
             %gtk-desktop-applications
-            %qt-desktop-applications
+            %qt-desktop-applications))
 
-            lxqt-modified
-            ;; TODO: This should probably go into px/services/desktop
-            px-desktop-defaults))
-
-;; Currently only lxqt-modified
-(define-public openbox-modified
-  (package
-    (inherit openbox)
-    (name "openbox-modified")
-    (arguments
-     (list
-      #:phases #~(modify-phases %standard-phases
-                   (add-after 'unpack 'force-reconfigure
-                     ;; This is made necessary by the openbox-python3 patch.
-                     (lambda _
-                       (delete-file "configure")))
-                   (add-after 'unpack 'patch-config-file
-                     (lambda _
-                       (substitute* "data/rc.xml"
-                         (("Clearlooks")
-                          "Arc-Dark")))))))))
-
-;; Currently only lxqt-modified
-(define-public px-file-manager
-  (package
-    (inherit pcmanfm-qt)
-    (name "px-file-manager")
-    (source
-     (origin
-       (inherit (package-source pcmanfm-qt))
-       (patches (search-patches "px-file-manager-0001-update-config.patch"))))
-    (arguments
-     (substitute-keyword-arguments (package-arguments pcmanfm-qt)
-       ((#:phases phases)
-        #~(modify-phases #$phases
-            (add-before 'configure 'patch-settings.conf.in
-              (lambda* (#:key inputs #:allow-other-keys)
-                (let ((wallpaper (search-input-file inputs
-                                  "share/lxqt/wallpapers/pantherx.jpg")))
-                  (substitute* "config/pcmanfm-qt/lxqt/settings.conf.in"
-                    (("Wallpaper=.*")
-                     (string-append "Wallpaper=" wallpaper "\n")))
-                  (substitute* '("config/pcmanfm-qt/lxqt/settings.conf.in")
-                    (("WallpaperMode=stretch")
-                     "WallpaperMode=zoom")
-                    ;; Patch default font
-                    (("Font=\"Sans Serif,10,-1,5,50,0,0,0,0,0\"")
-                     "Font=\"IBM Plex Sans,10,-1,5,50,0,0,0,0,0,Regular\"")
-                    ;; Patch default applications
-                    (("TerminalDirCommand=xterm")
-                     "TerminalDirCommand=qterminal")
-                    (("TerminalExecCommand=xterm")
-                     "TerminalExecCommand=qterminal")
-                    ;; Patch thumbnail size
-                    (("MaxThumbnailFileSize=4096")
-                     "MaxThumbnailFileSize=30720")))))))))
-    (inputs (list libfm-qt qtbase-5 qtx11extras px-lxqt-themes))
-    (native-inputs
-     (list pkg-config qttools-5 lxqt-build-tools))
-    (propagated-inputs `(("atril-thumbnailer" ,atril-thumbnailer)
-                         ("ffmpegthumbnailer" ,ffmpegthumbnailer)
-                         ("freetype" ,freetype)
-                         ("libgsf" ,libgsf)
-                         ("tumbler" ,tumbler)))))
 
 (define-public px-terminal-launcher
   (package
@@ -175,110 +109,17 @@
     (description "PantherX Terminal Launcher")
     (license license:expat)))
 
-(define-public lxqt-modified
-  (package
-    (inherit lxqt)
-    (name "lxqt-modified")
-    (propagated-inputs `(;; Apply Arc-Dark to openbox:
-                          ("openbox-modified" ,openbox-modified)
-                         ;; Apply modified menu and others to lxqt-panel:
-                         ;; TODO: FIX and restore
-                         ;; ("pantherx-panel" ,pantherx-panel)
-                         ;; ("libqtxdg" ,libqtxdg)
-                         ;; Apply default wallpaper and so on to pcmanfm-qt:
-                         ("px-file-manager" ,px-file-manager)
-                         ;; ("px-icons" ,px-icons)
-                         ;; ("px-lxqt-themes" ,px-lxqt-themes)
-                         ;; "lxqt-panel"
-                         ,@(fold alist-delete
-                                 (package-propagated-inputs lxqt)
-                                 '("lximage-qt" "pcmanfm-qt"))))))
-
-;;
-;; Desktop Configuration
-;;
-
-;; This goes straight into px/services/desktop (only LXQt)
-(define-public px-desktop-defaults
-  (package
-    (name "px-desktop-defaults")
-    (version "0.0.47")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/px-desktop-defaults_"
-                           version ".tgz"))
-       (sha256
-        (base32 "1y9wp2d35nrf72bkiv39k17paa6arxp2hpz2102mymj61zb96fvk"))))
-    (build-system trivial-build-system)
-    (arguments
-     `(#:modules ((guix build utils))
-       #:builder (begin
-                   (use-modules (guix build utils))
-                   (mkdir %output)
-                   (setenv "PATH"
-                           (string-append (assoc-ref %build-inputs "coreutils")
-                                          "/bin"
-                                          ":"
-                                          (assoc-ref %build-inputs "tar")
-                                          "/bin"
-                                          ":"
-                                          (assoc-ref %build-inputs "gzip")
-                                          "/bin"))
-                   (invoke "tar" "zxvf"
-                           (assoc-ref %build-inputs "source"))
-                   ;; (chdir (string-append (string-capitalize ,name) "-" ,version))
-                   ;; (display (string-append ,name "_" ,version))
-                   ;; (chdir (string-append ,name "_" ,version))
-                   (let ((source (assoc-ref %build-inputs "source"))
-                         (albert (assoc-ref %build-inputs "albert-launcher"))
-                         (copyq (assoc-ref %build-inputs "copyq"))
-                         (px-first-login-welcome-screen (assoc-ref
-                                                         %build-inputs
-                                                         "px-first-login-welcome-screen"))
-                         (out (assoc-ref %outputs "out")))
-                     (chdir ,name)
-                     (substitute* '("etc/xdg/autostart/lxqt-copyq-autostart.desktop")
-                       (("Exec=copyq")
-                        (string-append "Exec=" copyq "/bin/copyq")))
-                     (substitute* '("etc/xdg/autostart/albert.desktop")
-                       (("Exec=albert")
-                        (string-append "Exec=" albert "/bin/albert")))
-                     (substitute* '("etc/xdg/autostart/px-first-login-welcome-screen.desktop")
-                       (("Exec=px-first-login-welcome-screen")
-                        (string-append "Exec=" px-first-login-welcome-screen
-                                       "/bin/px-first-login-welcome-screen")))
-                     (copy-recursively "." %output)
-                     (chmod (string-append %output
-                             "/etc/px-desktop/scripts/lxqt-switch-desktop.sh")
-                            #o755)
-                     #t))))
-    (native-inputs `(("coreutils" ,coreutils)
-                     ("tar" ,tar)
-                     ("gzip" ,compression:gzip)))
-    (propagated-inputs `(("albert-launcher" ,albert-launcher)
-                         ;;("px-widget-style" ,px-widget-style) replaced with default 'breeze'
-						 ("breeze", breeze)
-						 ("px-icons" ,px-icons)
-                         ("px-first-login-welcome-screen" ,px-first-login-welcome-screen)
-                         ("px-openbox-theme" ,px-openbox-theme)
-                         ("copyq" ,copyq)))
-    (home-page "https://www.pantherx.org/")
-    (synopsis "PantherX Default Configuration Package")
-    (description "Default Configurations for PantherX Desktop")
-    (license license:expat)))
-
 ;;
 ;; PantherX OS Desktop default Applications and Services
 ;;
 
 (define %common-desktop-applications
-  (list ;Default applications and so on...
+  (list ;; Default applications and so on...
         ;; px-contacts
         ;; px-backup
         ;; px-hub-gui
-        ; px-software
-        ; px-software-assets-meta
+        ;; px-software
+        ;; px-software-assets-meta
 
         ;; Browser
         firefox
@@ -294,7 +135,7 @@
         aspell-dict-uk
 
         ;; Look and Feel
-        px-sddm-theme
+        px-sddm-theme ;; Login theme
         xcursor-themes
         gnome-themes-standard
         font-liberation
@@ -344,7 +185,7 @@
 
         ;; Excludes syncthingtray
         ;; Does not work on Gnome wayland
-        px-user-services-gtk
+        ;; px-user-services-gtk
         syncthing-gtk
 
         ;; PGP
@@ -359,14 +200,13 @@
    
 
    ;; Includes syncthingtray (QT)
-   px-user-services
+   ;; px-user-services
 
    ;; Default applications and so on...
-   px-first-login-welcome-screen
-   px-desktop-wiki
-   px-about
+   ;; px-first-login-welcome-screen
+   ;; px-desktop-wiki
    lxqt-archiver
-   px-settings-ui
+   ;; px-settings-ui
 
    ;; Office
    speedcrunch
@@ -394,7 +234,7 @@
    kleopatra
 
    ;; Clipboard manager
-   copyq
+   copyq))
 
    ;; Account Service Plugins
    ;; px-accounts-service-plugin-etesync  ;; TODO: uncomment whenever we had a working package for `px-contact-calendar`
@@ -429,12 +269,12 @@
    
    ;; Settings Service Plugins
    ;; px-settings-service-plugin-accounts
-   px-settings-service-plugin-backup
-   px-settings-service-plugin-desktop-search
-   px-settings-service-plugin-maintenance
-   px-settings-service-plugin-software
-   px-settings-service-plugin-theme
-   px-settings-service-plugin-theme-dark-bright))
+   ;; px-settings-service-plugin-backup
+   ;; px-settings-service-plugin-desktop-search
+   ;; px-settings-service-plugin-maintenance
+   ;; px-settings-service-plugin-software
+   ;; px-settings-service-plugin-theme
+   ;; px-settings-service-plugin-theme-dark-bright))
 
 ; (define %pantherx-desktop-i3
 ;   (list i3-wm i3lock i3lock-fancy i3status

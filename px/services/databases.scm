@@ -115,9 +115,3 @@ storage:
                                                      (const %mongodb-accounts))))
                 (default-value (mongodb-configuration))))
 
-(use-modules (gnu system)
-             (gnu bootloader)
-             (gnu bootloader grub)
-             (gnu system file-systems)
-             (px system config))
-

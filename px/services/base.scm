@@ -44,9 +44,7 @@
 
             %px-core-arm-services
             %px-gui-arm-services
-            %px-desktop-arm-services)
-
-  #:re-export (px-desktop-service-type))
+            %px-desktop-arm-services))
 
 ;;;
 ;;;
@@ -75,10 +73,10 @@
 ;;;
 
 (define %px-desktop-ee-services
+  ;; TODO: Does not include default desktop
   (append (list (service px-device-identity-service-type)
-                (service px-user-identity-service-type)
-                ;; Desktop
-                (service px-desktop-service-type)) %px-desktop-services-base))
+                (service px-user-identity-service-type))
+				%px-desktop-services-base))
 
 ;;;
 ;;; SERVER
@@ -145,12 +143,9 @@
          %px-core-arm-services))
 
 (define %px-desktop-arm-services
+  ;; TODO: Does not include default desktop
   (append (list (service dhcp-client-service-type)
                 (service sddm-service-type
-                         (sddm-configuration (minimum-uid 1000)
-                                             (theme "px-sddm-theme")))
-                (service px-desktop-service-type
-                         (px-desktop-configuration (lxqt lxqt-modified)
-                                                   (default-packages '()))))
+                         (sddm-configuration (minimum-uid 1000))))
           (modify-services %desktop-services
             (delete network-manager-service-type))))

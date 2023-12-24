@@ -41,8 +41,6 @@
   ;; Re-export for convenience
   #:re-export (%px-core-services
 
-                px-desktop-service-type
-
                 %px-desktop-services
                 %px-desktop-ee-services
 

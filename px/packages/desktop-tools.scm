@@ -350,16 +350,3 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
     (description "Qt-based tray application")
     (license license:gpl2+)))
 
-(define-public px-about
-  (package
-    (inherit lxqt-about)
-    (name "px-about")
-    (version "1.2.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_" version
-                           ".tgz"))
-       (sha256
-        (base32 "12cnydcw8rhbwh21j8ayj2x47nvr5zicnqfp6r13dapy1nss5rd4"))))))
-
