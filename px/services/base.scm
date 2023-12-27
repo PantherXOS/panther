@@ -32,10 +32,8 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:export (%px-core-services
-            ;; for custom desktops (for ex. xfce)
-            ;; without lxqt
-            ;; %px-desktop-services-base
-            
+
+            %px-desktop-core-services
             %px-desktop-services
             %px-desktop-ee-services
 
@@ -60,11 +58,13 @@
 ;;;
 ;;; DESKTOP
 ;;; px-desktop-os services
-;;; px-new-desktop services
 ;;;
 
+(define %px-desktop-core-services
+  (append %desktop-services-plain))
+
 (define %px-desktop-services
-  (append %px-desktop-services-base))
+  (append %desktop-services))
 
 ;;;
 ;;;
@@ -76,7 +76,7 @@
   ;; TODO: Does not include default desktop
   (append (list (service px-device-identity-service-type)
                 (service px-user-identity-service-type))
-				%px-desktop-services-base))
+				%desktop-services))
 
 ;;;
 ;;; SERVER

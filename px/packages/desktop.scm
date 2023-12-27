@@ -83,7 +83,6 @@
             %gtk-desktop-applications
             %qt-desktop-applications))
 
-
 (define-public px-terminal-launcher
   (package
     (name "px-terminal-launcher")
@@ -113,31 +112,14 @@
 ;; PantherX OS Desktop default Applications and Services
 ;;
 
+;; Stuff for every desktop; QT / GTK on X / Wayland
 (define %common-desktop-applications
-  (list ;; Default applications and so on...
-        ;; px-contacts
-        ;; px-backup
-        ;; px-hub-gui
-        ;; px-software
-        ;; px-software-assets-meta
-
-        ;; Browser
-        firefox
-
-        ;; Connectivity
-        ;; qbittorrent
-
-        ;; Office
-        libreoffice
+  (list libreoffice
         aspell
         aspell-dict-en
         aspell-dict-de
         aspell-dict-uk
 
-        ;; Look and Feel
-        px-sddm-theme ;; Login theme
-        xcursor-themes
-        gnome-themes-standard
         font-liberation
         font-adobe-source-sans-pro
         font-adobe-source-code-pro
@@ -147,135 +129,65 @@
         font-vazir
         font-openmoji
 
-        ;; WIP
-        ;; lxqt-arc-dark-theme
-        
-        ;; Utils
-        ;; Userspace virtual file system for GIO
         gvfs
         print-manager
 
-        ;; U2F
         pam-u2f
         libu2f-host
         libu2f-server
 
-        ;; Compression
         compression:zip
         compression:unzip
         unrar
 
-        ;; Command line utils
         curl
         neofetch
         wget
-        xrandr
 
-        ;; Secrets
-        ;; Displaying certificates and accessing key stores
         gcr
         gnome-keyring
-        ;; seahorse
-        
-        ;; Bluetooth
+
         blueman))
 
+;; GTK-specific
 (define %gtk-desktop-applications
-  (list
+  (list syncthing-gtk
 
-        ;; Excludes syncthingtray
-        ;; Does not work on Gnome wayland
-        ;; px-user-services-gtk
-        syncthing-gtk
+        ;; Look and feel
+        px-sddm-theme
+        xcursor-themes
+        gnome-themes-standard
 
         ;; PGP
         seahorse))
 
+;; QT-specific
 (define %qt-desktop-applications
-  (list
-   ;; Primarily for LXQt
-	paper-icon-theme
-	sddm-darkine-theme
-    breeze-gtk
-   
+  (list px-sddm-theme
+        xcursor-themes
+        gnome-themes-standard
+        paper-icon-theme
+        sddm-darkine-theme
+        breeze-gtk
 
-   ;; Includes syncthingtray (QT)
-   ;; px-user-services
+        speedcrunch
 
-   ;; Default applications and so on...
-   ;; px-first-login-welcome-screen
-   ;; px-desktop-wiki
-   lxqt-archiver
-   ;; px-settings-ui
+        qimgv
+        strawberry
+        mpv
 
-   ;; Office
-   speedcrunch
+        network-manager-applet
+        featherpad
+        qpdfview
 
-   ;; Multimedia
-   qimgv
-   strawberry
-   mpv
+        lxqt-archiver
+        flameshot
+        pinentry-qt
+        lxmenu-data
 
-   ;; Connectivity
-   ;; This package contains a systray applet for NetworkManager
-   ;; Does not work on Gnome wayland
-   network-manager-applet
-   featherpad
-   qpdfview
+        albert-launcher
 
-   ;; Utils
-   flameshot
-   pinentry-qt
-   lxmenu-data
+        kleopatra
 
-   albert-launcher
-
-   ;; PGP
-   kleopatra
-
-   ;; Clipboard manager
-   copyq))
-
-   ;; Account Service Plugins
-   ;; px-accounts-service-plugin-etesync  ;; TODO: uncomment whenever we had a working package for `px-contact-calendar`
-   ;; px-accounts-service-plugin-activity-watch
-   ;; px-accounts-service-plugin-claws-mail
-   ;; px-accounts-service-plugin-github
-   ;; px-accounts-service-plugin-gitlab
-   ;; px-accounts-service-plugin-oauth2-github
-   ;; px-accounts-service-plugin-oauth2-mastodon
-   ;; px-accounts-service-plugin-oauth2-google
-   ;; px-accounts-service-providers-mail
-   ;; px-accounts-service-plugin-imap
-   ;; px-accounts-service-plugin-maestral
-   ;; px-accounts-service-plugin-smtp
-   ;; px-accounts-service-plugin-carddav
-   ;; px-accounts-service-plugin-s3
-   ;; px-accounts-service-plugin-backup-local
-   ;; px-accounts-service-plugin-etherscan
-   ;; px-accounts-service-plugin-blockio
-   ;; px-accounts-service-plugin-cryptocurrency
-   ;; px-accounts-service-plugin-discourse
-   
-   ;; Hub Service Plugins
-   ;; px-hub-service-plugin-claws-mail
-   ;; px-hub-service-plugin-github
-   ;; px-hub-service-plugin-gitlab
-   ;; px-hub-service-plugin-discourse
-   ;; px-hub-service-plugin-mastodon
-   
-   ;; Time Tracking Plugins
-   ;; px-time-tracking-plugin-gitlab
-   
-   ;; Settings Service Plugins
-   ;; px-settings-service-plugin-accounts
-   ;; px-settings-service-plugin-backup
-   ;; px-settings-service-plugin-desktop-search
-   ;; px-settings-service-plugin-maintenance
-   ;; px-settings-service-plugin-software
-   ;; px-settings-service-plugin-theme
-   ;; px-settings-service-plugin-theme-dark-bright))
-
-; (define %pantherx-desktop-i3
-;   (list i3-wm i3lock i3lock-fancy i3status
-;         dmenu i3blocks))
+        ;; Clipboard manager
+        copyq))

@@ -26,7 +26,6 @@
 
             px-desktop-os
             px-desktop-ee-os
-            px-new-desktop
 
             px-server-os
             px-server-ee-os
@@ -41,6 +40,7 @@
   ;; Re-export for convenience
   #:re-export (%px-core-services
 
+                %px-desktop-core-services
                 %px-desktop-services
                 %px-desktop-ee-services
 
@@ -53,6 +53,7 @@
 
                 %px-core-packages
 
+			    %px-desktop-core-packages
                 %px-desktop-packages-gtk
                 %px-desktop-packages-qt
                 %px-desktop-packages
@@ -139,19 +140,6 @@
            #:templates templates
            #:default-packages %px-desktop-ee-packages
            #:default-services %px-desktop-ee-services))
-
-(define* (px-new-desktop os-config
-                         #:key (kernel 'nonlibre)
-                         (open-ports #f)
-                         (authorized-keys '())
-                         (templates '()))
-  (make-os os-config
-           #:kernel kernel
-           #:open-ports open-ports
-           #:authorized-keys authorized-keys
-           #:templates templates
-           #:default-packages %px-desktop-packages
-           #:default-services %px-desktop-services))
 
 ;;;
 ;;; SERVER

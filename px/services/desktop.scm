@@ -44,7 +44,8 @@
 
             create-swap-space-service
 
-            %px-desktop-services-base))
+            %desktop-services
+		    %desktop-services-plain))
 
 ;;
 ;; allow netdev group to control network manger
@@ -141,6 +142,7 @@
                  "  }\n"
                  "}\n"))))
 
+;; Generic Desktop for Qt, GTP
 (define* (desktop-services-for-system #:optional (system (or (%current-target-system)
                                                              (%current-system))))
   ;; List of services typically useful for a "desktop" use case.
@@ -254,5 +256,107 @@
 
          %base-services))
 
-(define-syntax %px-desktop-services-base
+(define-syntax %desktop-services
   (identifier-syntax (desktop-services-for-system)))
+
+;; Generic Desktop for use with other locker's and DE's; for ex. Sway on Wayland
+(define* (desktop-services-for-system-plain #:optional (system (or (%current-target-system)
+                                                             (%current-system))))
+  ;; List of services typically useful for a "desktop" use case.
+  
+  ;; Since GDM depends on Rust (gdm -> gnome-shell -> gjs -> mozjs -> rust)
+  ;; and Rust is currently unavailable on non-x86_64 platforms, default to
+  ;; SDDM there (FIXME).
+  (cons* 
+         ;; Add udev rules for MTP devices so that non-root users can access
+         ;; them.
+         (simple-service 'mtp udev-service-type
+                         (list libmtp))
+         ;; Add udev rules for scanners.
+         (service sane-service-type)
+         ;; Add polkit rules, so that non-root users in the wheel group can
+         ;; perform administrative tasks (similar to "sudo").
+         polkit-wheel-service
+
+         ;; Allow desktop users to also mount NTFS and NFS file systems
+         ;; without root.
+         (simple-service 'mount-setuid-helpers setuid-program-service-type
+                         (map (lambda (program)
+                                (setuid-program
+                                  (program program)))
+                              (list (file-append nfs-utils "/sbin/mount.nfs")
+                                    (file-append ntfs-3g "/sbin/mount.ntfs-3g"))))
+
+         ;; The global fontconfig cache directory can sometimes contain
+         ;; stale entries, possibly referencing fonts that have been GC'd,
+         ;; so mount it read-only.
+         fontconfig-file-system-service
+
+         ;; NetworkManager and its applet.
+         (service network-manager-service-type)
+         (service wpa-supplicant-service-type) ;needed by NetworkManager
+         (service modem-manager-service-type)
+         (service usb-modeswitch-service-type)
+
+         ;; The D-Bus clique.
+         (service avahi-service-type)
+         (service udisks-service-type)
+         (service upower-service-type)
+         (service accountsservice-service-type)
+         (service cups-pk-helper-service-type)
+         (service colord-service-type)
+         (service geoclue-service-type)
+         (service polkit-service-type)
+         (service elogind-service-type)
+         (service dbus-root-service-type)
+
+         (service ntp-service-type)
+
+         (service x11-socket-directory-service-type)
+
+         (service pulseaudio-service-type)
+         (service alsa-service-type)
+
+         ;; PantherX Specific
+         (simple-service 'custom-udev-rules udev-service-type
+                         (list libu2f-host))
+
+         (ledger-wallet-service)
+         (nitro-key-service)
+         (coinkite-service)
+
+         ;; Power savings
+         (service tlp-service-type)
+
+         ;; Bluetooth service
+         ;; (bluetooth-service #:auto-enable? #t)
+         (service bluetooth-service-type
+                  (bluetooth-configuration (auto-enable? #t)))
+
+         ;; Prevent overheating
+         ;; TLP does not conflict with thermald.
+         (service thermald-service-type)
+
+         ;; Printing
+         (service cups-service-type
+                  (cups-configuration (web-interface? #t)
+                                      (browsing? #t)
+                                      (default-paper-size "a4")))
+
+         ;; Keychain
+         (service gnome-keyring-service-type
+                  (gnome-keyring-configuration (pam-services '(("passwd" . passwd)
+                                                               ("greetd" . login)))))
+
+         ;; SSH is enabled by default but only with SSH key
+         (service openssh-service-type
+                  (openssh-configuration (permit-root-login 'prohibit-password)))
+
+         ;; Firewall
+         (service nftables-service-type
+                  (nftables-configuration (ruleset (make-firewall-rules '()))))
+
+         %base-services))
+
+(define-syntax %desktop-services-plain
+  (identifier-syntax (desktop-services-for-system-plain)))
