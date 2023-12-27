@@ -61,10 +61,10 @@
 ;;;
 
 (define %px-desktop-core-services
-  (append %desktop-services-plain))
+  (append %desktop-services-assembly-plain))
 
 (define %px-desktop-services
-  (append %desktop-services))
+  (append %desktop-services-assembly))
 
 ;;;
 ;;;
@@ -76,7 +76,7 @@
   ;; TODO: Does not include default desktop
   (append (list (service px-device-identity-service-type)
                 (service px-user-identity-service-type))
-				%desktop-services))
+				%desktop-services-assembly))
 
 ;;;
 ;;; SERVER
@@ -147,5 +147,5 @@
   (append (list (service dhcp-client-service-type)
                 (service sddm-service-type
                          (sddm-configuration (minimum-uid 1000))))
-          (modify-services %desktop-services
+          (modify-services %desktop-services-assembly
             (delete network-manager-service-type))))

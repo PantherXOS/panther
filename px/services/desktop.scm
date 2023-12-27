@@ -44,8 +44,8 @@
 
             create-swap-space-service
 
-            %desktop-services
-		    %desktop-services-plain))
+            %desktop-services-assembly
+		    %desktop-services-assembly-plain))
 
 ;;
 ;; allow netdev group to control network manger
@@ -256,7 +256,7 @@
 
          %base-services))
 
-(define-syntax %desktop-services
+(define-syntax %desktop-services-assembly
   (identifier-syntax (desktop-services-for-system)))
 
 ;; Generic Desktop for use with other locker's and DE's; for ex. Sway on Wayland
@@ -358,5 +358,5 @@
 
          %base-services))
 
-(define-syntax %desktop-services-plain
+(define-syntax %desktop-services-assembly-plain
   (identifier-syntax (desktop-services-for-system-plain)))
