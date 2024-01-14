@@ -184,12 +184,25 @@
 (define %px-substitute-server-url
   "https://packages.pantherx.org")
 
+(define %nonguix-substitute-server-url
+  "https://substitutes.nonguix.org")
+
 (define %px-substitute-server-key
   (plain-file "packages.pantherx.org.pub"
    "(public-key 
  (ecc 
   (curve Ed25519)
   (q #E8322D13EA02C09F06CB70FDA2ABBFD5E463F2AA34C18C692F5E25858F4E315D#)
+  )
+ )
+"))
+
+(define %nonguix-substitute-server-key
+  (plain-file "substitutes.nonguix.org.pub"
+   "(public-key 
+ (ecc 
+  (curve Ed25519)
+  (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)
   )
  )
 "))
@@ -256,10 +269,12 @@ return @code{defaule-value} if there is no modification applied."
         (existing-keys (guix-configuration-authorized-keys guix-config)))
     (guix-configuration (inherit guix-config)
                         (substitute-urls (append (list
-                                                  %px-substitute-server-url)
+                                                  %px-substitute-server-url
+                                                  %nonguix-substitute-server-url)
                                                  existing-urls))
                         (authorized-keys (append (list
-                                                  %px-substitute-server-key)
+                                                  %px-substitute-server-key
+                                                  %nonguix-substitute-server-key)
                                                  existing-keys)))))
 
 (define* (make-os config
