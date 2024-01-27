@@ -1,7 +1,3 @@
-;;; throttled PantherX
-;;; Hamzeh Nasajpour (h.nasajpour@pantherx.org)
-;;;
-
 (define-module (px packages throttled)
   #:use-module ((guix licenses)
                 #:prefix license:)
@@ -19,14 +15,15 @@
 (define-public throttled
   (package
     (name "throttled")
-    (version "0.8.0")
+    (version "0.10.0")
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/throttled_v" version
-                           ".tgz"))
+       (uri (string-append
+             "https://github.com/erpalma/throttled/archive/refs/tags/v"
+             version ".tar.gz"))
        (sha256
-        (base32 "0xqdsrkn00vywqm8y7rv141ip7psajrq7g92c9ph4d134lfqclnp"))))
+        (base32 "1f39rfk6bdx0a0m7krbb7yj0jy1p2a7qqn99y7jb02d84vy45q29"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build utils))
@@ -50,10 +47,10 @@
                           (bin-dir (string-append %output "/bin"))
                           (etc-dir (string-append %output "/etc/throttled"))
                           (python-dir (string-append %output "/python"))
-                          (root-dir "throttled")
+                          (root-dir "throttled-0.10.0")
                           (bin-script (string-append root-dir
-                                                     "/runit/lenovo_fix/run"))
-                          (py-script (string-append root-dir "/lenovo_fix.py")))
+                                                     "/runit/throttled/run"))
+                          (py-script (string-append root-dir "/throttled.py")))
                      (mkdir-p bin-dir)
                      (mkdir-p etc-dir)
                      (mkdir-p python-dir)
@@ -64,8 +61,8 @@
                                             (string-append tar "/bin:")))
                      (invoke "tar" "xvf" source)
                      (invoke "cp"
-                             (string-append root-dir "/etc/lenovo_fix.conf")
-                             (string-append etc-dir "/default.conf"))
+                             (string-append root-dir "/etc/throttled.conf")
+                             (string-append etc-dir "/throttled.conf"))
                      (invoke "cp"
                              (string-append root-dir "/mmio.py") python-dir)
                      (substitute* py-script
@@ -73,11 +70,11 @@
                         etc-dir))
                      (invoke "cp" py-script python-dir)
                      (substitute* bin-script
-                       (("/opt/lenovo_fix/venv")
+                       (("/opt/throttled/venv")
                         python))
                      (substitute* bin-script
-                       (("/opt/lenovo_fix/lenovo_fix.py")
-                        (string-append python-dir "/lenovo_fix.py" " $@")))
+                       (("/opt/throttled/throttled.py")
+                        (string-append python-dir "/throttled.py" " $@")))
                      (invoke "mv" bin-script
                              (string-append bin-dir "/throttled"))
                      (wrap-program (string-append bin-dir "/throttled")
@@ -86,7 +83,6 @@
                      (wrap-program (string-append bin-dir "/throttled")
                        `("PYTHONPATH" ":" prefix
                          (,(string-append python-pygo pythonpath))))
-
                      #t))))
     (native-inputs `(("coreutils" ,coreutils)
                      ("gzip" ,gzip)
@@ -96,7 +92,10 @@
               ("python-dbus" ,python-dbus)
               ("python-pygobject" ,python-pygobject)))
     (home-page "https://github.com/erpalma/throttled")
-    (synopsis "Fix Intel CPU Throttling on Linux")
+    (synopsis "Workaround for Intel throttling issues in Linux.")
     (description
-     "This tool was originally developed to fix Linux CPU throttling issues affecting Lenovo T480 / T480s / X1C6.")
+     "The CPU package power limit (PL1/2) is forced to a value of 44 W (29 W on battery)
+and the temperature trip point to 95 'C (85 'C on battery) by overriding default values
+in MSR and MCHBAR every 5 seconds (30 on battery) to block the Embedded Controller from
+resetting these values to default.")
     (license license:expat)))
