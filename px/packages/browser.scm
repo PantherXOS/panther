@@ -14,7 +14,8 @@
 (define-public falkon
   (package
     (name "falkon")
-    (version "22.08.1")
+    ;; 24.01.90 requires min. extra-cmake-modules 5.240.0
+    (version "23.08.4")
     (source
      (origin
        (method git-fetch)
@@ -23,7 +24,7 @@
              (commit (string-append "v" version))))
        (file-name (string-append name "-" version "-checkout"))
        (sha256
-        (base32 "12zrv4csbwl9x68v99bmwdz31qp0z7f8nwvr9cgc0iy27l0ay16l"))))
+        (base32 "1vnhdyvc0rzhg7cm1ixych45hwhss9w6855m7irs5j3lcf7zqr22"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f
@@ -37,7 +38,8 @@
                   qtquickcontrols-5
                   qtwebchannel-5
                   qtx11extras
-                  xcb-util))
+                  xcb-util
+                  ki18n))
     (propagated-inputs (list qtwebengine-5))
     (home-page "https://falkon.org")
     (synopsis
