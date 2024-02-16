@@ -879,3 +879,21 @@ than Python’s urllib2 library.")
 communicating with your Coldcard over USB")
     (license license:expat)))
 
+(define-public px-python-shared
+  (package
+    (name "px-python-shared")
+    (version "0.0.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://source.pantherx.org/" name "_v" version
+                           ".tgz"))
+       (sha256
+        (base32 "18cm0wpvc1hxs8v80v220kjws5wll4c1jl47zbwrw492y2sczakz"))))
+    (build-system python-build-system)
+    (native-inputs 
+     (list python-requests))
+    (home-page "https://www.pantherx.org/")
+    (synopsis "Stuff that's shared across px-projects.")
+    (description "Stuff like well known applications that's shared across px-projects.")
+    (license license:expat)))
