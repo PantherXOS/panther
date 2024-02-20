@@ -65,6 +65,7 @@
      `(#:tests? #f))
     (inputs (list boost
                   qtbase-5
+                  qtwayland-5
                   json-modern-cxx
                   libevent
                   libolm
@@ -118,6 +119,7 @@
               ("openssl" ,openssl)
               ("pulseaudio" ,pulseaudio)
               ("qtbase" ,qtbase-5)
+              ("qtwayland-5" ,qtwayland-5)
               ("qtdeclarative" ,qtdeclarative-5)
               ("qtmultimedia" ,qtmultimedia-5)
               ("qtquickcontrols2" ,qtquickcontrols2-5)
@@ -190,6 +192,7 @@ notification, emojis, E2E encryption, and voip calls.")
                   openssl
                   pulseaudio
                   qtbase-5
+                  qtwayland-5
                   qtdeclarative-5
                   qtgraphicaleffects
                   qtlocation
