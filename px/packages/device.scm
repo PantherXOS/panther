@@ -111,14 +111,14 @@
 (define-public px-device-identity-service
   (package
     (name "px-device-identity-service")
-    (version "0.11.0")
+    (version "0.11.1")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "1jhzg5jqhja8pbr47waxsfhlqqff84vvj8m8kipmy9jq1sn7s0i3"))))
+        (base32 "1is0dcdhm3faf4ib4wpnq77497zynfz4r7lr7d9mfbsgndaxcnbi"))))
     (build-system python-build-system)
     (arguments
      `(#:tests? #f
