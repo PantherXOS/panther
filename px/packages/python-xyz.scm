@@ -903,3 +903,21 @@ communicating with your Coldcard over USB")
     (synopsis "Stuff that's shared across px-projects.")
     (description "Stuff like well known applications that's shared across px-projects.")
     (license license:expat)))
+
+(define-public python-dbus-fast
+  (package
+    (name "python-dbus-fast")
+    (version "2.21.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "dbus_fast" version))
+       (sha256
+        (base32 "00jxi8fx1s3s5glapmrrsx14g2pj70smy755khwmj7az03955f47"))))
+    (build-system python-build-system)
+    (arguments
+     `(#:tests? #f))
+    (home-page "https://github.com/Bluetooth-Devices/dbus-fast")
+    (synopsis "A faster version of dbus-next")
+    (description "This package provides a faster version of dbus-next")
+    (license license:expat)))
