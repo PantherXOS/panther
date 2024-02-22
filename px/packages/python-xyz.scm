@@ -2,6 +2,7 @@
   #:use-module ((guix licenses)
                 #:prefix license:)
   #:use-module (guix download)
+  #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module (guix build-system gnu)
@@ -889,15 +890,15 @@ communicating with your Coldcard over USB")
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "18cm0wpvc1hxs8v80v220kjws5wll4c1jl47zbwrw492y2sczakz"))))
+        (base32 "1aj7d4r3d2w7v9igyfqiyay2zp2d5scsz0n0hkd363prbb35qhzk"))))
     (build-system python-build-system)
     (arguments
       (list #:tests? #f
             #:phases
             #~(modify-phases %standard-phases
                 (delete 'sanity-check))))
-    (native-inputs 
-     (list python-requests))
+    (native-inputs `(("pkg-config" ,pkg-config)))
+    (propagated-inputs `(("python-requests" ,python-requests)))
     (home-page "https://www.pantherx.org/")
     (synopsis "Stuff that's shared across px-projects.")
     (description "Stuff like well known applications that's shared across px-projects.")

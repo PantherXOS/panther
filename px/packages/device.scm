@@ -405,27 +405,6 @@ configuration file from commandline args and upload results to the server")
      "Background service for Bluetooth device discovery, data retrieval and submission")
     (license license:expat)))
 
-(define-public px-python-shared
-  (package
-    (name "px-python-shared")
-    (version "0.0.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_v" version
-                           ".tgz"))
-       (sha256
-        (base32 "1aj7d4r3d2w7v9igyfqiyay2zp2d5scsz0n0hkd363prbb35qhzk"))))
-    (build-system python-build-system)
-    (inputs `(("python-requests" ,python-requests)))
-    (native-inputs `(("pkg-config" ,pkg-config)))
-    (propagated-inputs `(("px-device-identity" ,px-device-identity)))
-    (home-page "https://www.pantherx.org/")
-    (synopsis "Stuff that's shared across px-projects.")
-    (description
-     "Stuff that's shared across px-python-projects.")
-    (license license:expat)))
-
 (define-public sysinfo-daemon
   (package
    (name "sysinfo-daemon")
