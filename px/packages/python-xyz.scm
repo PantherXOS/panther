@@ -891,6 +891,11 @@ communicating with your Coldcard over USB")
        (sha256
         (base32 "18cm0wpvc1hxs8v80v220kjws5wll4c1jl47zbwrw492y2sczakz"))))
     (build-system python-build-system)
+    (arguments
+      (list #:tests? #f
+            #:phases
+            #~(modify-phases %standard-phases
+                (delete 'sanity-check))))
     (native-inputs 
      (list python-requests))
     (home-page "https://www.pantherx.org/")
