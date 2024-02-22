@@ -159,62 +159,53 @@ to other applications, without root priviliges.")
 
 (define-public px-device-runner
   (package
-    (name "px-device-runner")
-    (version "0.0.14")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_v" version
-                           ".tgz"))
-       (sha256
-        (base32 "0sdyz81z8l0q99r09fymw2v6r9ylc7rkxxdwkbnm6lgch5pib36r"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (add-after 'install 'wrap-for-openssl-tss2-conf
-                    (lambda* (#:key outputs #:allow-other-keys)
-                      (let ((out (assoc-ref outputs "out"))
-                            (openssl (assoc-ref %build-inputs "openssl"))
-                            (tpm2-tss (assoc-ref %build-inputs "tpm2-tss"))
-                            (tpm2-tss-engine (assoc-ref %build-inputs
-                                                        "tpm2-tss-engine")))
-                        (wrap-program (string-append out
-                                                     "/bin/px-device-runner")
-                          `("OPENSSL_CONF" ":" prefix
-                            (,(string-append tpm2-tss-engine
-                                             "/etc/openssl-tss2.conf")))
-                          `("PATH" ":" prefix
-                            (,(string-append tpm2-tss-engine "/bin/") ,(string-append
-                                                                        openssl
-                                                                        "/bin/")))
-                          `("TPM2TSSENGINE_TCTI" ":" prefix
-                            (,(string-append tpm2-tss
-                               "/lib/libtss2-tcti-device.so:/dev/tpm0")))
-                          `("TPM2TOOLS_TCTI" ":" prefix
-                            (,(string-append tpm2-tss
-                               "/lib/libtss2-tcti-device.so:/dev/tpm0")))) #t)))
-                  (delete 'sanity-check))))
-    (inputs `(("openssl" ,openssl-1.1)
-              ("python-requests" ,python-requests)
-              ("python-authlib-0.14.3" ,python-authlib-0.14.3)
-              ("python-pycryptodomex" ,python-pycryptodomex)
-              ("python-jose" ,python-jose)
-              ("python-pyyaml" ,python-pyyaml)
-              ("python-shortuuid" ,python-shortuuid-v1)
-              ("python-appdirs" ,python-appdirs)
-              ("python-psutil" ,python-psutil)
-              ("tpm2-tss" ,tpm2-tss-openssl-1.1)
-              ("tpm2-tss-engine" ,tpm2-tss-engine)
-              ("bash-minimal" ,bash-minimal)))
-    (native-inputs `(("pkg-config" ,pkg-config)
-                     ("python-requests" ,python-requests)))
-    (propagated-inputs `(("px-device-identity" ,px-device-identity)))
-    (home-page "https://www.pantherx.org/")
-    (synopsis "PantherX Device Runner")
-    (description
-     "Downloads administrative jobs from Central Management to run on local device.")
-    (license license:expat)))
+   (name "px-device-runner")
+   (version "0.0.14")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (string-append "https://source.pantherx.org/" name "_v" version
+                         ".tgz"))
+     (sha256
+      (base32 "0sdyz81z8l0q99r09fymw2v6r9ylc7rkxxdwkbnm6lgch5pib36r"))))
+   (build-system python-build-system)
+   (arguments
+    `(#:tests? #f
+      #:phases 
+      (modify-phases
+       %standard-phases
+       (add-after 'install 'wrap-for-openssl-tss2-conf
+		  (lambda* (#:key outputs #:allow-other-keys)
+		    (let ((out (assoc-ref outputs "out"))
+			  (openssl (assoc-ref %build-inputs "openssl"))
+			  (tpm2-tss (assoc-ref %build-inputs "tpm2-tss"))
+			  (tpm2-tss-engine (assoc-ref %build-inputs "tpm2-tss-engine")))
+		      (wrap-program (string-append out "/bin/px-device-runner")
+				    `("OPENSSL_CONF" ":" prefix
+				      (,(string-append tpm2-tss-engine
+						       "/etc/openssl-tss2.conf")))
+				    `("PATH" ":" prefix
+				      (,(string-append tpm2-tss-engine "/bin/") 
+				       ,(string-append openssl "/bin/")))
+				    `("TPM2TSSENGINE_TCTI" ":" prefix
+				      (,(string-append tpm2-tss
+						       "/lib/libtss2-tcti-device.so:/dev/tpm0")))
+				    `("TPM2TOOLS_TCTI" ":" prefix
+				      (,(string-append tpm2-tss
+						       "/lib/libtss2-tcti-device.so:/dev/tpm0"))))
+		      #t)))
+       (delete 'sanity-check))))
+   (inputs `(("openssl" ,openssl-1.1)
+             ("tpm2-tss" ,tpm2-tss-openssl-1.1)
+             ("tpm2-tss-engine" ,tpm2-tss-engine)))
+   (native-inputs `(("pkg-config" ,pkg-config)))
+   (propagated-inputs `(("px-device-identity" ,px-device-identity)
+                        ("python-requests" ,python-requests)))
+   (home-page "https://www.pantherx.org/")
+   (synopsis "PantherX Device Runner")
+   (description
+    "Downloads administrative jobs from Central Management to run on local device.")
+   (license license:expat)))
 
 (define-public px-user-identity-service
   (package
