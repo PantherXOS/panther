@@ -329,64 +329,54 @@ configuration file from commandline args and upload results to the server")
 
 (define-public px-device-backup
   (package
-    (name "px-device-backup")
-    (version "0.0.5")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_v" version
-                           ".tgz"))
-       (sha256
-        (base32 "1wcqvwwcv5x98haj956gmwgv977h41pwh42qvhp6z0v3sfn21cby"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (add-after 'install 'wrap-for-openssl-tss2-conf
-                    (lambda* (#:key outputs #:allow-other-keys)
-                      (let ((out (assoc-ref outputs "out"))
-                            (openssl (assoc-ref %build-inputs "openssl"))
-                            (tpm2-tss (assoc-ref %build-inputs "tpm2-tss"))
-                            (tpm2-tss-engine (assoc-ref %build-inputs
-                                                        "tpm2-tss-engine")))
-                        (wrap-program (string-append out
-                                                     "/bin/px-device-backup")
-                          `("OPENSSL_CONF" ":" prefix
-                            (,(string-append tpm2-tss-engine
-                                             "/etc/openssl-tss2.conf")))
-                          `("PATH" ":" prefix
-                            (,(string-append tpm2-tss-engine "/bin/") ,(string-append
-                                                                        openssl
-                                                                        "/bin/")))
-                          `("TPM2TSSENGINE_TCTI" ":" prefix
-                            (,(string-append tpm2-tss
-                               "/lib/libtss2-tcti-device.so:/dev/tpm0")))
-                          `("TPM2TOOLS_TCTI" ":" prefix
-                            (,(string-append tpm2-tss
-                               "/lib/libtss2-tcti-device.so:/dev/tpm0")))) #t)))
-                  (delete 'sanity-check))))
-    (inputs `(("python-waitress" ,python-waitress)
-              ("openssl" ,openssl-1.1)
-              ("python-requests" ,python-requests)
-              ("python-authlib-0.14.3" ,python-authlib-0.14.3)
-              ("python-pycryptodomex" ,python-pycryptodomex)
-              ("python-jose" ,python-jose)
-              ("python-pyyaml" ,python-pyyaml)
-              ("python-shortuuid" ,python-shortuuid-v1)
-              ("python-appdirs" ,python-appdirs)
-              ("python-psutil" ,python-psutil)
-              ("tpm2-tss" ,tpm2-tss-openssl-1.1)
-              ("tpm2-tss-engine" ,tpm2-tss-engine)
-              ("python-boto3" ,python-boto3)
-              ("bash-minimal" ,bash-minimal)))
-    (native-inputs `(("pkg-config" ,pkg-config)
-                     ("python-requests" ,python-requests)))
-    (propagated-inputs `(("px-device-identity" ,px-device-identity)))
-    (home-page "https://www.pantherx.org/")
-    (synopsis "PantherX Device Backup")
-    (description
-     "Pulls device backup config from Central Management and runs the backup.")
-    (license license:expat)))
+   (name "px-device-backup")
+   (version "0.0.5")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (string-append "https://source.pantherx.org/" name "_v" version
+                         ".tgz"))
+     (sha256
+      (base32 "1wcqvwwcv5x98haj956gmwgv977h41pwh42qvhp6z0v3sfn21cby"))))
+   (build-system python-build-system)
+   (arguments
+    `(#:tests? #f
+      #:phases 
+      (modify-phases
+       %standard-phases
+       (add-after 'install 'wrap-for-openssl-tss2-conf
+		  (lambda* (#:key outputs #:allow-other-keys)
+		    (let ((out (assoc-ref outputs "out"))
+			  (openssl (assoc-ref %build-inputs "openssl"))
+			  (tpm2-tss (assoc-ref %build-inputs "tpm2-tss"))
+			  (tpm2-tss-engine (assoc-ref %build-inputs "tpm2-tss-engine")))
+		      (wrap-program (string-append out "/bin/px-device-backup")
+				    `("OPENSSL_CONF" ":" prefix
+				      (,(string-append tpm2-tss-engine
+						       "/etc/openssl-tss2.conf")))
+				    `("PATH" ":" prefix
+				      (,(string-append tpm2-tss-engine "/bin/") 
+				       ,(string-append openssl "/bin/")))
+				    `("TPM2TSSENGINE_TCTI" ":" prefix
+				      (,(string-append tpm2-tss
+						       "/lib/libtss2-tcti-device.so:/dev/tpm0")))
+				    `("TPM2TOOLS_TCTI" ":" prefix
+				      (,(string-append tpm2-tss
+						       "/lib/libtss2-tcti-device.so:/dev/tpm0"))))
+		      #t)))
+       (delete 'sanity-check))))
+   (inputs `(("openssl" ,openssl-1.1)
+             ("tpm2-tss" ,tpm2-tss-openssl-1.1)
+             ("tpm2-tss-engine" ,tpm2-tss-engine)))
+   (native-inputs `(("pkg-config" ,pkg-config)))
+   (propagated-inputs `(("px-device-identity" ,px-device-identity)
+                        ("python-requests" ,python-requests)
+                        ("python-boto3" ,python-boto3)))
+   (home-page "https://www.pantherx.org/")
+   (synopsis "PantherX Device Backup")
+   (description
+    "Pulls device backup config from Central Management and runs the backup.")
+   (license license:expat)))
 
 ; (define-public px-remote-access
 ;   (package
