@@ -456,3 +456,56 @@ configuration file from commandline args and upload results to the server")
    (description
     "Submit detailed system information")
    (license license:expat)))
+
+(define-public bcms
+  (package
+   (name "bcms")
+   (version "0.0.6")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (string-append "https://source.pantherx.org/" name "_v" version
+                         ".tgz"))
+     (sha256
+      (base32 "0sawprkkdmn1rgwb1iw2p8jfj0zfrpxp5lg05zh1v3bc0kkrywrm"))))
+   (build-system python-build-system)
+   (arguments
+    `(#:tests? #f
+      #:phases 
+      (modify-phases
+       %standard-phases
+       (add-after 'install 'wrap-for-openssl-tss2-conf
+		  (lambda* (#:key outputs #:allow-other-keys)
+		    (let ((out (assoc-ref outputs "out"))
+			  (openssl (assoc-ref %build-inputs "openssl"))
+			  (tpm2-tss (assoc-ref %build-inputs "tpm2-tss"))
+			  (tpm2-tss-engine (assoc-ref %build-inputs "tpm2-tss-engine")))
+		      (wrap-program (string-append out "/bin/bcms")
+				    `("OPENSSL_CONF" ":" prefix
+				      (,(string-append tpm2-tss-engine
+						       "/etc/openssl-tss2.conf")))
+				    `("PATH" ":" prefix
+				      (,(string-append tpm2-tss-engine "/bin/") 
+				       ,(string-append openssl "/bin/")))
+				    `("TPM2TSSENGINE_TCTI" ":" prefix
+				      (,(string-append tpm2-tss
+						       "/lib/libtss2-tcti-device.so:/dev/tpm0")))
+				    `("TPM2TOOLS_TCTI" ":" prefix
+				      (,(string-append tpm2-tss
+						       "/lib/libtss2-tcti-device.so:/dev/tpm0"))))
+		      #t)))
+       (delete 'sanity-check))))
+   (inputs `(("openssl" ,openssl-1.1)
+             ("tpm2-tss" ,tpm2-tss-openssl-1.1)
+             ("tpm2-tss-engine" ,tpm2-tss-engine)))
+   (native-inputs `(("pkg-config" ,pkg-config)))
+   (propagated-inputs `(("px-device-identity" ,px-device-identity)
+                        ("python-pycapnp" ,python-pycapnp)
+                        ("python-requests" ,python-requests)
+                        ("python-bleak" ,python-bleak)
+                        ("px-python-shared" ,px-python-shared)))
+   (home-page "https://www.pantherx.org/")
+   (synopsis "Collect and submit detailed system info")
+   (description
+    "Submit detailed system information")
+   (license license:expat)))
