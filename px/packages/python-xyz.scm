@@ -8,6 +8,7 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system pyproject)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-web)
@@ -921,3 +922,34 @@ communicating with your Coldcard over USB")
     (synopsis "A faster version of dbus-next")
     (description "This package provides a faster version of dbus-next")
     (license license:expat)))
+
+(define-public python-bleak
+  (package
+  (name "python-bleak")
+  (version "0.21.1")
+  (source
+   (origin
+     (method url-fetch)
+     (uri (pypi-uri "bleak" version))
+     (sha256
+      (base32 "13y1yld3li2z0ckjf3iblml6kqn7f0q1b8ds5jcmncgvf8kiljpc"))))
+    (build-system pyproject-build-system)
+    (arguments
+     (list
+      #:tests? #false ;there are none
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'use-poetry-core
+            (lambda _
+              ;; Patch to use the core poetry API.
+              (substitute* "pyproject.toml"
+                (("poetry.masonry.api")
+                 "poetry.core.masonry.api"))))
+          (delete 'sanity-check))))
+  (native-inputs (list pkg-config  python-poetry-core))
+  (propagated-inputs (list python-async-timeout
+                      python-dbus-fast))
+  (home-page "https://github.com/hbldh/bleak")
+  (synopsis "Bluetooth Low Energy platform Agnostic Klient")
+  (description "Bluetooth Low Energy platform Agnostic Klient")
+  (license license:expat)))
