@@ -948,7 +948,8 @@ communicating with your Coldcard over USB")
           (delete 'sanity-check))))
   (native-inputs (list pkg-config  python-poetry-core))
   (propagated-inputs (list python-async-timeout
-                      python-dbus-fast))
+                      python-dbus-fast
+                      python-typing-extensions))
   (home-page "https://github.com/hbldh/bleak")
   (synopsis "Bluetooth Low Energy platform Agnostic Klient")
   (description "Bluetooth Low Energy platform Agnostic Klient")
