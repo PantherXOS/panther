@@ -949,8 +949,21 @@ communicating with your Coldcard over USB")
   (native-inputs (list pkg-config  python-poetry-core))
   (propagated-inputs (list python-async-timeout
                       python-dbus-fast
-                      python-typing-extensions))
+                      python-typing-extensions-v4.10.0))
   (home-page "https://github.com/hbldh/bleak")
   (synopsis "Bluetooth Low Energy platform Agnostic Klient")
   (description "Bluetooth Low Energy platform Agnostic Klient")
   (license license:expat)))
+
+;; Upstream and remove
+(define-public python-typing-extensions-v4.10.0
+  (package
+    (inherit python-typing-extensions)
+    (name "python-typing-extensions")
+    (version "4.10.0")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "typing_extensions" version))
+              (sha256
+               (base32
+                "1jxkj4pni8pdyrn79sq441lsp40xzw363n0qvfc6zfcgkv4dgaxh"))))))
