@@ -908,13 +908,13 @@ communicating with your Coldcard over USB")
 (define-public python-dbus-fast
   (package
     (name "python-dbus-fast")
-    (version "2.21.1")
+    (version "1.95.2")
     (source
      (origin
        (method url-fetch)
        (uri (pypi-uri "dbus_fast" version))
        (sha256
-        (base32 "00jxi8fx1s3s5glapmrrsx14g2pj70smy755khwmj7az03955f47"))))
+        (base32 "0qfbqggh268vyai1dj3fpcn8p9dx9imknq02rkbfmkk2sdf4rmix"))))
     (build-system python-build-system)
     (arguments
      `(#:tests? #f))
