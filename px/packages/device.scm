@@ -408,14 +408,14 @@ configuration file from commandline args and upload results to the server")
 (define-public sysinfo-daemon
   (package
    (name "sysinfo-daemon")
-   (version "0.0.3")
+   (version "0.0.4")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "0cngbrwanmc65fmnglrkl36sqq6wljsr301fg65msiq3a9zbnkjk"))))
+      (base32 "0fkayxdazy6sqzzz190zmnji7b22gmn01935zrfgdzfywz8sxsjx"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
