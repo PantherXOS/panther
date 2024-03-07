@@ -409,14 +409,14 @@ configuration file from commandline args and upload results to the server")
 (define-public sysinfo-daemon
   (package
    (name "sysinfo-daemon")
-   (version "0.0.5")
+   (version "0.0.6")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "0wr1awpv05im85lx8xc54rm7hvx7dgy3l1x3p234yh8x55a5zclb"))))
+      (base32 "1mwh8zhqrq5xjfsv8hgg1w682cv0kbkqgijbgqmzdzwmiqr7amn2"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
@@ -451,6 +451,7 @@ configuration file from commandline args and upload results to the server")
    (propagated-inputs `(("px-device-identity" ,px-device-identity)
                         ("python-py-cpuinfo" ,python-py-cpuinfo)
                         ("python-requests" ,python-requests)
+                        ("python-psutil" ,python-psutil)
                         ("px-python-shared" ,px-python-shared)))
    (home-page "https://www.pantherx.org/")
    (synopsis "Collect and submit detailed system info")
