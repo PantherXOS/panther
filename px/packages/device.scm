@@ -161,14 +161,14 @@ to other applications, without root priviliges.")
 (define-public px-device-runner
   (package
    (name "px-device-runner")
-   (version "0.1.1")
+   (version "0.1.2")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "0hlh2h9phnjggv520873ynh6zc327b2anqzqms19qn35ah956xjc"))))
+      (base32 "1yg5g3931jvrw1ph9s5f3y3dk55981p48jvcayxcmhj5ql9460nw"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
@@ -201,7 +201,8 @@ to other applications, without root priviliges.")
              ("tpm2-tss-engine" ,tpm2-tss-engine)))
    (native-inputs `(("pkg-config" ,pkg-config)))
    (propagated-inputs `(("px-device-identity" ,px-device-identity)
-                        ("python-requests" ,python-requests)))
+                        ("python-requests" ,python-requests)
+                        ("px-python-shared" ,px-python-shared)))
    (home-page "https://www.pantherx.org/")
    (synopsis "PantherX Device Runner")
    (description
