@@ -161,14 +161,14 @@ to other applications, without root priviliges.")
 (define-public px-device-runner
   (package
    (name "px-device-runner")
-   (version "0.1.2")
+   (version "0.1.3")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "1yg5g3931jvrw1ph9s5f3y3dk55981p48jvcayxcmhj5ql9460nw"))))
+      (base32 "1c5385xb3kkk6jbjwfjkpr9mws5b33k9kcpaw6xwnlnwhr9y7x3m"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
