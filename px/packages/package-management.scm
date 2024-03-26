@@ -11,14 +11,14 @@
 (define-public px
   (package
     (name "px")
-    (version "0.0.20")
+    (version "0.0.21")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "120bgg9d8nll96sv2pq0m3qxxs70li38lz5yk9qm77w0jsnyczwg"))))
+        (base32 "1zinc00ys5byjhxx7gl2rspd572kqsvdvaxab7g5wajpknsnh87d"))))
     (build-system python-build-system)
     (arguments
      `(#:tests? #f
