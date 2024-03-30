@@ -45,3 +45,36 @@
 to provide a more automated backup experience. The CLI may be
 accessed via: px-backup-cli")
     (license license:expat)))
+
+(define-public tarsnap
+  (package
+    (name "tarsnap")
+    (version "1.0.39")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/Tarsnap/tarsnap/archive/"
+                           version ".tar.gz"))
+       (sha256
+        (base32 "0b91k0sg64nxidvgzpip5a1rz0cwmygsfr13ac1q7zmd59iz1cz2"))
+       (patches (search-patches
+                 "tarsnap-do-not-use-command-p-in-makefile.patch"))))
+    ;; This official release includes a configure script but it will
+    ;; try to invoke sh and that will not be found. Therefore it is
+    ;; necessary to build the configure script with autoconf.
+    (build-system gnu-build-system)
+    (inputs `(("openssl" ,openssl)
+              ("zlib" ,zlib)
+              ("e2fsprogs" ,e2fsprogs)))
+    (native-inputs `(("autoconf" ,autoconf)
+                     ("autoconf-archive" ,autoconf-archive)
+                     ;; necessary? I think this is added by the build system
+                     ("automake" ,automake)
+                     ("pkg-config" ,pkg-config)))
+    (home-page "https://www.tarsnap.com/")
+    (synopsis
+     "Tarsnap is a secure, efficient online backup service: \"Online backups for
+ the truly paranoid\".")
+    (description #f)
+    ;; See COPYING
+    (license #f)))
