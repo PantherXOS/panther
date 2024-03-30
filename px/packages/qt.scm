@@ -10,7 +10,8 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages qt)
   #:use-module (gnu packages build-tools)
-  #:use-module (srfi srfi-1))
+  #:use-module (srfi srfi-1)
+  #:use-module (px packages desktop-tools))
 
 (define (qt5-urls component version)
   "Return a list of URLs for VERSION of the Qt5 COMPONENT."
