@@ -67,7 +67,6 @@
   #:use-module (px packages package-management)
   #:use-module (px packages settings)
   #:use-module (px packages setup)
-  #:use-module (px packages software)
   #:use-module (px packages images)
   #:use-module (px packages themes)
   #:use-module (px packages device)
