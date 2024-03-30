@@ -304,3 +304,33 @@ for LXQt.")
     ;; licensed under CC-BY-SA 3.0.
     (license license:lgpl2.1+)))
 
+(define-public px-settings-service-plugin-theme-dark-bright
+  (package
+    (name "px-settings-service-plugin-theme-dark-bright")
+    (version "0.2.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://source.pantherx.org/" name "_" version
+                           ".tgz"))
+       (sha256
+        (base32 "0svx2z0ws4ck5p1bzw57y4rasmjshna4wx2pqlmak621ghrrnfvn"))))
+    (build-system cmake-build-system)
+    (arguments
+     `(#:tests? #f
+       #:phases (modify-phases %standard-phases
+                  (add-after 'unpack 'fix-screenshot-path
+                    (lambda* (#:key outputs #:allow-other-keys)
+                      (let ((out (assoc-ref outputs "out")))
+                        (substitute* "dark/theme.conf"
+                          (("dark.jpg")
+                           (string-append out "/share/px/themes/dark/dark.jpg")))
+                        (substitute* "bright/theme.conf"
+                          (("bright.jpg")
+                           (string-append out
+                            "/share/px/themes/bright/bright.jpg"))) #t))))))
+    (synopsis "PantherX Dark and Bright theme")
+    (home-page
+     "https://git.pantherx.org/development/plugins/px-settings-service-plugin-theme-dark-bright")
+    (description "PantherX Dark and Bright theme")
+    (license license:gpl3+)))
