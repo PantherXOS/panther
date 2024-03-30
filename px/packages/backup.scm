@@ -21,56 +21,6 @@
   #:use-module (px packages library)
   #:use-module (px packages tarsnap))
 
-(define-public px-org-remote-backup-service
-  (package
-    (name "px-org-remote-backup-service")
-    (version "v0.0.6")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://source.pantherx.org/px-org-remote-backup-service_"
-             version ".tgz"))
-       (sha256
-        (base32 "062p4p6jf8y8cw2pdxj50sw00sw9lfh404168ljhqqgzwhdxpp6p"))))
-    (build-system trivial-build-system)
-    (arguments
-     `(#:modules ((guix build utils))
-       #:builder (begin
-                   (use-modules (guix build utils)
-                                (srfi srfi-26))
-                   (let* ((source (assoc-ref %build-inputs "source"))
-                          (tar (assoc-ref %build-inputs "tar"))
-                          (ls (assoc-ref %build-inputs "source"))
-                          (gzip (assoc-ref %build-inputs "gzip"))
-                          (bin-dir (string-append %output "/bin"))
-                          (backup-bin-file (string-append bin-dir "/"
-                                                          ,"px-org-remote-backup-create.sh"))
-                          (restore-bin-file (string-append bin-dir "/"
-                                                           ,"px-org-remote-backup-restore.sh"))
-                          (bash-bin (string-append (assoc-ref %build-inputs
-                                                              "bash") "/bin")))
-                     (mkdir-p bin-dir)
-                     (setenv "PATH"
-                             (string-append gzip "/bin"))
-                     (invoke (string-append tar "/bin/tar") "xvf" source "-C"
-                             bin-dir)
-                     (patch-shebang backup-bin-file
-                                    (list bash-bin))
-                     (patch-shebang restore-bin-file
-                                    (list bash-bin))
-                     (chmod backup-bin-file #o555)
-                     (chmod restore-bin-file #o555)))))
-    (native-inputs `(("tar" ,tar)
-                     ("gzip" ,gzip)))
-    (inputs `(("bash" ,bash)))
-    (propagated-inputs `(("tarsnap" ,tarsnap)))
-    (home-page "https://www.pantherx.org/")
-    (synopsis "PantherX Backup/Restore shell scripts")
-    (description
-     "This package provides two scripts for create backup and restore based on given user as parameter.")
-    (license license:expat)))
-
 (define-public px-backup
   (package
     (name "px-backup")
