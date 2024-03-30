@@ -84,15 +84,6 @@ network cards supported by the brcmsmac or brcmfmac driver.")
       (description "BlueZ - Bluetooth protocol stack for Linux")
       (license license:expat))))
 
-(define-public linux-px
-  (corrupt-linux linux-libre-5.15))
-
-(define-public linux-firmware-px
-  (package
-    (inherit linux-firmware)
-    (name "linux-firmware")
-    (version "20210919")))
-
 (define (config->string options)
   (string-join (map (match-lambda
                       ((option quote m)
