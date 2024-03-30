@@ -380,33 +380,6 @@ configuration file from commandline args and upload results to the server")
     "Pulls device backup config from Central Management and runs the backup.")
    (license license:expat)))
 
-(define-public bluetooth-client-manager-service
-  (package
-    (name "bluetooth-client-manager-service")
-    (version "0.1.10")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_v" version
-                           ".tgz"))
-       (sha256
-        (base32 "1rryll9pic2k5gqdhyrxiff20dgs4xs8j2213vy5l1p4ahinlwrf"))))
-    (build-system cmake-build-system)
-    (native-inputs `(("pkg-config" ,pkg-config)))
-    (inputs `(("bluez-qt" ,bluez-qt)
-              ("capnproto" ,capnproto-0.9)
-              ("openssl" ,openssl)
-              ("qtbase" ,qtbase-5)
-              ("util-linux" ,util-linux "lib")
-              ("yaml-cpp" ,yaml-cpp)))
-    (arguments
-     `(#:tests? #f))
-    (home-page "https://pantherx.org")
-    (synopsis "Bluetooth Client Manager Service")
-    (description
-     "Background service for Bluetooth device discovery, data retrieval and submission")
-    (license license:expat)))
-
 (define-public sysinfo-daemon
   (package
    (name "sysinfo-daemon")
