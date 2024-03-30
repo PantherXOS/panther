@@ -980,3 +980,21 @@ communicating with your Coldcard over USB")
     (description "Flask-WTF integrates Flask and WTForms, including CSRF, file
 upload, and reCAPTCHA.")
     (license license:bsd-3)))
+
+(define-public python-speaklater
+  (package
+    (name "python-speaklater")
+    (version "1.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "speaklater" version))
+       (sha256
+        (base32 "1ab5dbfzzgz6cnz4xlwx79gz83id4bhiw67k1cgqrlzfs0va7zjr"))))
+    (build-system python-build-system)
+    (home-page "http://github.com/mitsuhiko/speaklater")
+    (synopsis
+     "implements a lazy string for python useful for use with gettext")
+    (description
+     "implements a lazy string for python useful for use with gettext")
+    (license #f)))

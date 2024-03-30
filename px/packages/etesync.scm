@@ -124,24 +124,6 @@
 It currently implements AddressBook and Calendar access, and supports two-way sync (both push and pull) to the server.")
     (license license:gpl3)))
 
-(define-public python-speaklater
-  (package
-    (name "python-speaklater")
-    (version "1.3")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "speaklater" version))
-       (sha256
-        (base32 "1ab5dbfzzgz6cnz4xlwx79gz83id4bhiw67k1cgqrlzfs0va7zjr"))))
-    (build-system python-build-system)
-    (home-page "http://github.com/mitsuhiko/speaklater")
-    (synopsis
-     "implements a lazy string for python useful for use with gettext")
-    (description
-     "implements a lazy string for python useful for use with gettext")
-    (license #f)))
-
 ;; python-flask-wtf tests require python-flask-babelex
 (define-public python-flask-babelex
   (package
