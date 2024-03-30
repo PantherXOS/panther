@@ -10,6 +10,12 @@
   #:use-module (gnu packages shells)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages curl)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages networking)
+  #:use-module (gnu packages web)
+  #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages xml))
 
