@@ -16,6 +16,7 @@
   #:use-module (gnu packages databases)
   #:use-module (gnu packages search)
   #:use-module (gnu packages gnupg)
+  #:use-module (gnu packages tar)
   #:use-module (guix git-download))
 
 (define-public kasync
