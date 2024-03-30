@@ -328,14 +328,14 @@
          ;; Power savings
          (service tlp-service-type)
 
+         ;; Prevent overheating
+         ;; TLP does not conflict with thermald.
+         (service thermald-service-type)
+
          ;; Bluetooth service
          ;; (bluetooth-service #:auto-enable? #t)
          (service bluetooth-service-type
                   (bluetooth-configuration (auto-enable? #t)))
-
-         ;; Prevent overheating
-         ;; TLP does not conflict with thermald.
-         (service thermald-service-type)
 
          ;; Printing
          (service cups-service-type

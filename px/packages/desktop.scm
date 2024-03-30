@@ -85,17 +85,13 @@
 
 ;; Stuff for every desktop; QT / GTK on X / Wayland
 (define %common-desktop-applications
-  (list libreoffice
-        aspell
+  (list aspell
         aspell-dict-en
-        aspell-dict-de
-        aspell-dict-uk
 
         font-liberation
         font-adobe-source-sans-pro
         font-adobe-source-code-pro
-        font-cns11643-swjz ;?
-        font-wqy-zenhei ;?
+        font-wqy-zenhei
         font-ibm-plex
         font-vazir
         font-openmoji
@@ -115,9 +111,6 @@
         neofetch
         wget
 
-        gcr
-        gnome-keyring
-
         blueman))
 
 ;; GTK-specific
@@ -128,6 +121,10 @@
         px-sddm-theme
         xcursor-themes
         gnome-themes-standard
+
+        ;; Keychain
+        gcr
+        gnome-keyring
 
         ;; PGP
         seahorse))
@@ -141,10 +138,14 @@
         sddm-darkine-theme
         breeze-gtk
 
+        ;; Keychain
+        gcr
+        gnome-keyring
+
         speedcrunch
 
         qimgv
-        strawberry
+        ;; strawberry
         mpv
 
         network-manager-applet
