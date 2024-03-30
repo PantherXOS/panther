@@ -3,7 +3,14 @@
 
 (define-module (px services security-token)
   #:use-module (gnu services base)
-  #:export (ledger-wallet-service nitro-key-service yubikey-service coinkite-service))
+  #:export (ledger-wallet-service
+            nitro-key-service
+            yubikey-service
+            coinkite-service
+            %ledger-udev-rule
+            %nitro-key-udev-rule
+            %yubikey-udev-rule
+            %coinkite-udev-rule))
 
 ;;;
 ;;; Ledger hardware wallet definitions
