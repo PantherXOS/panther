@@ -29,8 +29,6 @@
             px-user-identity-configuration?
             px-user-identity-service-type
 
-            px-enterprise-channels-service
-
             px-device-runner-configuration
             px-device-runner-service-type
 
@@ -121,40 +119,6 @@
                                    shepherd-root-service-type
                                    px-user-identity-shepherd-service)))
                 (default-value (px-user-identity-configuration))))
-
-;;
-;; Pantherx Enterprise Channels Service
-;;
-
-(define (px-enterprise-channels-service channels)
-  (let ((channel-conf (call-with-output-string (lambda (port)
-                                                 (pretty-print channels port)))))
-    (simple-service 'enterprise-channels special-files-service-type
-                    `(("/etc/guix/channels.scm" ,(computed-file "channels.scm"
-                                                  (with-imported-modules '((guix
-                                                                            build
-                                                                            utils))
-                                                                         #~(begin
-                                                                             (use-modules
-                                                                              (guix
-                                                                               build
-                                                                               utils))
-                                                                             (let 
-                                                                                  (
-                                                                                   (base-dir
-                                                                                    (dirname #$output)))
-                                                                               
-                                                                               
-                                                                               (mkdir-p
-                                                                                base-dir)
-                                                                               (call-with-output-file #$output
-                                                                                 (lambda 
-                                                                                         (port)
-                                                                                   
-                                                                                   
-                                                                                   (format
-                                                                                    port
-                                                                                    #$channel-conf))))))))))))
 
 ;;
 ;; Device Runner Service
