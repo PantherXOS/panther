@@ -42,36 +42,6 @@
   #:use-module (srfi srfi-26)
   #:use-module (ice-9 match))
 
-(define-public mongodb
-  (package
-    (name "mongodb")
-    (version "5.0.9")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://fastdl.mongodb.org/linux/" name
-                           "-linux-x86_64-debian10-" version ".tgz"))
-       (sha256
-        (base32 "0ycav2jckl5v8mjaiddzll2i25z4lp8fpsg9ymcxpzyj3kxxip6q"))))
-    (build-system binary-build-system)
-    (arguments
-     `(#:patchelf-plan `(("bin/mongo" ("curl" "gcc" "gcc-toolchain" "openssl"
-                                       "xz"))
-                         ("bin/mongod" ("curl" "gcc" "gcc-toolchain" "openssl"
-                                        "xz"))
-                         ("bin/mongos" ("curl" "gcc" "gcc-toolchain" "openssl"
-                                        "xz")))))
-    (inputs (list curl
-                  (list gcc "lib") gcc-toolchain openssl xz))
-    (home-page "https://www.mongodb.org")
-    (synopsis "High performance and high availability document database")
-    (description
-     "Mongo is a high-performance, high availability, schema-free
-document-oriented database.  A key goal of MongoDB is to bridge the gap
-between key/value stores (which are fast and highly scalable) and traditional
-RDBMS systems (which are deep in functionality).")
-    (license license:expat)))
-
 (define-public sqlitecpp
   (package
     (name "sqlitecpp")
