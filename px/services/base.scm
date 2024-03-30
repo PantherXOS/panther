@@ -38,11 +38,7 @@
             %px-desktop-ee-services
 
             %px-server-services
-            %px-server-ee-services
-
-            %px-core-arm-services
-            %px-gui-arm-services
-            %px-desktop-arm-services))
+            %px-server-ee-services))
 
 ;;;
 ;;;
@@ -99,53 +95,3 @@
 
 (define %px-server-ee-services
   (append (list (service px-device-identity-service-type)) %px-server-services))
-
-;;;
-;;; ARM-SPECIFIC
-;;;
-
-(define %px-core-arm-services
-  (cons*
-   ;; networking
-   (service wpa-supplicant-service-type)
-   (service network-manager-service-type)
-   (service modem-manager-service-type)
-   (service usb-modeswitch-service-type)
-   (service ntp-service-type)
-
-   ;; remote access
-   (service openssh-service-type
-            (openssh-configuration (x11-forwarding? #t)
-                                   (permit-root-login #t)))
-
-   %base-services))
-
-(define %px-gui-arm-services
-  (cons* (service slim-service-type
-                  (slim-configuration (vt "vt7")
-                                      (auto-login? #t)
-                                      (auto-login-session (file-append openbox
-                                                           "/bin/openbox-session"))
-                                      (default-user "default")))
-         (service avahi-service-type)
-         (service udisks-service-type)
-         (service upower-service-type)
-         (service accountsservice-service-type)
-         (service polkit-service-type)
-         (service elogind-service-type)
-         (service dbus-root-service-type)
-         polkit-wheel-service
-         polkit-network-manager-service ;control network without sudo
-         polkit-elogind-service ;reboot without sudo
-         
-         (service pulseaudio-service-type)
-         (service alsa-service-type)
-         %px-core-arm-services))
-
-(define %px-desktop-arm-services
-  ;; TODO: Does not include default desktop
-  (append (list (service dhcp-client-service-type)
-                (service sddm-service-type
-                         (sddm-configuration (minimum-uid 1000))))
-          (modify-services %desktop-services-assembly
-            (delete network-manager-service-type))))

@@ -43,10 +43,6 @@
                 %px-server-services
                 %px-server-ee-services
 
-                %px-core-arm-services
-                %px-gui-arm-services
-                %px-desktop-arm-services
-
                 %px-core-packages
 
 			    %px-desktop-core-packages
@@ -56,9 +52,7 @@
                 %px-desktop-ee-packages
 
                 %px-server-packages
-                %px-server-ee-packages
-                %px-core-arm-packages
-                %px-gui-arm-packages))
+                %px-server-ee-packages))
 
 ;;;
 ;;; PantherX Desktop OS defintions

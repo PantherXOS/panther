@@ -31,22 +31,19 @@
             %px-desktop-packages
             %px-desktop-ee-packages
             %px-server-packages
-            %px-server-ee-packages
-            %px-core-arm-packages
-            %px-gui-arm-packages
-            %px-desktop-arm-packages))
+            %px-server-ee-packages))
 
 ;;;
 ;;; CORE
 ;;;
 
 (define %px-core-packages
-  (append (list px ;User and system updates
-                ;; px-setup-assistant             ;; System installation
+  (append (list px
                 gnutls
-                nss-certs ;TLS library and NNS certificates
-                libimobiledevice ;iPhone tethering
-                screen) %base-packages))
+                nss-certs
+                libimobiledevice
+                screen) 
+          %base-packages))
 
 ;;;
 ;;; DESKTOP
@@ -55,7 +52,7 @@
 ;; Stuff for every desktop; QT / GTK on X / Wayland
 (define %px-desktop-core-packages
   (append %common-desktop-applications
-		  %px-core-packages))
+	  %px-core-packages))
 
 ;; GTK-specific
 (define %px-desktop-packages-gtk
@@ -76,38 +73,16 @@
 (define %px-desktop-ee-packages
   (append (list px-device-identity 
                 px-org-remote-user-activity-service)
-               %px-desktop-packages))
+          %px-desktop-packages))
 
 ;;;
 ;;; SERVER
 ;;;
 
 (define %px-server-packages
-  (append (list) %px-core-packages))
+  (append (list) 
+	  %px-core-packages))
 
 (define %px-server-ee-packages
-  (append (list px-device-identity) %px-server-packages))
-
-;;;
-;;; ARM-SPECIFIC
-;;;
-
-(define %px-core-arm-packages
-  (append (list cloud-utils ;disk utilities
-                gnutls
-                nss-certs
-                curl ;networking
-                ;; evtest             ;; hardware status
-                %base-packages)))
-
-(define %px-gui-arm-packages
-  (append (list openbox ;window manager
-                libnotify
-                dunst
-                dbus ;desktop notifications
-                xterm
-                xdg-utils
-                %px-core-arm-packages)))
-
-(define %px-desktop-arm-packages
-  (append (list px-sddm-theme) %base-packages))
+  (append (list px-device-identity) 
+	  %px-server-packages))
