@@ -15,6 +15,8 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages qt)
+  #:use-module (gnu packages bash)
+  #:use-module (gnu packages base)
   #:use-module (px packages library))
 
 (define-public px
