@@ -998,3 +998,22 @@ upload, and reCAPTCHA.")
     (description
      "implements a lazy string for python useful for use with gettext")
     (license #f)))
+
+;; python-flask-wtf tests require python-flask-babelex
+(define-public python-flask-babelex
+  (package
+    (name "python-flask-babelex")
+    (version "0.9.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "Flask-BabelEx" version))
+       (sha256
+        (base32 "09yfr8hlwvpgvq8kp1y7qbnnl0q28hi0348bv199ssiqx779r99r"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-babel python-flask python-jinja2
+                             python-speaklater))
+    (home-page "http://github.com/mrjoes/flask-babelex")
+    (synopsis "Adds i18n/l10n support to Flask applications")
+    (description "Adds i18n/l10n support to Flask applications")
+    (license license:bsd-3)))
