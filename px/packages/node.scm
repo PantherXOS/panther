@@ -37,20 +37,3 @@
     (description "PNPM uses a content-addressable filesystem to
 store all files from all module directories on a disk")
     (license license:expat)))
-
-(define-public pnpm-7
-  (package
-    (inherit pnpm)
-    (name "pnpm")
-    (version "7.32.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/pnpm/pnpm/releases/download/v"
-                           version "/pnpm-linuxstatic-"
-                           (match (or (%current-system)
-                                      (%current-target-system))
-                             ("x86_64-linux" "x64")
-                             ("aarch64-linux" "arm64"))))
-       (sha256
-        (base32 "1k3n24ink74ajs8nd0p6y6238vi41n5bvrk8clnydgwg11ax1zx0"))))))
