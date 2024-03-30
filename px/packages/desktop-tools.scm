@@ -39,6 +39,9 @@
   #:use-module (gnu packages kde-frameworks)
   #:use-module (px packages images)
   #:use-module (px packages qt)
+  #:use-module (px packages common)
+  #:use-module (px packages library)
+  #:use-module (px packages themes)
   #:use-module (srfi srfi-1))
 
 (define-public px-recoll
