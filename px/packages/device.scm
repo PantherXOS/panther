@@ -37,7 +37,6 @@
   #:use-module (gnu packages web)
   #:use-module (px packages crates-io)
   #:use-module (px packages common)
-  #:use-module (px packages kde-frameworks)
   #:use-module (px packages python-xyz)
   #:use-module (px packages tpm)
   #:use-module (px packages library))

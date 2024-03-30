@@ -30,7 +30,6 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages xml)
   #:use-module (px packages common)
-  #:use-module (px packages contacts-calendar)
   #:use-module (px packages networking)
   #:use-module (px packages etesync)
   #:use-module (px packages library)

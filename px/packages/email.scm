@@ -1,5 +1,7 @@
 (define-module (px packages email)
+  #:use-module (guix download)
   #:use-module (guix build-system qt)
+  #:use-module (guix build-system trivial)
   #:use-module ((guix licenses)
                 #:prefix license:)
   #:use-module (guix packages)

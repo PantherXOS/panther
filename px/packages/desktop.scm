@@ -59,11 +59,9 @@
   #:use-module (px packages atril-thumbnailer)
   #:use-module (px packages backup)
   #:use-module (px packages common)
-  #:use-module (px packages contacts-calendar)
   #:use-module (px packages desktop-tools)
   #:use-module (px packages document)
   #:use-module (px packages hub)
-  #:use-module (px packages kde-frameworks)
   #:use-module (px packages library)
   #:use-module (px packages matrix-client)
   #:use-module (px packages package-management)
@@ -74,10 +72,8 @@
   #:use-module (px packages images)
   #:use-module (px packages themes)
   #:use-module (px packages backup)
-  #:use-module (px packages user-services)
   #:use-module (px packages wiki)
   #:use-module (px packages device)
-  #:use-module (px packages time-tracking)
   #:use-module (srfi srfi-1)
   #:export (%common-desktop-applications 
             %gtk-desktop-applications

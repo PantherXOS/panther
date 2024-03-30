@@ -6,8 +6,8 @@
   #:use-module (guix download)
   #:use-module (guix packages)
   #:use-module (guix gexp)
-  #:use-module (guix build-system trivial)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system gnu)
   #:use-module (guix utils)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages base)
@@ -18,8 +18,7 @@
   #:use-module (gnu packages bash)
   #:use-module (gnu packages backup)
   #:use-module (px packages accounts)
-  #:use-module (px packages library)
-  #:use-module (px packages tarsnap))
+  #:use-module (px packages library))
 
 (define-public px-backup
   (package
