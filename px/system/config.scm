@@ -30,10 +30,6 @@
             px-server-os
             px-server-ee-os
 
-            px-core-arm-os
-            px-gui-arm-os
-            px-desktop-arm-os
-
             %px-server-open-ports-common
             %default-pantherx-channel)
 
@@ -170,57 +166,3 @@
            #:templates templates
            #:default-packages %px-server-ee-packages
            #:default-services %px-server-ee-services))
-
-;;;
-;;; ARM
-;;;
-
-(define px-core-arm-os
-  (operating-system
-    (host-name "pantherx")
-    (timezone "Europe/Berlin")
-    (locale "en_US.utf8")
-
-    (bootloader (bootloader-configuration
-                  (bootloader u-boot-bootloader)
-                  (targets '("/dev/vda"))))
-
-    (file-systems (cons (file-system
-                          (device "/dev/sda1")
-                          (mount-point "/")
-                          (type "ext4")) %base-file-systems))
-
-    (users (cons* (user-account
-                    (name "panther")
-                    (comment "default user")
-                    (group "users")
-                    (password (crypt "pantherx" "$6$abc"))
-                    (supplementary-groups '("wheel" "netdev" "lp" "video"
-                                            "audio"))) %base-user-accounts))
-
-    (packages %px-core-arm-packages)
-    (services
-     %px-core-arm-services)
-    (name-service-switch %mdns-host-lookup-nss)))
-
-(define px-gui-arm-os
-  (operating-system
-    (inherit px-core-arm-os)
-    (host-name "pantherx")
-    (packages %px-gui-arm-packages)
-    (services
-     %px-gui-arm-services)))
-
-(define (px-desktop-arm-os os-config)
-  (let ((selected-packages (prepare-packages os-config
-                                             %px-desktop-arm-packages))
-        (selected-services (prepare-services os-config
-                                             %px-desktop-arm-services)))
-    (operating-system
-      (inherit os-config)
-
-      (packages selected-packages)
-      (services
-       selected-services)
-
-      (name-service-switch %mdns-host-lookup-nss))))
