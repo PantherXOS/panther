@@ -11,6 +11,7 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages curl)
   #:use-module (gnu packages flex)
+  #:use-module (gnu packages libusb)
   #:use-module (gnu packages gettext)
   #:use-module (gnu packages tex)
   #:use-module (gnu packages perl)
