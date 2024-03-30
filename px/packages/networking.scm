@@ -162,3 +162,29 @@ offering a simple API to solve common recurring messaging problems, such as
 publish/subscribe, RPC-style request/reply, or service discovery.")
     (home-page "https://nng.nanomsg.org/")
     (license license:expat)))
+
+(define-public px-network-inspection
+  (package
+    (name "px-network-inspection")
+    (version "0.0.15")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://source.pantherx.org/px-network-inspection_" version
+             ".tgz"))
+       (sha256
+        (base32 "0fzcy9f61qz0zi8chb6y86qfsjyn510fkxkxcw66rgxji76b1qx1"))))
+    (build-system cmake-build-system)
+    (arguments
+     `(#:tests? #f))
+    (inputs `(("glib" ,glib)
+              ("curl" ,curl)
+              ("fping" ,fping)
+              ("json-c" ,json-c)
+              ("libnl" ,libnl)))
+    (native-inputs `(("pkg-config" ,pkg-config)))
+    (home-page "https://www.pantherx.org/")
+    (synopsis "PantherX Netwrok Inspection")
+    (description "This package provides network inspection utility tool")
+    (license license:expat)))
