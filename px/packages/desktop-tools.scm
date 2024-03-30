@@ -350,3 +350,27 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
     (description "Qt-based tray application")
     (license license:gpl2+)))
 
+(define-public px-terminal-launcher
+  (package
+    (name "px-terminal-launcher")
+    (version "v0.2.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://source.pantherx.org/" name "_" version
+                           ".tgz"))
+       (sha256
+        (base32 "0fqlzbipnddn9cd0amjn9py7qzwnk5ir674lshpf7rsnv7fasalw"))))
+    (build-system qt-build-system)
+    (native-inputs (list qttools-5 pkg-config extra-cmake-modules))
+    (inputs (list capnproto-0.9
+                  qtbase-5
+                  qtsvg-5
+                  qtcharts
+                  px-auth-library-cpp
+                  networkmanager-qt))
+    (propagated-inputs (list px-icons))
+    (home-page "https://www.pantherx.dev")
+    (synopsis "PantherX Terminal Launcher")
+    (description "PantherX Terminal Launcher")
+    (license license:expat)))
