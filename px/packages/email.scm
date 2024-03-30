@@ -17,7 +17,7 @@
   #:use-module (gnu packages search)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages base)
-  #:use-module (gnu packages gzip)
+  #:use-module (gnu packages compression)
   #:use-module (guix git-download))
 
 (define-public kasync
