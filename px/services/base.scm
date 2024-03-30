@@ -41,19 +41,20 @@
             %px-server-ee-services))
 
 ;;;
-;;;
 ;;; CORE
 ;;; px-core-os services
 ;;;
 
 (define %px-core-services
-  (append (list (service dhcp-client-service-type)
-                (service ntp-service-type)) %base-services))
+  (append (list
+	   (service dhcp-client-service-type)
+           (service ntp-service-type))
+          %base-services))
 
-;;;
 ;;;
 ;;; DESKTOP
 ;;; px-desktop-os services
+;;; px-desktop-ee-os services
 ;;;
 
 (define %px-desktop-core-services
@@ -62,17 +63,12 @@
 (define %px-desktop-services
   (append %desktop-services-assembly))
 
-;;;
-;;;
-;;; ENTERPRISE
-;;; px-desktop-ee-o services
-;;;
-
 (define %px-desktop-ee-services
   ;; TODO: Does not include default desktop
-  (append (list (service px-device-identity-service-type)
-                (service px-user-identity-service-type))
-				%desktop-services-assembly))
+  (append (list
+	   (service px-device-identity-service-type)
+           (service px-user-identity-service-type))
+	  %desktop-services-assembly))
 
 ;;;
 ;;; SERVER
@@ -82,16 +78,15 @@
 
 (define %px-server-services
   (append (list
-           ;; OpenSSH is enabled by default but only with SSH key
            (service openssh-service-type
                     (openssh-configuration (permit-root-login 'prohibit-password)))
-
-           ;; Time service
+	   
            (service ntp-service-type)
-           ;; Firewall
            (service nftables-service-type)
-           ;; DHCP
-           (service dhcp-client-service-type)) %base-services))
+           (service dhcp-client-service-type)) 
+          %base-services))
 
 (define %px-server-ee-services
-  (append (list (service px-device-identity-service-type)) %px-server-services))
+  (append (list
+	   (service px-device-identity-service-type)) 
+	  %px-server-services))
