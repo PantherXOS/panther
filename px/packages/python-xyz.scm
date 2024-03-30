@@ -954,3 +954,29 @@ communicating with your Coldcard over USB")
   (synopsis "Bluetooth Low Energy platform Agnostic Klient")
   (description "Bluetooth Low Energy platform Agnostic Klient")
   (license license:expat)))
+
+;; etesync-dav: Requirement.parse('Flask-WTF<1.0.0,>=0.14.2'), {'etesync-dav'})
+(define-public python-flask-wtf-0.15.1
+  (package
+    (name "python-flask-wtf")
+    (version "0.15.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "Flask-WTF" version))
+       (sha256
+        (base32 "1p7jzxa3xckg13z1v9mck576m977h4qfczs3ag12sc4iz22p25zz"))))
+    (build-system python-build-system)
+    (arguments
+     '(#:phases (modify-phases %standard-phases
+                  (replace 'check
+                    (lambda _
+                      (invoke "pytest" "-vv"))))))
+    (propagated-inputs (list python-flask python-itsdangerous python-wtforms
+                             python-flask-babelex))
+    (native-inputs (list python-pytest))
+    (home-page "https://github.com/lepture/flask-wtf")
+    (synopsis "Simple integration of Flask and WTForms")
+    (description "Flask-WTF integrates Flask and WTForms, including CSRF, file
+upload, and reCAPTCHA.")
+    (license license:bsd-3)))
