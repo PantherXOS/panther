@@ -26,8 +26,6 @@
   #:use-module (gnu packages qt)
   #:use-module (px packages accounts)
   #:use-module (px packages backup)
-  #:use-module (px packages clawsmail)
-  #:use-module (px packages common)
   #:use-module (px packages library)
   #:use-module (px packages common))
 
