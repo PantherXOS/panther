@@ -514,38 +514,6 @@ could load from store")
      "Adds support for Ethereum and Bitcoin wallet addresses in Accounts Service.")
     (license license:expat)))
 
-(define-public px-accounts-service-plugin-etesync
-  (package
-    (name "px-accounts-service-plugin-etesync")
-    (version "0.1.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_v" version
-                           ".tgz"))
-       (sha256
-        (base32 "16zzqh9lb5gb1yn12v48akh5rfidssxjah9f3jg8hpzy0qaca64z"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'patch-version
-                    (lambda* (#:key inputs outputs #:allow-other-keys)
-                      (substitute* (string-append "plugins/"
-                                                  ,name ".yaml")
-                        (("PLUGIN_PATH")
-                         (assoc-ref outputs "out"))
-                        (("PLUGIN_VERSION")
-                         ,version))))
-                  (delete 'sanity-check))))
-    (propagated-inputs `(("etesync-dav" ,etesync-dav)
-                         ("px-contacts-calendar" ,px-contacts-calendar)
-                         ("python-etesync" ,python-etesync)))
-    (home-page "https://www.pantherx.org/")
-    (synopsis "EteSync Plugin for Online Accounts Service")
-    (description "Support Etesync account as a CardDAV/CalDAV provider")
-    (license license:expat)))
-
 (define-public px-accounts-service-plugin-gitlab
   (package
     (name "px-accounts-service-plugin-gitlab")
