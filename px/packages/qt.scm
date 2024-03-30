@@ -143,3 +143,24 @@
     (synopsis "Google Maps plugin for QtLocation")
     (description "GoogleMaps plugin for QtLocation module")
     (license license:gpl3+)))
+
+(define-public qtutilities
+  (package
+    (name "qtutilities")
+    (version "6.12.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/Martchus/qtutilities/archive/refs/tags/v"
+             version ".tar.gz"))
+       (sha256
+        (base32 "0b58i66hhfg18d9bzbkzx8m34x070af5k3dankz5q69dr1lbrf6k"))))
+    (build-system cmake-build-system)
+    (native-inputs (list cpputilities qtbase-5 qttools-5))
+    (arguments
+     `(#:tests? #f))
+    (home-page "https://github.com/Martchus/qtutilities")
+    (synopsis "Common Qt related C++ classes and routines")
+    (description "Common Qt related C++ classes and routines")
+    (license license:gpl2+)))
