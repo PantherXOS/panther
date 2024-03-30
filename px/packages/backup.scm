@@ -17,6 +17,7 @@
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages backup)
+  #:use-module (gnu packages openssl)
   #:use-module (px packages accounts)
   #:use-module (px packages library))
 
