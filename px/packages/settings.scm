@@ -27,7 +27,8 @@
   #:use-module (px packages accounts)
   #:use-module (px packages backup)
   #:use-module (px packages library)
-  #:use-module (px packages common))
+  #:use-module (px packages common)
+  #:use-module (px packages email))
 
 (define-public px-settings-ui
   (package
