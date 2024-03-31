@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+panther_dir="$(dirname "$(realpath "$0")")"
+
+GUILE_LOAD_PATH="${panther_dir}${GUILE_LOAD_PATH:+:}${GUILE_LOAD_PATH}"
+GUIX_PACKAGE_PATH="${panther_dir}${GUIX_PACKAGE_PATH:+:}${GUIX_PACKAGE_PATH}"
+
+export GUILE_LOAD_PATH GUIX_PACKAGE_PATH
+
+echo $GUILE_LOAD_PATH
+echo $GUIX_PACKAGE_PATH
+
+exec "$@"
