@@ -66,3 +66,10 @@ Options:
 ```scheme
 (service px-user-identity-service-type)
 ```
+
+## UDEV Rules
+
+- `ledger-wallet-service`
+- `nitro-key-service`
+- `yubikey-service`
+- `coinkite-service`

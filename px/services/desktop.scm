@@ -217,9 +217,10 @@
          (simple-service 'custom-udev-rules udev-service-type
                          (list libu2f-host))
 
-         (ledger-wallet-service)
-         (nitro-key-service)
-         (coinkite-service)
+         ;; Adding plugdev group once should suffice
+         (udev-rules-service 'nitro %nitro-key-udev-rule #:groups '("plugdev"))
+         (udev-rules-service 'yubikey %yubikey-udev-rule)
+         (udev-rules-service 'coinkite %coinkite-udev-rule)
 
          ;; Power savings
          (service tlp-service-type)
@@ -266,6 +267,10 @@
 (define %px-desktop-base-minimal-services
   (modify-services
     %px-desktop-base-services
+    (delete agetty-service-type)
+    (delete mingetty-service-type)
+    (delete pulseaudio-service-type)
+    (delete alsa-service-type)
     (delete sddm-service-type)
     (delete gnome-keyring-service-type)
     (delete openssh-service-type)))

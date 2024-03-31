@@ -35,6 +35,7 @@
                 (home-directory "/home/panther"))
                %base-user-accounts))
 
+  (packages %px-desktop-core-packages)
   (services %px-desktop-minmal-services))
 
  #:open-ports '(("tcp" "ssh"))
