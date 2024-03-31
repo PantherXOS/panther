@@ -25,7 +25,7 @@
   #:use-module (px packages setup)
   #:use-module (px packages themes)
   #:export (%px-core-packages
-            %px-desktop-core-packages
+            %px-desktop-minimal-packages
             %px-desktop-packages-gtk
             %px-desktop-packages-qt
             %px-desktop-packages
@@ -50,19 +50,21 @@
 ;;;
 
 ;; Stuff for every desktop; QT / GTK on X / Wayland
-(define %px-desktop-core-packages
-  (append %common-desktop-applications
+(define %px-desktop-minimal-packages
+  (append %minimal-desktop-applications
 	  %px-core-packages))
 
 ;; GTK-specific
 (define %px-desktop-packages-gtk
   (append %gtk-desktop-applications 
+          %minimal-desktop-applications
           %common-desktop-applications
           %px-core-packages))
 
 ;; QT-specific
 (define %px-desktop-packages-qt
   (append %qt-desktop-applications
+          %minimal-desktop-applications
           %common-desktop-applications
           %px-core-packages))
 

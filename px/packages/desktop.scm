@@ -53,8 +53,7 @@
   #:use-module (gnu packages pdf)
   #:use-module (gnu packages syncthing)
   #:use-module (gnu packages xdisorg)
-  #:use-module (nongnu packages compression)
-  #:use-module (nongnu packages mozilla)
+
   #:use-module (px packages accounts)
   #:use-module (px packages atril-thumbnailer)
   #:use-module (px packages backup)
@@ -70,8 +69,12 @@
   #:use-module (px packages images)
   #:use-module (px packages themes)
   #:use-module (px packages device)
+
+  #:use-module (nongnu packages compression)
+  #:use-module (nongnu packages mozilla)
   #:use-module (srfi srfi-1)
-  #:export (%common-desktop-applications 
+  #:export (%minimal-desktop-applications
+            %common-desktop-applications 
             %gtk-desktop-applications
             %qt-desktop-applications))
 
@@ -80,7 +83,7 @@
 ;;
 
 ;; Stuff for every desktop; QT / GTK on X / Wayland
-(define %common-desktop-applications
+(define %minimal-desktop-applications
   (list aspell
         aspell-dict-en
 
@@ -93,7 +96,6 @@
         font-openmoji
 
         gvfs
-        print-manager
 
         pam-u2f
         libu2f-host
@@ -109,42 +111,43 @@
 
         blueman))
 
-;; GTK-specific
-(define %gtk-desktop-applications
-  (list syncthing-gtk
 
-        ;; Look and feel
+(define %common-desktop-applications
+  (list libreoffice
+  
         px-sddm-theme
         xcursor-themes
         gnome-themes-standard
-
-        ;; Keychain
-        gcr
-        gnome-keyring
-
-        ;; PGP
-        seahorse))
-
-;; QT-specific
-(define %qt-desktop-applications
-  (list px-sddm-theme
-        xcursor-themes
-        gnome-themes-standard
-        paper-icon-theme
         sddm-darkine-theme
+        paper-icon-theme
         breeze-gtk
 
         ;; Keychain
         gcr
         gnome-keyring
 
+        ;; Printing
+        print-manager
+
+        network-manager-applet
+  ))
+
+;; GTK-specific
+(define %gtk-desktop-applications
+  (list syncthing-gtk
+
+        ;; PGP
+        seahorse))
+
+;; QT-specific
+(define %qt-desktop-applications
+  (list syncthingtray
         speedcrunch
 
         qimgv
         ;; strawberry
         mpv
 
-        network-manager-applet
         featherpad
         qpdfview
 
@@ -154,7 +157,6 @@
         lxmenu-data
 
         albert-launcher
-
         kleopatra
 
         ;; Clipboard manager

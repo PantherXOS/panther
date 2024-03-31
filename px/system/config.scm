@@ -44,7 +44,7 @@
 
                %px-core-packages
 
-               %px-desktop-core-packages
+               %px-desktop-minimal-packages
                %px-desktop-packages-gtk
                %px-desktop-packages-qt
                %px-desktop-packages
