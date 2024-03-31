@@ -19,24 +19,22 @@
   #:use-module (guix records)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
-  #:export (make-os
+  
+  #:export (make-os 
             os-template
             os-template-service
 
-            ;; used in px system config
             prepare-packages
             prepare-services
             prepare-swap-devices
 
-            ;; used in ee repo
             adjust-bootloader-theme
-
-            ;; This is not used anywhere
-            ;; %px-artwork-repository
-            ;; %px-grub-theme
             
-            ;; %px-substitute-server-url
-            ;; %px-substitute-server-key
+            %px-substitute-server-key
+            %nonguix-substitute-server-key
+            %px-substitute-server-key
+            %nonguix-substitute-server-key
+
             apply-px-substitute-server))
 
 ;;;
@@ -262,18 +260,16 @@ return @code{defaule-value} if there is no modification applied."
     (else (operating-system-firmware config))))
 
 (define %pantherx-default-channels
-  (append
-    (list 
-     (channel
-			(name 'pantherx)
-      (branch "master")
-      (url "https://channels.pantherx.org/git/panther.git")
-      (introduction
-      (make-channel-introduction
-        "54b4056ac571611892c743b65f4c47dc298c49da"
-        (openpgp-fingerprint
-          "A36A D41E ECC7 A871 1003  5D24 524F EB1A 9D33 C9CB")))))
-    %default-channels))
+  (append (list (channel
+                  (name 'pantherx)
+                  (branch "master")
+                  (url "https://channels.pantherx.org/git/panther.git")
+                  (introduction
+                   (make-channel-introduction
+                    "54b4056ac571611892c743b65f4c47dc298c49da"
+                    (openpgp-fingerprint
+                     "A36A D41E ECC7 A871 1003  5D24 524F EB1A 9D33 C9CB")))))
+          %default-channels))
 
 ;;
 ;; OS config generation

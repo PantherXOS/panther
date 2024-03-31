@@ -33,10 +33,7 @@
             px-device-runner-service-type
 
             px-file-upload-configuration
-            px-file-upload-service-type
-
-            btuart-configuration
-            btuart-service-type))
+            px-file-upload-service-type))
 
 ;;
 ;; Device Identity Service
@@ -242,55 +239,3 @@ delete_on_success = ~a"
                                                         tpm2-tss-engine)))))
                 (description
                  "Service definition to run file upload on intervals")))
-
-;;
-;; btuart-service-type
-;;
-
-(define-record-type* <btuart-configuration> btuart-configuration
-                     make-btuart-configuration
-  btuart-configuration?
-  (package
-    btuart-configuration-package
-    (default bluez))
-  (device btuart-configuration-device
-          (default "/dev/ttyAMA0"))
-  (protocol btuart-configuration-protocol
-            (default "bcm"))
-  (baudrate btuart-configuration-baudrate
-            (default "3000000"))
-  (flow-control? btuart-configuration-flow-control?
-                 (default #t)))
-
-(define btuart-shepherd-service
-  (match-lambda
-    (($ <btuart-configuration>
-        package
-        device
-        protocol
-        baudrate
-        flow-control?)
-     (list (shepherd-service (documentation
-                              "attach serial lines as Bluetooth HCI interfaces")
-                             (provision '(btuart))
-                             (requirement '(udev))
-                             (start #~(make-forkexec-constructor (list #$(file-append
-                                                                          package
-                                                                          "/bin/btattach")
-                                                                       "-B"
-                                                                       #$device
-                                                                       "-P"
-                                                                       #$protocol
-                                                                       "-S"
-                                                                       #$baudrate
-                                                                       (when #$flow-control?
-                                                                         "-N"))))
-                             (one-shot? #t))))))
-
-(define btuart-service-type
-  (service-type (name 'btuart)
-                (extensions (list (service-extension
-                                   shepherd-root-service-type
-                                   btuart-shepherd-service)))
-                (default-value (btuart-configuration))
-                (description "Attach serial lines as Bluetooth HCI interfaces")))
