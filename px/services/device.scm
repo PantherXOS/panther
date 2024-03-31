@@ -1,5 +1,14 @@
 (define-module (px services device)
-  #:use-module (gnu)
+  #:use-module (guix gexp)
+  #:use-module (guix records)
+  #:use-module (srfi srfi-1)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 pretty-print)
+
+  #:use-module (gnu system)
+  #:use-module (gnu system shadow)
+  #:use-module (gnu services)
+  #:use-module (gnu services configuration)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages base)
   #:use-module (gnu packages linux)
@@ -7,24 +16,15 @@
   #:use-module (gnu packages video)
   #:use-module (gnu services mcron)
   #:use-module (gnu services shepherd)
-  #:use-module (gnu system)
-  #:use-module (gnu system shadow)
 
   #:use-module (px packages device)
   #:use-module (px packages security-token)
   #:use-module (px packages tpm)
 
-  #:use-module (guix gexp)
-  #:use-module (guix records)
-  #:use-module (ice-9 match)
-  #:use-module (ice-9 pretty-print)
-
-  #:export (<px-device-identity-configuration>
-            px-device-identity-configuration
+  #:export (px-device-identity-configuration
             px-device-identity-configuration?
             px-device-identity-service-type
 
-            <px-device-identity-configuration>
             px-user-identity-configuration
             px-user-identity-configuration?
             px-user-identity-service-type
@@ -39,7 +39,7 @@
             btuart-service-type))
 
 ;;
-;; Device Identity API SERVICE
+;; Device Identity Service
 ;;
 
 (define-record-type* <px-device-identity-configuration>
@@ -48,11 +48,21 @@
   px-device-identity-configuration?
   (package
     px-device-identity-configuration-package
-    (default px-device-identity-service)))
+    (default px-device-identity-service)
+    (docstring "The package to use for the device identity service"))
+  (port px-device-identity-configuration-port
+        (default 8000)
+        (docstring "The port to listen on"))
+  (config-dir px-device-identity-configuration-config-dir
+              (default "/etc/px-device-identity")
+              (docstring "The directory to store the configuration file"))
+  (key-dir px-device-identity-configuration-key-dir
+           (default "/root/.local/share/px-device-identity")
+           (docstring "The directory to store the key files")))
 
 (define px-device-identity-shepherd-service
   (match-lambda
-    (($ <px-device-identity-configuration> package)
+    (($ <px-device-identity-configuration> package port config-dir key-dir)
      (list (shepherd-service (provision '(px-device-identity))
                              (documentation
                               "Run px-device-identity-service as a daemon")
@@ -64,7 +74,13 @@
                                                                   "-S"
                                                                   "identity-api"
                                                                   (string-append #$package
-                                                                   "/bin/px-device-identity-service"))))
+                                                                   "/bin/px-device-identity-service")
+                                                                  "--port"
+                                                                  (number->string #$port)
+                                                                  "--config-dir"
+                                                                  #$config-dir
+                                                                  "--key-dir"
+                                                                  #$key-dir)))
                              (stop #~(make-kill-destructor)))))))
 
 (define px-device-identity-service-type
