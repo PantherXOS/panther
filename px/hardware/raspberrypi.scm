@@ -5,7 +5,7 @@
   #:use-module (nongnu packages linux)
   #:use-module (px system os)
   #:use-module (px packages linux)
-  #:use-module (px services device)
+  #:use-module (px services bluetooth)
   #:export (%raspberry-pi-4-template
             %seeed-reterminal-template))
 
