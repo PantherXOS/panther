@@ -123,7 +123,8 @@
         breeze-gtk
 
         ;; Keychain
-        gcr
+        ;; Conflict with gnome-keyring version
+        ;; gcr
         gnome-keyring
 
         ;; Printing
