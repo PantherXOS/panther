@@ -267,6 +267,7 @@
 (define %px-desktop-base-minimal-services
   (modify-services
     %px-desktop-base-services
+    (delete login-service-type)
     (delete agetty-service-type)
     (delete mingetty-service-type)
     (delete pulseaudio-service-type)
