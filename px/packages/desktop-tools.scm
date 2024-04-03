@@ -44,52 +44,6 @@
   #:use-module (px packages themes)
   #:use-module (srfi srfi-1))
 
-(define-public px-recoll
-  (package
-    (inherit recoll)
-    (name "px-recoll")
-    (arguments
-     '(#:tests? #f
-       #:configure-flags '("--disable-webkit" ;no qtwebkit yet
-                           "--with-inotify" "--enable-recollq" "QMAKEPATH=")
-       #:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'patch-icon
-                    (lambda _
-                      ;; Update icon
-                      (substitute* '("desktop/recoll-searchgui.desktop")
-                        (("Icon=recoll")
-                         "Icon=preferences-desktop-search"))
-                      (substitute* '("qtgui/main.cpp")
-                        (("app.setWindowIcon\\(icon\\)")
-                         "app.setWindowIcon(QIcon::fromTheme(\"preferences-desktop-search\"))"))
-                      (substitute* '("qtgui/rclmain_w.cpp")
-                        (("QIcon\\(QString\\(\":/images/recoll.png\"\\)\\)")
-                         "QIcon::fromTheme(\"preferences-desktop-search\")"))
-                      ;; Enable show tray icon
-                      (substitute* '("qtgui/guiutils.cpp")
-                        (("showTrayIcon\", Bool, false")
-                         "showTrayIcon\", Bool, true"))
-                      ;; Enable show close to tray
-                      (substitute* '("qtgui/guiutils.cpp")
-                        (("closeToTray\", Bool, false")
-                         "closeToTray\", Bool, true"))
-                      ;; Enable desktop notification
-                      (substitute* '("qtgui/guiutils.cpp")
-                         ;
-                        (("trayMessages\", Bool, false")
-                         "trayMessages\", Bool, true"))
-                      ;; Rename Recoll to Advanced Search
-                      (substitute* '("desktop/recoll-searchgui.desktop")
-                         ;
-                        (("Name=Recoll")
-                         "Name=Advanced Search"))
-                      ;; Update category to Settings
-                      (substitute* '("desktop/recoll-searchgui.desktop")
-                         ;
-                        (("Categories=Qt;Utility;Filesystem;Database;")
-                         "Categories=Settings;"))
-                      #t)))))))
-
 (define-public albert-launcher
   (package
     (name "albert-launcher")
