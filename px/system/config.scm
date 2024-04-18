@@ -30,8 +30,7 @@
             px-server-os
             px-server-ee-os
 
-            %px-server-open-ports-common
-            %default-pantherx-channel)
+            %px-server-open-ports-common)
 
   ;; Re-export for convenience
   #:re-export (%px-core-services 
@@ -51,7 +50,9 @@
                %px-desktop-ee-packages
 
                %px-server-packages
-               %px-server-ee-packages))
+               %px-server-ee-packages
+               
+               %pantherx-default-channels))
 
 ;;;
 ;;; PantherX Desktop OS defintions
@@ -63,17 +64,6 @@
 
 (define %px-server-open-ports-common
   '(("tcp" "ssh" "http" "https")))
-
-;; For use in unattended-upgrade-service-type
-(define %default-pantherx-channel
-  (channel
-    (name 'pantherx)
-    (branch "master")
-    (url "https://channels.pantherx.org/git/panther.git")
-    (introduction
-     (make-channel-introduction "54b4056ac571611892c743b65f4c47dc298c49da"
-                                (openpgp-fingerprint
-                                 "A36A D41E ECC7 A871 1003  5D24 524F EB1A 9D33 C9CB")))))
 
 ;;;
 ;;; CORE

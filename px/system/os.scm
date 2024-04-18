@@ -32,8 +32,10 @@
             
             %px-substitute-server-key
             %nonguix-substitute-server-key
-            %px-substitute-server-key
-            %nonguix-substitute-server-key
+            %px-substitute-server-url
+            %nonguix-substitute-server-url
+
+            %pantherx-default-channels
 
             apply-px-substitute-server))
 
