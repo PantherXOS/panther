@@ -1030,8 +1030,12 @@ upload, and reCAPTCHA.")
        (sha256
         (base32 "01kc2d4sbjrnqrp8jd751pcvl27l7pgp4nf1m6a5gzckgqbx8j53"))))
     (build-system python-build-system)
-    (propagated-inputs (list python-babel python-flask python-jinja2
-                             python-speaklater))
+    (arguments
+      (list #:tests? #f
+            #:phases
+            #~(modify-phases %standard-phases
+                (delete 'sanity-check))))
+    (native-inputs `(("pkg-config" ,pkg-config)))
     (home-page "https://www.pantherx.org/")
     (synopsis "Massages the state of your system.")
     (description "Basically ansible, minus a lot of the features, plus speed.")
