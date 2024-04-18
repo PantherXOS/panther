@@ -1017,3 +1017,22 @@ upload, and reCAPTCHA.")
     (synopsis "Adds i18n/l10n support to Flask applications")
     (description "Adds i18n/l10n support to Flask applications")
     (license license:bsd-3)))
+
+(define-public state-massage
+  (package
+    (name "state-massage")
+    (version "0.0.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://source.pantherx.org/" name "_v" version
+                           ".tgz"))
+       (sha256
+        (base32 "01kc2d4sbjrnqrp8jd751pcvl27l7pgp4nf1m6a5gzckgqbx8j53"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-babel python-flask python-jinja2
+                             python-speaklater))
+    (home-page "https://www.pantherx.org/")
+    (synopsis "Massages the state of your system.")
+    (description "Basically ansible, minus a lot of the features, plus speed.")
+    (license license:bsd-3)))
