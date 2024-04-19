@@ -167,7 +167,7 @@ to other applications, without root priviliges.")
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "13zblxd7hax7dr29i751dcxxwc5j9vmr1zjfqk8gy5ifbjh1rnz5"))))
+      (base32 "1kclkpav1sn2x7j3hwq3059a8xn5182xv9764rpry3rq6llhxg5g"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
