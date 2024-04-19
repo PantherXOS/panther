@@ -160,7 +160,7 @@ to other applications, without root priviliges.")
 (define-public px-device-runner
   (package
    (name "px-device-runner")
-   (version "0.1.4")
+   (version "0.1.5")
    (source
     (origin
      (method url-fetch)
