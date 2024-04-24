@@ -40,7 +40,6 @@
 (define %px-core-packages
   (append (list px
                 gnutls
-                nss-certs
                 libimobiledevice
                 screen) 
           %base-packages))
