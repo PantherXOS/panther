@@ -55,7 +55,7 @@
        (file-name (git-file-name name version))))
     (build-system cmake-build-system)
     (native-inputs `(("python" ,python-wrapper)
-                     
+
                      ;; The following dependencies are used for tests.
                      ("python-pytest" ,python-pytest)
                      ("catch" ,catch2-1)
@@ -521,7 +521,7 @@ provides Python-specific tags that represent an arbitrary Python object.")
 
     ;; (native-inputs `(
     ;; ("python-cryptography" ,python-cryptography)))
-    
+
     (home-page "")
     (synopsis "")
     (description "todo.")
@@ -877,21 +877,21 @@ than Python’s urllib2 library.")
      `(#:tests? #f))
     (home-page "https://github.com/Coldcard/ckcc-protocol")
     (synopsis "Python library for Coldcard")
-    (description "Python library and command line tool for 
+    (description "Python library and command line tool for
 communicating with your Coldcard over USB")
     (license license:expat)))
 
 (define-public px-python-shared
   (package
     (name "px-python-shared")
-    (version "0.0.2")
+    (version "0.0.3")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "09c88ni0fa915py3l4wx2cyvrs83gbc7gd1hypwr1wbk3y9a3c7g"))))
+        (base32 "0lfq86ia7zg2bh2pliw3nnnvdk20hwsjk8iijmw4axsr9l27366p"))))
     (build-system python-build-system)
     (arguments
       (list #:tests? #f
