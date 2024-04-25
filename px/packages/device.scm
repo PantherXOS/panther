@@ -117,7 +117,7 @@
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
-      #:phases 
+      #:phases
       (modify-phases
        %standard-phases
        (add-after 'install 'wrap-for-openssl-tss2-conf
@@ -131,7 +131,7 @@
 				      (,(string-append tpm2-tss-engine
 						       "/etc/openssl-tss2.conf")))
 				    `("PATH" ":" prefix
-				      (,(string-append tpm2-tss-engine "/bin/") 
+				      (,(string-append tpm2-tss-engine "/bin/")
 				       ,(string-append openssl "/bin/")))
 				    `("TPM2TSSENGINE_TCTI" ":" prefix
 				      (,(string-append tpm2-tss
@@ -160,18 +160,18 @@ to other applications, without root priviliges.")
 (define-public px-device-runner
   (package
    (name "px-device-runner")
-   (version "0.1.5")
+   (version "0.1.6")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "1kclkpav1sn2x7j3hwq3059a8xn5182xv9764rpry3rq6llhxg5g"))))
+      (base32 "0xwjrlcnawmzqa7xk9fwky302w43js3v572rvlkgv8i4765piirh"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
-      #:phases 
+      #:phases
       (modify-phases
        %standard-phases
        (add-after 'install 'wrap-for-openssl-tss2-conf
@@ -185,7 +185,7 @@ to other applications, without root priviliges.")
 				      (,(string-append tpm2-tss-engine
 						       "/etc/openssl-tss2.conf")))
 				    `("PATH" ":" prefix
-				      (,(string-append tpm2-tss-engine "/bin/") 
+				      (,(string-append tpm2-tss-engine "/bin/")
 				       ,(string-append openssl "/bin/")))
 				    `("TPM2TSSENGINE_TCTI" ":" prefix
 				      (,(string-append tpm2-tss
@@ -222,7 +222,7 @@ to other applications, without root priviliges.")
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
-      #:phases 
+      #:phases
       (modify-phases
        %standard-phases
        (add-after 'install 'wrap-for-openssl-tss2-conf
@@ -236,7 +236,7 @@ to other applications, without root priviliges.")
 				      (,(string-append tpm2-tss-engine
 						       "/etc/openssl-tss2.conf")))
 				    `("PATH" ":" prefix
-				      (,(string-append tpm2-tss-engine "/bin/") 
+				      (,(string-append tpm2-tss-engine "/bin/")
 				       ,(string-append openssl "/bin/")))
 				    `("TPM2TSSENGINE_TCTI" ":" prefix
 				      (,(string-append tpm2-tss
@@ -342,7 +342,7 @@ configuration file from commandline args and upload results to the server")
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
-      #:phases 
+      #:phases
       (modify-phases
        %standard-phases
        (add-after 'install 'wrap-for-openssl-tss2-conf
@@ -356,7 +356,7 @@ configuration file from commandline args and upload results to the server")
 				      (,(string-append tpm2-tss-engine
 						       "/etc/openssl-tss2.conf")))
 				    `("PATH" ":" prefix
-				      (,(string-append tpm2-tss-engine "/bin/") 
+				      (,(string-append tpm2-tss-engine "/bin/")
 				       ,(string-append openssl "/bin/")))
 				    `("TPM2TSSENGINE_TCTI" ":" prefix
 				      (,(string-append tpm2-tss
@@ -393,7 +393,7 @@ configuration file from commandline args and upload results to the server")
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
-      #:phases 
+      #:phases
       (modify-phases
        %standard-phases
        (add-after 'install 'wrap-for-openssl-tss2-conf
@@ -407,7 +407,7 @@ configuration file from commandline args and upload results to the server")
 				      (,(string-append tpm2-tss-engine
 						       "/etc/openssl-tss2.conf")))
 				    `("PATH" ":" prefix
-				      (,(string-append tpm2-tss-engine "/bin/") 
+				      (,(string-append tpm2-tss-engine "/bin/")
 				       ,(string-append openssl "/bin/")))
 				    `("TPM2TSSENGINE_TCTI" ":" prefix
 				      (,(string-append tpm2-tss
@@ -447,7 +447,7 @@ configuration file from commandline args and upload results to the server")
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
-      #:phases 
+      #:phases
       (modify-phases
        %standard-phases
        (add-after 'install 'wrap-for-openssl-tss2-conf
@@ -461,7 +461,7 @@ configuration file from commandline args and upload results to the server")
 				      (,(string-append tpm2-tss-engine
 						       "/etc/openssl-tss2.conf")))
 				    `("PATH" ":" prefix
-				      (,(string-append tpm2-tss-engine "/bin/") 
+				      (,(string-append tpm2-tss-engine "/bin/")
 				       ,(string-append openssl "/bin/")))
 				    `("TPM2TSSENGINE_TCTI" ":" prefix
 				      (,(string-append tpm2-tss
