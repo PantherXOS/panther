@@ -884,14 +884,14 @@ communicating with your Coldcard over USB")
 (define-public px-python-shared
   (package
     (name "px-python-shared")
-    (version "0.0.3")
+    (version "0.1.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "0lfq86ia7zg2bh2pliw3nnnvdk20hwsjk8iijmw4axsr9l27366p"))))
+        (base32 "08bf7xa0qsnj3i3ss89hqpgakazk0ajz1jiankwgfm8bbzk2j1bv"))))
     (build-system python-build-system)
     (arguments
       (list #:tests? #f
