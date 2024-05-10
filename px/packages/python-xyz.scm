@@ -1040,3 +1040,35 @@ upload, and reCAPTCHA.")
     (synopsis "Massages the state of your system.")
     (description "Basically ansible, minus a lot of the features, plus speed.")
     (license license:bsd-3)))
+
+(define-public python-sentry-sdk-2
+  (package
+    (name "python-sentry-sdk")
+    (version "2.1.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "sentry_sdk" version))
+       (sha256
+        (base32 "1hbfj9dxf705ap7cvx05xsc47f2v5552qb10mcvvrc6886xw1n4m"))))
+    (build-system pyproject-build-system)
+    (arguments
+      (list #:tests? #f
+            #:phases
+            #~(modify-phases %standard-phases
+                (delete 'sanity-check))))
+    (propagated-inputs (list python-certifi 
+                             python-urllib3))
+                             ;; tests
+                             ;; django fails: Requested settings, but settings are not configured.
+                             ;  python-starlette
+                             ;  python-fastapi
+                             ;  python-rq
+                             ;  python-loguru
+                             ;  python-celery
+                             ;  python-dateutil
+                             ;  python-django))
+    (home-page "https://github.com/getsentry/sentry-python")
+    (synopsis "Python client for Sentry (https://sentry.io)")
+    (description "Python client for Sentry (https://sentry.io)")
+    (license license:expat)))
