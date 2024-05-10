@@ -436,14 +436,14 @@ configuration file from commandline args and upload results to the server")
 (define-public bcms
   (package
    (name "bcms")
-   (version "0.0.15")
+   (version "0.0.16")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "1wxigi54wajinr7zqfn94n22250z14f2vipw1n6fypwb47wsvjjd"))))
+      (base32 "1wd8b4q7rr2k3l4x8m0c040xa3q7p2gpqf48malfh3yba8k0h6l6"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
