@@ -481,7 +481,7 @@ configuration file from commandline args and upload results to the server")
                         ("python-bleak" ,python-bleak)
                         ("python-dbus" ,python-dbus)
                         ("px-python-shared" ,px-python-shared)
-                        ("python-sentry-sdk" ,python-sentry-sdk)))
+                        ("python-sentry-sdk" ,python-sentry-sdk-2)))
    (home-page "https://www.pantherx.org/")
    (synopsis "Collect and submit detailed system info")
    (description
