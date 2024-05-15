@@ -1021,14 +1021,14 @@ upload, and reCAPTCHA.")
 (define-public state-massage
   (package
     (name "state-massage")
-    (version "0.0.4")
+    (version "0.0.5")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "09knx65vbcnklpir64ysb7sz9ij0vrghyz6lgnp660xyv30vqh82"))))
+        (base32 "123n2lry0b1zfbs1356vci7xiqs5wmnsl016k90ql39sxkml94fx"))))
     (build-system python-build-system)
     (arguments
       (list #:tests? #f
