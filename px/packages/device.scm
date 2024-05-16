@@ -161,14 +161,14 @@ to other applications, without root priviliges.")
 (define-public px-device-runner
   (package
    (name "px-device-runner")
-   (version "0.2.0")
+   (version "0.2.1")
    (source
     (origin
      (method url-fetch)
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "0zas25wwdx0av00bi2zsai8j35lygyhczds173g41qmrsn5rny3k"))))
+      (base32 "1i11210hpj6d6d09xrdwfq5vrnvm26bm97k80a8yz9mil9dxnqak"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
@@ -203,8 +203,9 @@ to other applications, without root priviliges.")
    (propagated-inputs `(("px-device-identity" ,px-device-identity)
                         ("python-requests" ,python-requests)
                         ("px-python-shared" ,px-python-shared)
-                         ("python-appdirs" ,python-appdirs)
-                         ("python-dateutil" ,python-dateutil)))
+                        ("python-appdirs" ,python-appdirs)
+                        ("python-dateutil" ,python-dateutil)
+                        ("python-sentry-sdk" ,python-sentry-sdk-2)))
    (home-page "https://www.pantherx.org/")
    (synopsis "PantherX Device Runner")
    (description
