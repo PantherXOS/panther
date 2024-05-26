@@ -95,7 +95,33 @@
     (description "This package provides background services to show status ")
     (license license:expat)))
 
-(define-public sentry-native
+(define-public sentry-native-0.6
+  (package
+    (name "sentry-native")
+    (version "0.6.2")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/getsentry/sentry-native")
+             (commit version)
+             (recursive? #t)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1rd069j2jrqaj67l32p005jmlfah6blcxrca7h2kqgc8nv33pd6j"))))
+    (build-system cmake-build-system)
+    (arguments
+     `(#:tests? #f))
+    (inputs `(("curl" ,curl)))
+    (native-inputs `(("pkg-config" ,pkg-config)
+                     ("zlib", zlib)))
+    (home-page "https://github.com/getsentry/sentry-native")
+    (synopsis "Official Sentry SDK for C/C++")
+    (description "The Sentry Native SDK is an error and crash reporting client
+for native applications, optimized for C and C++.")
+    (license license:expat)))
+    
+(define-public sentry-native-0.7
   (package
     (name "sentry-native")
     (version "0.7.4")
