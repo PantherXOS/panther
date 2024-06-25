@@ -36,7 +36,7 @@
 (define-public vscode
   (package
     (name "vscode")
-    (version "1.89.1")
+    (version "1.90.2")
     (source
      #f)
     (build-system binary-build-system)
@@ -154,7 +154,7 @@
                                                  out) ":"))))) #t)))))
     (native-inputs `(("tar" ,tar)))
     (inputs `(("vscode" ,(make-vscode-release-asset version "vscode"
-                          "1zfh48g6prjhjcyrz5impsnm6khw7s75k8k54bp0cszl81ddsysx"))
+                          "0d0cgsiafmr1wmxqji7mi4hmms7zqql868bcfbq9lmkw96zw85dw"))
               ("gcc:lib" ,gcc "lib")
               ("gcc" ,gcc "lib")
               ("glib" ,glib)
