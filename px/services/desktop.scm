@@ -219,7 +219,8 @@
 
          ;; Adding plugdev group once should suffice
          (udev-rules-service 'nitro %nitro-key-udev-rule #:groups '("plugdev"))
-         (udev-rules-service 'yubikey %yubikey-udev-rule)
+         ;; Using the rules from libfido2 package
+         (udev-rules-service 'fido2 libfido2)
          (udev-rules-service 'coinkite %coinkite-udev-rule)
 
          ;; Power savings

@@ -5,11 +5,9 @@
   #:use-module (gnu services base)
   #:export (ledger-wallet-service
             nitro-key-service
-            yubikey-service
             coinkite-service
             %ledger-udev-rule
             %nitro-key-udev-rule
-            %yubikey-udev-rule
             %coinkite-udev-rule))
 
 ;;;
@@ -112,13 +110,6 @@ KERNEL==\"sd?1\", ATTRS{idVendor}==\"20a0\", ATTRS{idProduct}==\"4109\", SYMLINK
 ;;; https://wiki.archlinux.org/title/YubiKey#YubiKey_not_acting_as_HID_device
 ;;; DO NOTE: This rule is very similar to 1st of Nitrokey
 ;;;
-
-(define %yubikey-udev-rule
-  (udev-rule "10-security-key.rules"
-   "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0664\", GROUP=\"plugdev\", ATTRS{idVendor}==\"1050\", ATTRS{idProduct}==\"0113|0114|0115|0116|0120|0200|0402|0403|0406|0407|0410\""))
-
-(define (yubikey-service)
-  (udev-rules-service 'yubikey %yubikey-udev-rule #:groups '("plugdev")))
 
 (define %coinkite-udev-rule
   (udev-rule "51-coinkite.rules"
