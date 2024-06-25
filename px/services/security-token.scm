@@ -115,7 +115,7 @@ KERNEL==\"sd?1\", ATTRS{idVendor}==\"20a0\", ATTRS{idProduct}==\"4109\", SYMLINK
 
 (define %yubikey-udev-rule
   (udev-rule "10-security-key.rules"
-   "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0664\", GROUP=\"plugdev\", ATTRS{idVendor}==\"2581\", ATTRS{idProduct}==\"f1d0\""))
+   "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0664\", GROUP=\"plugdev\", ATTRS{idVendor}==\"1050\", ATTRS{idProduct}==\"0113|0114|0115|0116|0120|0200|0402|0403|0406|0407|0410\""))
 
 (define (yubikey-service)
   (udev-rules-service 'yubikey %yubikey-udev-rule #:groups '("plugdev")))
