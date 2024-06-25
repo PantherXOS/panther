@@ -221,6 +221,7 @@
          (udev-rules-service 'nitro %nitro-key-udev-rule #:groups '("plugdev"))
          ;; Using the rules from libfido2 package
          (udev-rules-service 'fido2 libfido2)
+         (udev-rules-service 'yubikey yubikey-personalization)
          (udev-rules-service 'coinkite %coinkite-udev-rule)
 
          ;; Power savings
