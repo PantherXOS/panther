@@ -26,7 +26,8 @@
   #:use-module (gnu packages qt)
   #:use-module (gnu packages web)
   #:use-module (gnu packages admin)
-  #:use-module (gnu packages xml))
+  #:use-module (gnu packages xml)
+  #:use-module (px packages kde-plasma))
 
 ;; TODO: DROP IF OBSOLETE
 (define-public px-widget-style
@@ -50,17 +51,17 @@
     ;; Package type "Plasma/LookAndFeel" not found
     ;; TODO: Unknown property type for key "X-KDE-ParentApp",
     ;; "X-Plasma-MainScript"
-    (inputs `(("kcmutils" ,kcmutils)
-              ("kconfigwidgets" ,kconfigwidgets)
-              ("kcoreaddons" ,kcoreaddons)
-              ("kde-frameworkintegration" ,kde-frameworkintegration)
-              ("kdecoration" ,kdecoration)
-              ("kguiaddons" ,kguiaddons)
-              ("ki18n" ,ki18n)
-              ("kiconthemes" ,kiconthemes)
-              ("kpackage" ,kpackage)
-              ("kwayland" ,kwayland)
-              ("kwindowsystem" ,kwindowsystem)
+    (inputs `(("kcmutils" ,kcmutils-5)
+              ("kconfigwidgets" ,kconfigwidgets-5)
+              ("kcoreaddons" ,kcoreaddons-5)
+              ("kde-frameworkintegration" ,kde-frameworkintegration-5)
+              ("kdecoration" ,kdecoration-5)
+              ("kguiaddons" ,kguiaddons-5)
+              ("ki18n" ,ki18n-5)
+              ("kiconthemes" ,kiconthemes-5)
+              ("kpackage" ,kpackage-5)
+              ("kwayland" ,kwayland-5)
+              ("kwindowsystem" ,kwindowsystem-5)
               ("plasma-framework" ,plasma-framework) ;missing in CMakeList.txt
               ;; ("qtbase" ,qtbase)
               ("qtdeclarative" ,qtdeclarative-5)
