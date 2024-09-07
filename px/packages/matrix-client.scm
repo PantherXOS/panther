@@ -195,7 +195,7 @@ notification, emojis, E2E encryption, and voip calls.")
                   qtwayland-5
                   qtdeclarative-5
                   qtgraphicaleffects
-                  qtlocation
+                  qtlocation-5
                   qtmultimedia-5
                   qtquickcontrols-5
                   qtquickcontrols2-5
