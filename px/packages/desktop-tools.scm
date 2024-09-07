@@ -305,7 +305,7 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
                   qtsvg-5
                   qtcharts
                   px-auth-library-cpp
-                  networkmanager-qt))
+                  networkmanager-qt5))
     (propagated-inputs (list px-icons))
     (home-page "https://www.pantherx.dev")
     (synopsis "PantherX Terminal Launcher")
