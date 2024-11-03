@@ -24,6 +24,7 @@
   #:use-module (gnu packages serialization)
   #:use-module (gnu packages curl)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages crypto)
   #:use-module (px packages common)
   #:use-module (px packages device)
   #:use-module (px packages library))
@@ -51,7 +52,8 @@
     (native-inputs `(("autoconf" ,autoconf)
                      ("automake" ,automake)
                      ("libtool" ,libtool)
-                     ("pkg-config" ,pkg-config)))
+                     ("pkg-config" ,pkg-config)
+                     ("libxcrypt" ,libxcrypt)))
     (home-page "https://mmonit.com")
     (synopsis "Pro-active Monitoring")
     (description
