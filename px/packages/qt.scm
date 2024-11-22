@@ -136,7 +136,7 @@
     (build-system qt-build-system)
     (inputs
      (list qtbase-5
-           qtlocation
+           qtlocation-5
            qtdeclarative-5))
     (native-inputs
       (list pkg-config qttools-5))
