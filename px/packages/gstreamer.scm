@@ -16,5 +16,5 @@
               ("qtdeclarative" ,qtdeclarative-5)
               ("qtquickcontrols2" ,qtquickcontrols2-5)
               ("qtx11extras" ,qtx11extras)
-              ("qtwayland" ,qtwayland)
+              ("qtwayland" ,qtwayland-5)
               ,@(package-inputs gst-plugins-good)))))
