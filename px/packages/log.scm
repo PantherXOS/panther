@@ -8,6 +8,7 @@
   #:use-module (guix build-system go)
   #:use-module (gnu packages)
   #:use-module (gnu packages crates-io)
+  #:use-module (gnu packages crates-database)
   #:use-module (gnu packages tls)
   #:use-module (px packages crates-io))
 
