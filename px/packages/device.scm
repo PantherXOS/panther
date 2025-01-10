@@ -268,7 +268,7 @@ to other applications, without root priviliges.")
 (define-public px-file-upload-cli
   (package
     (name "px-file-upload-cli")
-    (version "0.0.6")
+    (version "0.0.13")
     (source
      (origin
        (method url-fetch)
@@ -276,13 +276,13 @@ to other applications, without root priviliges.")
                            ".crate"))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "10p0zxf576v28hgzbby45q9xlj3bd0314h9zaikallc1l30qb2l9"))))
+        (base32 "1xzl7nx5sd43wjrf6sbrrmsbmys54dp1sds9qdniqx55j62jsifs"))))
     (build-system cargo-build-system)
     (arguments
      `(#:tests? #f
        #:cargo-inputs (("rust-chrono" ,rust-chrono-0.4)
                        ("rust-clap" ,rust-clap-2)
-                       ("rust-configparser" ,rust-configparser-2)
+                       ("rust-configparser" ,rust-configparser-3)
                        ("rust-fern" ,rust-fern-0.6)
                        ("rust-log" ,rust-log-0.4)
                        ("rust-mime-guess" ,rust-mime-guess-2)
@@ -291,9 +291,7 @@ to other applications, without root priviliges.")
                        ("rust-serde-json" ,rust-serde-json-1)
                        ("rust-serde-yaml" ,rust-serde-yaml-0.8)
                        ("rust-syslog" ,rust-syslog-4)
-                       ;; TODO: restore back to upstream version once the following patch is merged upstream:
-                       ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=60174
-                       ("rust-tokio" ,rust-tokio-1-patched)
+                       ("rust-tokio" ,rust-tokio-1)
                        ("rust-tokio-util" ,rust-tokio-util-0.6)
                        ("rust-uuid" ,rust-uuid-0.8))
        #:phases (modify-phases %standard-phases
