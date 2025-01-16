@@ -173,3 +173,23 @@ of the standard synchronization primitives.")
     (description
      "This package provides a restricted plain text serializer for serde.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-retry-1
+  (package
+    (name "rust-retry")
+    (version "1.3.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "retry" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1xm3p41ygijbjpyj81psqhb2r3rdcqwlk5pl48lgsqwsjh5cd5dc"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-rand" ,rust-rand-0.8))))
+    (home-page "https://github.com/jimmycuadra/retry")
+    (synopsis "Utilities for retrying operations that can fail")
+    (description
+     "This package provides Utilities for retrying operations that can fail.")
+    (license license:expat)))
