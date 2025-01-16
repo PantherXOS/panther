@@ -215,7 +215,7 @@ to other applications, without root priviliges.")
 (define-public px-user-identity-service
   (package
    (name "px-user-identity-service")
-   (version "0.1.0")
+   (version "0.2.5")
    (source
     (origin
      (method url-fetch)
