@@ -45,7 +45,7 @@
 (define-public px-device-identity
   (package
    (name "px-device-identity")
-   (version "0.11.2")
+   (version "0.13.0")
    (source
     (origin
        (method url-fetch)
