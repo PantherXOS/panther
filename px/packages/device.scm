@@ -107,7 +107,7 @@
 (define-public px-device-identity-service
   (package
    (name "px-device-identity-service")
-   (version "0.11.1")
+   (version "0.11.6")
    (source
     (origin
      (method url-fetch)
