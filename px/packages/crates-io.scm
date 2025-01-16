@@ -152,3 +152,24 @@ of the standard synchronization primitives.")
     (description
      "This package provides An extensible, strongly-typed implementation of OAuth2.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-serde-plain-1
+  (package
+    (name "rust-serde-plain")
+    (version "1.0.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "serde_plain" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0l4d4nbw00pz6n43icrc605bhgynfmlyq39sn8i10qasnrnzrqcw"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-serde" ,rust-serde-1))
+       #:cargo-development-inputs (("rust-serde-derive" ,rust-serde-derive-1))))
+    (home-page "https://docs.rs/serde_plain")
+    (synopsis "restricted plain text serializer for serde")
+    (description
+     "This package provides a restricted plain text serializer for serde.")
+    (license (list license:expat license:asl2.0))))
