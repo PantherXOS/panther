@@ -6,6 +6,7 @@
   #:use-module (gnu packages crates-web)
   #:use-module (gnu packages crates-graphics)
   #:use-module (gnu packages crates-windows)
+  #:use-module (gnu packages crates-crypto)
   #:use-module ((guix licenses)
                 #:prefix license:))
 
@@ -112,3 +113,42 @@ of the standard synchronization primitives.")
     (synopsis "An XML-RPC implementation for Rust")
     (description "An XML-RPC implementation for Rust")
     (license license:cc0)))
+
+(define-public rust-oauth2-5
+  (package
+    (name "rust-oauth2")
+    (version "5.0.0-rc.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "oauth2" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1gw5cxhkkf65skz1ggkhfpgh8rn3f7nvww1gdl1jjbb07kd8blr3"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-base64" ,rust-base64-0.21)
+                       ("rust-chrono" ,rust-chrono-0.4)
+                       ("rust-curl" ,rust-curl-0.4)
+                       ("rust-getrandom" ,rust-getrandom-0.2)
+                       ("rust-http" ,rust-http-1)
+                       ("rust-rand" ,rust-rand-0.8)
+                       ("rust-reqwest" ,rust-reqwest-0.12)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-serde-json" ,rust-serde-json-1)
+                       ("rust-serde-path-to-error" ,rust-serde-path-to-error-0.1)
+                       ("rust-sha2" ,rust-sha2-0.10)
+                       ("rust-thiserror" ,rust-thiserror-1)
+                       ("rust-ureq" ,rust-ureq-2)
+                       ("rust-url" ,rust-url-2))
+       #:cargo-development-inputs (("rust-anyhow" ,rust-anyhow-1)
+                                   ("rust-async-std" ,rust-async-std-1)
+                                   ("rust-hex" ,rust-hex-0.4)
+                                   ("rust-hmac" ,rust-hmac-0.12)
+                                   ("rust-tokio" ,rust-tokio-1)
+                                   ("rust-uuid" ,rust-uuid-1))))
+    (home-page "https://github.com/ramosbugs/oauth2-rs")
+    (synopsis "An extensible, strongly-typed implementation of OAuth2")
+    (description
+     "This package provides An extensible, strongly-typed implementation of OAuth2.")
+    (license (list license:expat license:asl2.0))))
