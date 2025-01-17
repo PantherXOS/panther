@@ -153,6 +153,45 @@ of the standard synchronization primitives.")
      "This package provides An extensible, strongly-typed implementation of OAuth2.")
     (license (list license:expat license:asl2.0))))
 
+(define-public rust-oauth2-4
+  (package
+    (name "rust-oauth2")
+    (version "4.4.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "oauth2" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0zwkmwxwygl4fwghgyanixzqgn7yvkwwwacdghz7x124v36l3263"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-base64" ,rust-base64-0.13)
+                       ("rust-chrono" ,rust-chrono-0.4)
+                       ("rust-curl" ,rust-curl-0.4)
+                       ("rust-getrandom" ,rust-getrandom-0.2)
+                       ("rust-http" ,rust-http-0.2)
+                       ("rust-rand" ,rust-rand-0.8)
+                       ("rust-reqwest" ,rust-reqwest-0.11)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-serde-json" ,rust-serde-json-1)
+                       ("rust-serde-path-to-error" ,rust-serde-path-to-error-0.1)
+                       ("rust-sha2" ,rust-sha2-0.10)
+                       ("rust-thiserror" ,rust-thiserror-1)
+                       ("rust-ureq" ,rust-ureq-2)
+                       ("rust-url" ,rust-url-2))
+       #:cargo-development-inputs (("rust-anyhow" ,rust-anyhow-1)
+                                   ("rust-async-std" ,rust-async-std-1)
+                                   ("rust-hex" ,rust-hex-0.4)
+                                   ("rust-hmac" ,rust-hmac-0.12)
+                                   ("rust-tokio" ,rust-tokio-1)
+                                   ("rust-uuid" ,rust-uuid-0.8))))
+    (home-page "https://github.com/ramosbugs/oauth2-rs")
+    (synopsis "An extensible, strongly-typed implementation of OAuth2")
+    (description
+     "This package provides An extensible, strongly-typed implementation of OAuth2.")
+    (license (list license:expat license:asl2.0))))
+
 (define-public rust-serde-plain-1
   (package
     (name "rust-serde-plain")
