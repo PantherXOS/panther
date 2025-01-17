@@ -52,7 +52,7 @@
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "0l74408snlgy17ph737whn66jm2qflrkxpdvd01kflb713x0rjv4"))))
+        (base32 "1gd9s04brlw3qd9b633j9r68blbbrp038j7b2c7y9c2gx1fq10yq"))))
    (build-system python-build-system)
     (arguments
      `(#:tests? #f
@@ -114,7 +114,7 @@
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "1is0dcdhm3faf4ib4wpnq77497zynfz4r7lr7d9mfbsgndaxcnbi"))))
+      (base32 "02cs4rb4xrvrszzdwr38kqi0ha5vma5z1yi4zc16nd9q7v2s2rvy"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
@@ -222,7 +222,7 @@ to other applications, without root priviliges.")
      (uri (string-append "https://source.pantherx.org/" name "_v" version
                          ".tgz"))
      (sha256
-      (base32 "0vhb5f4klvbdf802b3i4mli3926ny4pxcnbhif8mn56dnj8lgf84"))))
+      (base32 "0vx6rgz5znz4av9gg1mxvi8r3c0a7xfb1xl8465072m91panylfr"))))
    (build-system python-build-system)
    (arguments
     `(#:tests? #f
