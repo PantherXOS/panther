@@ -29,7 +29,6 @@
   #:use-module (gnu packages xml)
   #:use-module (px packages kde-plasma))
 
-;; TODO: DROP IF OBSOLETE
 (define-public px-widget-style
   (package
     (name "px-widget-style")
@@ -118,26 +117,6 @@
     (synopsis "LXQt Arc Dark Theme")
     (home-page "https://git.pantherx.org/franz/lxqt-arc-dark-theme")
     (description "LXQt Theme based on Arc by horst3180 and LXQt dark theme")
-    (license license:gpl3+)))
-
-(define-public px-openbox-theme
-  (package
-    (name "px-openbox-theme")
-    (version "0.0.5")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_v" version
-                           ".tgz"))
-       (sha256
-        (base32 "19ir80lknf0lxb3qfy3s0zxl1ly1dxw83d33304zj2zpghd77i37"))))
-    (build-system cmake-build-system)
-    (arguments
-     `(#:tests? #f))
-    (synopsis "Arc Openbox theme")
-    (home-page "https://github.com/dglava/arc-openbox")
-    (description
-     "Openbox theme created to fit in nicely with the Arc GTK theme.")
     (license license:gpl3+)))
 
 (define-public sddm-darkine-theme
@@ -264,79 +243,6 @@
     (home-page "https://snwh.org")
     (description "Paper is an open source FreeDesktop icon project")
     (license license:expat)))
-
-;; TODO: DROP IF OBSOLETE
-(define-public px-lxqt-themes
-  (package
-    (name "px-lxqt-themes")
-    (version "1.3.0-u1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_" version
-                           ".tgz"))
-       (sha256
-        (base32 "06zzwym5id6a2nwwvxki7c4c1c7xf2lq03rm6924gylj047hyj5q"))))
-    (build-system cmake-build-system)
-    (native-inputs `(("lxqt-build-tools" ,lxqt-build-tools)
-                     ("perl" ,perl)))
-    (arguments
-     `(#:tests? #f ;no tests
-       #:phases (modify-phases %standard-phases
-                  ;; !!! TODO I guess these Variables come from lxqt-build-tools, so maybe it would be better to update this package
-                  ;; instead of these patches.
-                  (add-after 'unpack 'patch-source
-                    (lambda _
-                      (substitute* '("CMakeLists.txt")
-                        (("DESTINATION \"\\$\\{LXQT_GRAPHICS_DIR\\}")
-                         "DESTINATION \"share/lxqt/graphics"))
-                      (substitute* '("themes/CMakeLists.txt")
-                        (("DESTINATION \"\\$\\{LXQT_SHARE_DIR\\}")
-                         "DESTINATION \"share/lxqt"))
-                      (substitute* '("wallpapers/CMakeLists.txt")
-                        (("DESTINATION \"\\$\\{LXQT_SHARE_DIR\\}")
-                         "DESTINATION \"share/lxqt"))
-                      (substitute* '("palettes/CMakeLists.txt")
-                        (("DESTINATION \"\\$\\{LXQT_SHARE_DIR\\}")
-                         "DESTINATION \"share/lxqt")) #t)))))
-    (home-page "https://lxqt-project.org/")
-    (synopsis "Themes, graphics and icons for LXQt")
-    (description "This package comprises a number of graphic files and themes
-for LXQt.")
-    ;; The whole package is released under LGPL 2.1+, while the LXQt logo is
-    ;; licensed under CC-BY-SA 3.0.
-    (license license:lgpl2.1+)))
-
-(define-public px-settings-service-plugin-theme-dark-bright
-  (package
-    (name "px-settings-service-plugin-theme-dark-bright")
-    (version "0.2.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_" version
-                           ".tgz"))
-       (sha256
-        (base32 "0svx2z0ws4ck5p1bzw57y4rasmjshna4wx2pqlmak621ghrrnfvn"))))
-    (build-system cmake-build-system)
-    (arguments
-     `(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'fix-screenshot-path
-                    (lambda* (#:key outputs #:allow-other-keys)
-                      (let ((out (assoc-ref outputs "out")))
-                        (substitute* "dark/theme.conf"
-                          (("dark.jpg")
-                           (string-append out "/share/px/themes/dark/dark.jpg")))
-                        (substitute* "bright/theme.conf"
-                          (("bright.jpg")
-                           (string-append out
-                            "/share/px/themes/bright/bright.jpg"))) #t))))))
-    (synopsis "PantherX Dark and Bright theme")
-    (home-page
-     "https://git.pantherx.org/development/plugins/px-settings-service-plugin-theme-dark-bright")
-    (description "PantherX Dark and Bright theme")
-    (license license:gpl3+)))
 
 (define-public px-icons
   (package
