@@ -1,7 +1,3 @@
-;;; Reza Alizadeh Majd <r.majd@pantherx.org>
-;;; Franz Geffke <franz@pantherx.org>
-;;;
-
 (define-module (px packages base)
   #:use-module (gnu system)
   #:use-module (gnu packages admin)
@@ -18,7 +14,6 @@
   #:use-module (gnu packages security-token)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages xorg)
-  #:use-module (px packages activity)
   #:use-module (px packages desktop)
   #:use-module (px packages device)
   #:use-module (px packages package-management)
@@ -72,8 +67,7 @@
   (append %px-desktop-packages-qt))
 
 (define %px-desktop-ee-packages
-  (append (list px-device-identity 
-                px-org-remote-user-activity-service)
+  (append (list px-device-identity)
           %px-desktop-packages))
 
 ;;;
