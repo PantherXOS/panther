@@ -53,8 +53,6 @@
   #:use-module (gnu packages pdf)
   #:use-module (gnu packages syncthing)
   #:use-module (gnu packages xdisorg)
-
-  #:use-module (px packages accounts)
   #:use-module (px packages atril-thumbnailer)
   #:use-module (px packages backup)
   #:use-module (px packages common)
@@ -68,7 +66,6 @@
   #:use-module (px packages images)
   #:use-module (px packages themes)
   #:use-module (px packages device)
-
   #:use-module (nongnu packages compression)
   #:use-module (nongnu packages mozilla)
   #:use-module (srfi srfi-1)
