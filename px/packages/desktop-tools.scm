@@ -37,7 +37,6 @@
   #:use-module (gnu packages xfce)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages kde-frameworks)
-  #:use-module (px packages images)
   #:use-module (px packages qt)
   #:use-module (px packages common)
   #:use-module (px packages library)
@@ -303,7 +302,7 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
     (inputs (list capnproto-0.9
                   qtbase-5
                   qtsvg-5
-                  qtcharts
+                  qtcharts-5
                   px-auth-library-cpp
                   networkmanager-qt5))
     (propagated-inputs (list px-icons))
