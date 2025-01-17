@@ -351,3 +351,35 @@ of the standard synchronization primitives.")
      "This package provides a safe and efficient Rust library for parsing, emitting,
 and manipulating YAML data.")
     (license license:expat)))
+
+(define-public rust-serde-yml-0.0.12
+  (package
+    (name "rust-serde-yml")
+    (version "0.0.12")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "serde_yml" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1p8xwz4znd6fj962y22fdvvv16gb8c0hx4iv5hjplngiidcdvqjr"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-indexmap" ,rust-indexmap-2)
+                       ("rust-itoa" ,rust-itoa-1)
+                       ("rust-libyml" ,rust-libyml-0.0.5)
+                       ("rust-memchr" ,rust-memchr-2)
+                       ("rust-ryu" ,rust-ryu-1)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-version-check" ,rust-version-check-0.9))
+       #:cargo-development-inputs (("rust-indoc" ,rust-indoc-2)
+                                   ("rust-serde" ,rust-serde-1)
+                                   ("rust-serde-derive" ,rust-serde-derive-1))))
+    (home-page "https://serdeyml.com")
+    (synopsis
+     "robust Rust library that simplifies the serialization and deserialization of Rust data structures to and from YAML format using the widely-used Serde framework.")
+    (description
+     "This package provides a robust Rust library that simplifies the serialization
+and deserialization of Rust data structures to and from YAML format using the
+widely-used Serde framework.")
+    (license (list license:expat license:asl2.0))))
