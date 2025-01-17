@@ -58,7 +58,6 @@
   #:use-module (px packages common)
   #:use-module (px packages desktop-tools)
   #:use-module (px packages document)
-  #:use-module (px packages hub)
   #:use-module (px packages library)
   #:use-module (px packages matrix-client)
   #:use-module (px packages package-management)
