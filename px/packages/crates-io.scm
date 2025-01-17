@@ -326,3 +326,28 @@ of the standard synchronization primitives.")
     (synopsis "OpenID Connect library")
     (description "This package provides @code{OpenID} Connect library.")
     (license license:expat)))
+
+(define-public rust-libyml-0.0.5
+  (package
+    (name "rust-libyml")
+    (version "0.0.5")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "libyml" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "106963pwg1gc3165bdlk8bbspmk919gk10vshhqglks3z8m700ik"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:tests? #f
+       #:cargo-inputs (("rust-anyhow" ,rust-anyhow-1)
+                       ("rust-version-check" ,rust-version-check-0.9))
+       #:cargo-development-inputs (("rust-pretty-assertions" ,rust-pretty-assertions-1))))
+    (home-page "https://libyml.com")
+    (synopsis
+     "safe and efficient Rust library for parsing, emitting, and manipulating YAML data.")
+    (description
+     "This package provides a safe and efficient Rust library for parsing, emitting,
+and manipulating YAML data.")
+    (license license:expat)))
