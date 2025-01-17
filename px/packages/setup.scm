@@ -1,6 +1,3 @@
-;;; Setup Packages Module for PantherX
-;;; Hamzeh Nasajpour (h.nasajpour@pantherx.org)
-
 (define-module (px packages setup)
   #:use-module ((guix licenses)
                 #:prefix license:)
@@ -28,42 +25,6 @@
   #:use-module (gnu packages time)
   #:use-module (gnu packages xorg)
   #:use-module (px packages common))
-
-(define-public px-first-login-welcome-screen
-  (package
-    (name "px-first-login-welcome-screen")
-    (version "0.0.4")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/"
-                           name
-                           "_" ;
-                           version
-                           ".tgz"))
-       (sha256
-        (base32 "1av540acbwpn7ccc790bifmndfx7kscx6y7y1nqln6cmmazvzfvn"))))
-    (build-system cmake-build-system)
-    (arguments
-     '(#:tests? #f ;no tests
-       #:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'patch-chpasswd-path
-                    (lambda* (#:key inputs #:allow-other-keys)
-                      (let ((shadow (assoc-ref inputs "shadow")))
-                        (substitute* "helper/px-first-login-password-helper.cpp"
-                          (("chpasswd")
-                           (string-append shadow "/sbin/chpasswd"))) #t))))))
-    (inputs `(("qtbase" ,qtbase-5)
-              ("qtlinguist" ,qttools-5)
-              ("capnproto" ,capnproto-0.9)
-              ("polkit-qt" ,polkit-qt)
-              ("shadow" ,shadow)))
-    (propagated-inputs `(("pkg-config" ,pkg-config)))
-    (home-page "https://www.pantherx.org/")
-    (synopsis "PantherX Setup Assistant")
-    (description
-     "This package provides cli and gui applications for Setup PantherX Devices")
-    (license license:gpl3)))
 
 (define-public px-setup-assistant
   (package
