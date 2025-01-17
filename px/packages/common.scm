@@ -25,8 +25,7 @@
   #:use-module (gnu packages curl)
   #:use-module (gnu packages check)
   #:use-module (gnu packages networking)
-  #:use-module (px packages python-xyz)
-  #:use-module (px packages common))
+  #:use-module (px packages python-xyz))
 
 (define-public capnproto-0.9
   (package
