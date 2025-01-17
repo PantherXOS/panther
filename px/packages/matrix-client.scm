@@ -33,9 +33,9 @@
   #:use-module (gnu packages tls)
   #:use-module (gnu packages xorg)
   #:use-module (px packages aidc)
-  #:use-module (px packages accounts)
   #:use-module (px packages gstreamer)
   #:use-module (px packages common)
+  #:use-module (px packages library)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system meson)
@@ -46,7 +46,6 @@
                 #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix utils)
-  #:use-module (px packages library)
   #:use-module (srfi srfi-1))
 
 (define-public qmtxclient
@@ -147,18 +146,6 @@ notification, emojis, E2E encryption, and voip calls.")
     (inputs `(("px-auth-library-cpp" ,px-auth-library-cpp)
               ,@(package-inputs matrix-client-library)))))
 
-(define-public px-matrix-client-library-with-ciba
-  (package
-    (inherit matrix-client-library-with-ciba)
-    (name "px-matrix-client-library-with-ciba")
-    (arguments
-     `(#:configure-flags '("-DCIBA_AUTHENTICATION=ON"
-                           "-DPX_ACCOUNTS_INTEGRATION=ON")
-       ,@(package-arguments matrix-client-library)))
-    (inputs `(("capnproto" ,capnproto-0.9)
-              ("px-accounts-matrix-bridge" ,px-accounts-matrix-bridge)
-              ,@(package-inputs matrix-client-library-with-ciba)))))
-
 (define-public matrix-client-gui-library
   (package
     (name "matrix-client-gui-library")
@@ -215,30 +202,6 @@ notification, emojis, E2E encryption, and voip calls.")
     (synopsis "")
     (description "")
     (license license:gpl3+)))
-
-(define-public matrix-client-gui
-  (package
-    (inherit matrix-client-gui-library)
-    (name "matrix-client-gui")
-    (arguments
-     `(#:tests? #f ;no tests
-       #:phases (modify-phases %standard-phases
-                  (replace 'configure
-                    (lambda* (#:key outputs #:allow-other-keys)
-                      (substitute* "MatrixClientApp.pro"
-                        (("/usr")
-                         (assoc-ref outputs "out")))
-                      (substitute* "configurations/configurations.pri"
-                        (("/usr")
-                         (assoc-ref outputs "out")))
-                      (invoke "qmake" "MatrixClientApp.pro"))))))
-    (inputs `(("px-matrix-client-library-with-ciba" ,px-matrix-client-library-with-ciba)
-              ("px-auth-library-cpp" ,px-auth-library-cpp)
-              ("px-accounts-matrix-bridge" ,px-accounts-matrix-bridge)
-              ("capnproto" ,capnproto-0.9)
-              ,@(fold alist-delete
-                      (package-inputs matrix-client-gui-library)
-                      '("matrix-client-library"))))))
 
 (define-public matrix-client-call-auto-accept
   (package
