@@ -1051,14 +1051,15 @@ upload, and reCAPTCHA.")
        (uri (pypi-uri "sentry_sdk" version))
        (sha256
         (base32 "1hbfj9dxf705ap7cvx05xsc47f2v5552qb10mcvvrc6886xw1n4m"))))
-    (build-system pyproject-build-system)
+    (build-system python-build-system)
     (arguments
       (list #:tests? #f
             #:phases
             #~(modify-phases %standard-phases
                 (delete 'sanity-check))))
     (propagated-inputs (list python-certifi 
-                             python-urllib3))
+                             python-urllib3
+                             python-setuptools-57))
                              ;; tests
                              ;; django fails: Requested settings, but settings are not configured.
                              ;  python-starlette
