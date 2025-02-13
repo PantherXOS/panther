@@ -9,6 +9,38 @@
 (define-public pnpm
   (package
     (name "pnpm")
+    (version "10.3.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/pnpm/pnpm/releases/download/v"
+                           version "/pnpm-linuxstatic-"
+                           (match (or (%current-system)
+                                      (%current-target-system))
+                             ("x86_64-linux" "x64")
+                             ("aarch64-linux" "arm64"))))
+       (sha256
+        (base32 "1ndvn1h17lg0p5jg3qqfr5b038nbmw37mslahccczfcaq9390c8k"))))
+    (build-system trivial-build-system)
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder (begin
+                   (use-modules ((guix build utils)))
+                   (let* ((source (assoc-ref %build-inputs "source"))
+                          (bin (string-append %output "/bin"))
+                          (exe (string-append bin "/pnpm")))
+                     (mkdir-p bin)
+                     (copy-file source exe)
+                     (chmod exe #o755)))))
+    (home-page "https://pnpm.io")
+    (synopsis "Fast, disk space efficient package manager for nodejs")
+    (description "PNPM uses a content-addressable filesystem to
+store all files from all module directories on a disk")
+    (license license:expat)))
+
+(define-public pnpm-9
+  (package
+    (name "pnpm")
     (version "9.15.5")
     (source
      (origin
