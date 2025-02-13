@@ -36,7 +36,7 @@
 (define-public vscode
   (package
     (name "vscode")
-    (version "1.96.2")
+    (version "1.97.2")
     (source
      #f)
     (build-system binary-build-system)
