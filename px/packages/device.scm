@@ -97,7 +97,8 @@
                          ("python-pyyaml" ,python-pyyaml)
                          ("python-shortuuid" ,python-shortuuid-v1)
                          ("python-appdirs" ,python-appdirs)
-                         ("python-psutil" ,python-psutil)))
+                         ("python-psutil" ,python-psutil)
+                         ("python-joserfc", python-joserfc)))
     (home-page "https://www.pantherx.org/")
     (synopsis "PantherX Device Identity Manager")
     (description
