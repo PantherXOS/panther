@@ -294,25 +294,6 @@ It give you an easy way to pass from raw mail to Python object that you can
 use in your code.")
     (license license:asl2.0)))
 
-(define-public python-pylint-2.5.3
-  (package
-    (inherit python-pylint)
-    (name "python-pylint")
-    (version "2.5.3")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/PyCQA/pylint")
-             (commit (string-append "pylint-" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "04cgbh2z1mygar63plzziyz34yg6bdr4i0g63jp256fgnqwb1bi3"))))
-    (arguments
-     `(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (delete 'sanity-check))))))
-
 (define-public python-simplejson-3.17.0
   (package
     (inherit python-simplejson)
