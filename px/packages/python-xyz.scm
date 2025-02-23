@@ -503,18 +503,6 @@ module and then similar looking characters are removed.")
      "persist-queue implements a file-based queue and a serial of sqlite3-based queues")
     (license license:bsd-2)))
 
-(define-public python-json-logger-0.1.10
-  (package
-    (inherit python-json-logger)
-    (name "python-json-logger")
-    (version "0.1.10")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "python-json-logger" version))
-       (sha256
-        (base32 "1plcfi4z3rpch29l64hpjxwxwi829pg44qjvj6ag7vyj9grslb6g"))))))
-
 (define-public python-supervisor
   (package
     (name "python-supervisor")
