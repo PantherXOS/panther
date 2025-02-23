@@ -40,55 +40,6 @@
   #:use-module (gnu packages tls)
   #:use-module (gnu packages compression))
 
-(define-public pybind11-2.6.2
-  (package
-    (name "pybind11")
-    (version "2.6.2")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/pybind/pybind11")
-             (commit (string-append "v" version))))
-       (sha256
-        (base32 "1lsacpawl2gb5qlh0cawj9swsyfbwhzhwiv6553a7lsigdbadqpy"))
-       (file-name (git-file-name name version))))
-    (build-system cmake-build-system)
-    (native-inputs `(("python" ,python-wrapper)
-
-                     ;; The following dependencies are used for tests.
-                     ("python-pytest" ,python-pytest)
-                     ("catch" ,catch2-1)
-                     ("eigen" ,eigen)))
-    (arguments
-     `(#:configure-flags (list (string-append "-DCATCH_INCLUDE_DIR="
-                                              (assoc-ref %build-inputs "catch")
-                                              "/include/catch"))
-
-       #:phases (modify-phases %standard-phases
-                  (add-after 'install 'install-python
-                    (lambda* (#:key outputs #:allow-other-keys)
-                      (let ((out (assoc-ref outputs "out")))
-                        (with-directory-excursion "../source"
-                          (setenv "PYBIND11_USE_CMAKE" "yes")
-                          (invoke "python"
-                                  "setup.py"
-                                  "install"
-                                  "--single-version-externally-managed"
-                                  "--root=/"
-                                  (string-append "--prefix=" out)))))))
-
-       #:test-target "check"))
-    (home-page "https://github.com/pybind/pybind11/")
-    (synopsis "Seamless operability between C++11 and Python")
-    (description
-     "@code{pybind11} is a lightweight header-only library that exposes C++
-types in Python and vice versa, mainly to create Python bindings of existing
-C++ code.  Its goals and syntax are similar to the @code{Boost.Python}
-library: to minimize boilerplate code in traditional extension modules by
-inferring type information using compile-time introspection.")
-    (license license:bsd-3)))
-
 (define-public python-maestral-qt
   (package
     (name "python-maestral-qt")
