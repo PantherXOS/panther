@@ -503,24 +503,6 @@ module and then similar looking characters are removed.")
      "persist-queue implements a file-based queue and a serial of sqlite3-based queues")
     (license license:bsd-2)))
 
-(define-public strict-rfc3339
-  (package
-    (name "strict-rfc3339")
-    (version "0.7")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "strict-rfc3339" version))
-       (sha256
-        (base32 "0xqjbsn0g1h88rayh5yrpdagq60zfwrfs3yvk6rmgby3vyz1gbaw"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f))
-    (home-page "https://github.com/danielrichman/strict-rfc3339")
-    (synopsis "Strict, simple, lightweight RFC3339 functions.")
-    (description "Strict, simple, lightweight RFC3339 functions.")
-    (license license:gpl3+)))
-
 (define-public python-json-logger-0.1.10
   (package
     (inherit python-json-logger)
