@@ -446,18 +446,6 @@ module and then similar looking characters are removed.")
     (description "Please use Python2.7+. Also compatible with Python 3.0+.")
     (license license:expat)))
 
-(define-public python-pyrsistent-0.14.11
-  (package
-    (inherit python-pyrsistent)
-    (name "python-pyrsistent")
-    (version "0.14.11")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "pyrsistent" version))
-       (sha256
-        (base32 "1qkh74bm296mp5g3r11lgsksr6bh4w1bf8pji4nmxdlfj542ga1w"))))))
-
 (define-public python-click-8
   (package
     (inherit python-click)
