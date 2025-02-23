@@ -294,21 +294,6 @@ It give you an easy way to pass from raw mail to Python object that you can
 use in your code.")
     (license license:asl2.0)))
 
-(define-public python-pyscard-1.9.9
-  (package
-    (inherit python-pyscard)
-    (name "python-pyscard-1.9.9")
-    (version "1.9.9")
-    (source
-     (origin
-       (method url-fetch)
-       ;; The maintainer publishes releases on various sites, but
-       ;; SourceForge is apparently the only one with a signed release.
-       (uri (string-append "mirror://sourceforge/pyscard/pyscard/pyscard%20"
-                           version "/pyscard-" version ".tar.gz"))
-       (sha256
-        (base32 "082cjkbxadaz2jb4rbhr0mkrirzlqyqhcf3r823qb0q1k50ybgg6"))))))
-
 (define-public python-shortuuid-v1
   (package
     (inherit python-shortuuid)
