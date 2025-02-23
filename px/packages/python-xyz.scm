@@ -458,18 +458,6 @@ module and then similar looking characters are removed.")
        (sha256
         (base32 "0ymdyf37acq4qxh038q0xx44qgj6y2kf0jd0ivvix6qij88w214c"))))))
 
-(define-public python-pytz-2018.9
-  (package
-    (inherit python-pytz)
-    (name "python-pytz")
-    (version "2018.9")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "pytz" version))
-       (sha256
-        (base32 "0k1pqnq3c4gvcspjxf3fschdjn71fk89i4wz801rxqh7f145xw6m"))))))
-
 (define-public python-mypy
   (package
     (name "python-mypy")
