@@ -330,27 +330,6 @@ and URL-safe UUIDs.  UUIDs are generated using the built-in Python @code{uuid}
 module and then similar looking characters are removed.")
     (license license:bsd-3)))
 
-(define-public python-pyyaml-v5.3.1
-  (package
-    (name "python-pyyaml-v5.3.1")
-    (version "5.3.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "PyYAML" version))
-       (sha256
-        (base32 "0pb4zvkfxfijkpgd1b86xjsqql97ssf1knbd1v53wkg1qm9cgsmq"))))
-    (build-system python-build-system)
-    (inputs `(("libyaml" ,libyaml)))
-    (home-page "https://pyyaml.org")
-    (synopsis "YAML parser and emitter for Python")
-    (description
-     "PyYAML is a YAML parser and emitter for Python.  PyYAML features a
-complete YAML 1.1 parser, Unicode support, pickle support, capable extension
-API, and sensible error messages.  PyYAML supports standard YAML tags and
-provides Python-specific tags that represent an arbitrary Python object.")
-    (license license:expat)))
-
 (define-public python-jose-3.1.0
   (package
     (name "python-jose-3.1.0")
