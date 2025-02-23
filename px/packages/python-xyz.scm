@@ -294,18 +294,6 @@ It give you an easy way to pass from raw mail to Python object that you can
 use in your code.")
     (license license:asl2.0)))
 
-(define-public python-simplejson-3.17.0
-  (package
-    (inherit python-simplejson)
-    (name "python-simplejson-3.17.0")
-    (version "3.17.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "simplejson" version))
-       (sha256
-        (base32 "108yf3252fy4ndqab7h46raksxfhcn113bzy2yd8369vidrjnjrb"))))))
-
 (define-public python-wrapt-1.12.1
   (package
     (inherit python-wrapt)
