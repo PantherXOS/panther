@@ -288,27 +288,6 @@ module and then similar looking characters are removed.")
     (description "todo.")
     (license license:psfl)))
 
-(define-public python-authlib-0.14.3
-  (package
-    (name "python-authlib-0.14.3")
-    (version "0.14.3")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "Authlib" version))
-       (sha256
-        (base32 "1xljzkzhhc27rbr9zj37iv7cbwf6wqgbyq9gmki3svwrks790lnc"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f))
-
-    (native-inputs `(("python-cryptography" ,python-cryptography)))
-
-    (home-page "")
-    (synopsis "")
-    (description "todo.")
-    (license license:psfl)))
-
 (define-public python-requests-cache
   (package
     (name "python-requests-cache")

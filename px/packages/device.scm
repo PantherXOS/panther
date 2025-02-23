@@ -92,7 +92,6 @@
               ("bash-minimal" ,bash-minimal)))
     (native-inputs `(("pkg-config" ,pkg-config)))
     (propagated-inputs `(("python-requests" ,python-requests)
-                         ("python-authlib-0.14.3" ,python-authlib-0.14.3)
                          ("python-pycryptodomex" ,python-pycryptodomex)
                          ("python-pyyaml" ,python-pyyaml)
                          ("python-shortuuid" ,python-shortuuid-v1)
