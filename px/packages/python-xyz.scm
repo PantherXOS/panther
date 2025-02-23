@@ -923,38 +923,6 @@ communicating with your Coldcard over USB")
     (description "This package provides a faster version of dbus-next")
     (license license:expat)))
 
-(define-public python-bleak
-  (package
-  (name "python-bleak")
-  (version "0.20.2")
-  (source
-   (origin
-     (method url-fetch)
-     (uri (pypi-uri "bleak" version))
-     (sha256
-      (base32 "1r4ynwvdpk95pjfq6m38jszf3xmzgi2skkn5zyldxrilprxa94kc"))))
-    (build-system pyproject-build-system)
-    (arguments
-     (list
-      #:tests? #false ;there are none
-      #:phases
-      #~(modify-phases %standard-phases
-          (add-after 'unpack 'use-poetry-core
-            (lambda _
-              ;; Patch to use the core poetry API.
-              (substitute* "pyproject.toml"
-                (("poetry.masonry.api")
-                 "poetry.core.masonry.api"))))
-          (delete 'sanity-check))))
-  (native-inputs (list pkg-config  python-poetry-core))
-  (propagated-inputs (list python-async-timeout
-                      python-dbus-fast
-                      python-typing-extensions))
-  (home-page "https://github.com/hbldh/bleak")
-  (synopsis "Bluetooth Low Energy platform Agnostic Klient")
-  (description "Bluetooth Low Energy platform Agnostic Klient")
-  (license license:expat)))
-
 ;; etesync-dav: Requirement.parse('Flask-WTF<1.0.0,>=0.14.2'), {'etesync-dav'})
 (define-public python-flask-wtf-0.15.1
   (package
