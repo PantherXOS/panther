@@ -294,18 +294,6 @@ It give you an easy way to pass from raw mail to Python object that you can
 use in your code.")
     (license license:asl2.0)))
 
-(define-public python-wrapt-1.12.1
-  (package
-    (inherit python-wrapt)
-    (name "python-wrapt-1.12.1")
-    (version "1.12.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "wrapt" version))
-       (sha256
-        (base32 "1mwpkdnqxf0yxj1a0hsnl06lf287qi5ap7309wm37x45zf0zlbxn"))))))
-
 (define-public python-pyscard-1.9.9
   (package
     (inherit python-pyscard)
