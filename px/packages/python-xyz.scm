@@ -458,18 +458,6 @@ module and then similar looking characters are removed.")
        (sha256
         (base32 "0ymdyf37acq4qxh038q0xx44qgj6y2kf0jd0ivvix6qij88w214c"))))))
 
-(define-public python-itsdangerous-1.1.0
-  (package
-    (inherit python-itsdangerous)
-    (name "python-itsdangerous")
-    (version "1.1.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "itsdangerous" version))
-       (sha256
-        (base32 "068zpbksq5q2z4dckh2k1zbcq43ay74ylqn77rni797j0wyh66rj"))))))
-
 (define-public python-markupsafe-1.1.1
   (package
     (inherit python-markupsafe)
