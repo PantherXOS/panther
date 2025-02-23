@@ -330,35 +330,6 @@ and URL-safe UUIDs.  UUIDs are generated using the built-in Python @code{uuid}
 module and then similar looking characters are removed.")
     (license license:bsd-3)))
 
-(define-public python-jose-3.1.0
-  (package
-    (name "python-jose-3.1.0")
-    (version "3.1.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "python-jose" version))
-       (sha256
-        (base32 "1kmz7bzwvjk0nnzcpfqhbnlvv4ngkr380xnf5hj9sblnnvyvg144"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f))
-
-    (inputs `(("python-pytest-runner" ,python-pytest-runner)
-              ("python-pyasn1" ,python-pyasn1)
-              ("python-rsa" ,python-rsa)
-              ("python-ecdsa" ,python-ecdsa)))
-    (propagated-inputs `(("python-pyasn1" ,python-pyasn1)
-                         ("python-rsa" ,python-rsa)
-                         ("python-ecdsa" ,python-ecdsa)
-                         ;; ("python-urllib3" ,python-urllib3)
-                         ))
-
-    (home-page "")
-    (synopsis "")
-    (description "todo.")
-    (license license:psfl)))
-
 (define-public python-exitstatus-2.0.1
   (package
     (name "python-exitstatus-2.0.1")
