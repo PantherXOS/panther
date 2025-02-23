@@ -446,18 +446,6 @@ module and then similar looking characters are removed.")
     (description "Please use Python2.7+. Also compatible with Python 3.0+.")
     (license license:expat)))
 
-(define-public python-appdirs-1.4.3
-  (package
-    (inherit python-appdirs)
-    (name "python-appdirs")
-    (version "1.4.3")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "appdirs" version))
-       (sha256
-        (base32 "14id6wxi12lgyw0mg3bcfnf888ad07jz9yj46gfzhn186z8rcn4y"))))))
-
 (define-public python-pyrsistent-0.14.11
   (package
     (inherit python-pyrsistent)
