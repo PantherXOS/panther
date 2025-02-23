@@ -175,27 +175,6 @@ inferring type information using compile-time introspection.")
     (description "Open-source Dropbox client for macOS and Linux.")
     (license license:expat)))
 
-(define-public python-dbus-next
-  (package
-    (name "python-dbus-next")
-    (version "0.2.3")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://github.com/altdesktop/python-dbus-next/archive/refs/tags/v"
-             version ".tar.gz"))
-       (sha256
-        (base32 "0nggps85gq1f2lp9gf8kv1am3zihdk65zdg8hy2xs3p51ndnh6fv"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f))
-    (home-page "https://github.com/altdesktop/python-dbus-next")
-    (synopsis "A zero-dependency DBus library for Python with asyncio support")
-    (description
-     "A zero-dependency DBus library for Python with asyncio support")
-    (license license:expat)))
-
 (define-public python-desktop-notifier
   (package
     (name "python-desktop-notifier")
