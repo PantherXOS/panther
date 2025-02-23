@@ -458,18 +458,6 @@ module and then similar looking characters are removed.")
        (sha256
         (base32 "0ymdyf37acq4qxh038q0xx44qgj6y2kf0jd0ivvix6qij88w214c"))))))
 
-(define-public python-markupsafe-1.1.1
-  (package
-    (inherit python-markupsafe)
-    (name "python-markupsafe")
-    (version "1.1.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "MarkupSafe" version))
-       (sha256
-        (base32 "0sqipg4fk7xbixqd8kq6rlkxj664d157bdwbh93farcphf92x1r9"))))))
-
 (define-public python-pytz-2018.9
   (package
     (inherit python-pytz)
