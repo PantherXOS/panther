@@ -905,24 +905,6 @@ communicating with your Coldcard over USB")
     (description "Stuff like well known applications that's shared across px-projects.")
     (license license:expat)))
 
-(define-public python-dbus-fast
-  (package
-    (name "python-dbus-fast")
-    (version "1.95.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "dbus_fast" version))
-       (sha256
-        (base32 "0qfbqggh268vyai1dj3fpcn8p9dx9imknq02rkbfmkk2sdf4rmix"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f))
-    (home-page "https://github.com/Bluetooth-Devices/dbus-fast")
-    (synopsis "A faster version of dbus-next")
-    (description "This package provides a faster version of dbus-next")
-    (license license:expat)))
-
 ;; etesync-dav: Requirement.parse('Flask-WTF<1.0.0,>=0.14.2'), {'etesync-dav'})
 (define-public python-flask-wtf-0.15.1
   (package
