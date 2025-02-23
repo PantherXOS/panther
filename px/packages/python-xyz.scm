@@ -503,18 +503,6 @@ module and then similar looking characters are removed.")
      "persist-queue implements a file-based queue and a serial of sqlite3-based queues")
     (license license:bsd-2)))
 
-(define-public python-persist-queue-0.3.5
-  (package
-    (inherit python-persist-queue)
-    (name "python-persist-queue")
-    (version "0.3.5")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "persist-queue" version))
-       (sha256
-        (base32 "1bdz04ybjqczlp3x4wc4jq2dbr6r6zqbxak0l27av82irg91m2wn"))))))
-
 (define-public strict-rfc3339
   (package
     (name "strict-rfc3339")
