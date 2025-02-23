@@ -256,23 +256,6 @@ inferring type information using compile-time introspection.")
     (description "Handling event-based streams.")
     (license license:expat)))
 
-(define-public python-pytest-rerunfailures
-  (package
-    (name "python-pytest-rerunfailures")
-    (version "10.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "pytest-rerunfailures" version))
-       (sha256
-        (base32 "0ws2hbgh00nd6xchyi9ymyxfpg5jpxsy5mxdz4nxvriyw5nw05vn"))))
-    (build-system python-build-system)
-    (propagated-inputs `(("python-pytest" ,python-pytest)))
-    (home-page "https://github.com/pytest-dev/pytest-rerunfailures")
-    (synopsis "pytest plugin to re-run tests to eliminate flaky failures")
-    (description "pytest plugin to re-run tests to eliminate flaky failures")
-    (license #f)))
-
 (define-public python-types-requests
   (package
     (name "python-types-requests")
