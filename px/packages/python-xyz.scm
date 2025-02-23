@@ -542,18 +542,6 @@ module and then similar looking characters are removed.")
     (description "Take The Time, a time-taking library for Python.")
     (license license:expat)))
 
-(define-public python-lazy-object-proxy-1.4.0
-  (package
-    (inherit python-lazy-object-proxy)
-    (name "python-lazy-object-proxy-1.4.0")
-    (version "1.4.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "lazy-object-proxy" version))
-       (sha256
-        (base32 "1znridhk878rpgn92jvyra2gg70bi4l03ciz1i5lwdwsv4rivcbz"))))))
-
 (define-public python-ckcc-protocol
   (package
     (name "python-ckcc-protocol")
