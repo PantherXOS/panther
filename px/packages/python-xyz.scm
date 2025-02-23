@@ -266,9 +266,9 @@ and URL-safe UUIDs.  UUIDs are generated using the built-in Python @code{uuid}
 module and then similar looking characters are removed.")
     (license license:bsd-3)))
 
-(define-public python-exitstatus-2.0.1
+(define-public python-exitstatus
   (package
-    (name "python-exitstatus-2.0.1")
+    (name "python-exitstatus")
     (version "2.0.1")
     (source
      (origin
@@ -279,10 +279,6 @@ module and then similar looking characters are removed.")
     (build-system python-build-system)
     (arguments
      `(#:tests? #f))
-
-    ;; (native-inputs `(
-    ;; ("python-cryptography" ,python-cryptography)))
-
     (home-page "")
     (synopsis "")
     (description "todo.")
