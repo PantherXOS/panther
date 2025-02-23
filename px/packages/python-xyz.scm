@@ -373,33 +373,6 @@ module and then similar looking characters are removed.")
     (description "todo.")
     (license license:psfl)))
 
-(define-public python-requests-2.23
-  (package
-    (name "python-requests")
-    (version "2.23")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "requests" version))
-       (sha256
-        (base32 "1rhpg0jb08v0gd7f19jjiwlcdnxpmqi1fhvw7r4s9avddi4kvx5k"))))
-    (build-system python-build-system)
-    (propagated-inputs `(("python-certifi" ,python-certifi)
-                         ("python-chardet" ,python-chardet)
-                         ("python-idna" ,python-idna)
-                         ("python-urllib3" ,python-urllib3)))
-    (arguments
-     ;; FIXME: Some tests require network access.
-     '(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (delete 'sanity-check))))
-    (home-page "http://python-requests.org/")
-    (synopsis "Python HTTP library")
-    (description
-     "Requests is a Python HTTP client library.  It aims to be easier to use
-than Python’s urllib2 library.")
-    (license license:asl2.0)))
-
 (define-public python-requests-cache
   (package
     (name "python-requests-cache")
