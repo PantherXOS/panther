@@ -294,18 +294,6 @@ It give you an easy way to pass from raw mail to Python object that you can
 use in your code.")
     (license license:asl2.0)))
 
-(define-public python-mail-parser-3.12.0
-  (package
-    (inherit python-mail-parser)
-    (name "python-mail-parser-3.12.0")
-    (version "3.12.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "mail-parser" version))
-       (sha256
-        (base32 "052j6iwsfjg472wb74c9n9i9cgqjm6lsrkb9zs3hljkxnb24mzz8"))))))
-
 (define-public python-pylint-2.5.3
   (package
     (inherit python-pylint)
