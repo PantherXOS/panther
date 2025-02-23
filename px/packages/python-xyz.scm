@@ -114,26 +114,6 @@ inferring type information using compile-time introspection.")
     (description "A Qt user interface for the Maestral Daemon.")
     (license license:asl2.0)))
 
-(define-public python-markdown2
-  (package
-    (name "python-markdown2")
-    (version "2.4.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://github.com/trentm/python-markdown2/archive/refs/tags/"
-             version ".tar.gz"))
-       (sha256
-        (base32 "0259g4wq124fxzrqs50frkc03zldy916g68xn7n9vpw1z0iznva5"))))
-    (build-system python-build-system)
-    (home-page "https://github.com/trentm/python-markdown2")
-    (synopsis
-     "Markdown is a light text markup format and a processor to convert that to HTML.")
-    (description
-     "Markdown is a light text markup format and a processor to convert that to HTML.")
-    (license license:asl2.0)))
-
 (define-public python-maestral
   (package
     (name "python-maestral")
