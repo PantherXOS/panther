@@ -207,17 +207,18 @@ notification, emojis, E2E encryption, and voip calls.")
   (package
     (inherit matrix-client-gui-library)
     (name "matrix-client")
-    (version "0.1.55")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_" version
-                           ".tgz"))
-       (sha256
-        (base32 "1xl0pxf9j9pqnn7rmq728pwrlwrh7r7xa5wh5fd21y06i9blb9bd"))))
-    (build-system qt-build-system)
     (arguments
-     `(#:tests? #f))
+     `(#:tests? #f ;no tests
+       #:phases (modify-phases %standard-phases
+                  (replace 'configure
+                    (lambda* (#:key outputs #:allow-other-keys)
+                      (substitute* "MatrixClientApp.pro"
+                        (("/usr")
+                         (assoc-ref outputs "out")))
+                      (substitute* "configurations/configurations.pri"
+                        (("/usr")
+                         (assoc-ref outputs "out")))
+                      (invoke "qmake" "MatrixClientApp.pro"))))))
     (inputs `(("matrix-client-gui-library" ,matrix-client-gui-library)
               ,@(package-inputs matrix-client-gui-library)))))
 
