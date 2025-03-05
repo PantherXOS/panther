@@ -289,21 +289,20 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
 (define-public px-terminal-launcher
   (package
     (name "px-terminal-launcher")
-    (version "v0.2.3")
+    (version "v0.3.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_" version
                            ".tgz"))
        (sha256
-        (base32 "0fqlzbipnddn9cd0amjn9py7qzwnk5ir674lshpf7rsnv7fasalw"))))
+        (base32 "01mvvgm25xl869hca8qrj3wyn04s5dwnlfn590j3g18kijg8szgi"))))
     (build-system qt-build-system)
     (native-inputs (list qttools-5 pkg-config extra-cmake-modules))
     (inputs (list capnproto-0.9
                   qtbase-5
                   qtsvg-5
                   qtcharts-5
-                  px-auth-library-cpp
                   networkmanager-qt5))
     (propagated-inputs (list px-icons))
     (home-page "https://www.pantherx.dev")
