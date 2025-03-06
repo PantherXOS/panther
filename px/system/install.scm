@@ -1,18 +1,25 @@
 ;; PantherX disk image configuration file
-;; Reza Alizadeh Majd <r.majd@PantherX.org>
+;;
 ;; Generate a bootable image (e.g. for USB sticks, etc.) with:
 ;; $ guix system disk-image path/to/px-install.scm
 ;; Using Guix time-machine
-;; $ guix time-machine --channels=/path/to/channels.scm -- system disk-image -t iso9660 /path/to/px/system/install.scm
+;; $ guix time-machine --channels=/path/to/channels.scm -- system disk-image -t iso9660 px/system/install.scm
 
 (define-module (px system install)
+  #:use-module (guix channels)
+  #:use-module (guix gexp)
+  #:use-module (gnu packages admin)
+  #:use-module (gnu packages package-management)
+  #:use-module (gnu packages vim)
+  #:use-module (gnu packages libusb)
+  #:use-module (gnu services)
+  #:use-module (gnu services base)
   #:use-module (gnu system)
   #:use-module (gnu system install)
-  #:use-module (gnu packages admin)
-  #:use-module (gnu packages libusb)
   #:use-module (nongnu packages linux)
   #:use-module (px packages setup)
-  #:use-module (guix gexp)
+  #:use-module (px system config)
+  #:use-module (px system os)
   #:export (installation-os-nonfree))
 
 (define %issue
@@ -40,6 +47,23 @@
                      wpa-supplicant
                      ;; iPhone USB tethering
                      libimobiledevice
-                     (operating-system-packages installation-os)))))
+                     ;; Editing
+                     neovim
+                     (operating-system-packages installation-os)))
+    (services
+     (modify-services (operating-system-user-services installation-os)
+       (guix-service-type
+        config => (guix-configuration
+                   (inherit config)
+                   (guix (guix-for-channels %pantherx-default-channels))
+                   (authorized-keys
+                    (cons* %px-substitute-server-key
+                           %nonguix-substitute-server-key
+                           %default-authorized-guix-keys))
+                   (substitute-urls
+                    (cons* %px-substitute-server-url
+                           %nonguix-substitute-server-url
+                           %default-substitute-urls))
+                   (channels %pantherx-default-channels)))))))
 
 px-installation-os
