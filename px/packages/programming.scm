@@ -115,6 +115,9 @@
                       (mkdir-p (string-append %output "/bin"))
                       (invoke "ln" "-s"
                               (string-append %output "/opt/vscode/bin/code")
+                              (string-append %output "/bin/"))
+                      (invoke "ln" "-s"
+                              (string-append %output "/opt/vscode/chrome_crashpad_handler")
                               (string-append %output "/bin/")) #t))
                   (add-after 'install 'wrap-where-patchelf-does-not-work
                     (lambda* (#:key inputs outputs #:allow-other-keys)
@@ -151,6 +154,39 @@
                                                                 "/lib")
                                                  (string-append out
                                                                 "/opt/vscode")
+                                                 out) ":"))))
+                        (wrap-program (string-append out "/opt/vscode/chrome_crashpad_handler")
+                          `("FONTCONFIG_PATH" ":" prefix
+                            (,(string-join (list (string-append (assoc-ref
+                                                                 inputs
+                                                                 "fontconfig")
+                                                                "/etc/fonts")
+                                                 out) ":"))))
+                        (wrap-program (string-append out "/opt/vscode/chrome_crashpad_handler")
+                          `("LD_LIBRARY_PATH" ":" prefix
+                            (,(string-join (list (string-append (assoc-ref
+                                                                 inputs "nss")
+                                                                "/lib/nss")
+                                                 (string-append (assoc-ref
+                                                                 inputs
+                                                                 "eudev")
+                                                                "/lib")
+                                                 (string-append (assoc-ref
+                                                                 inputs "gcc")
+                                                                "/lib")
+                                                 (string-append (assoc-ref
+                                                                 inputs
+                                                                 "libxkbfile")
+                                                                "/lib")
+                                                 (string-append (assoc-ref
+                                                                 inputs "zlib")
+                                                                "/lib")
+                                                 (string-append (assoc-ref
+                                                                 inputs
+                                                                 "libsecret")
+                                                                "/lib")
+                                                 (string-append out
+                                                                "/opt/chrome_crashpad_handler")
                                                  out) ":"))))) #t)))))
     (native-inputs `(("tar" ,tar)))
     (inputs `(("vscode" ,(make-vscode-release-asset version "vscode"
