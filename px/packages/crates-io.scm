@@ -8,6 +8,7 @@
   #:use-module (gnu packages crates-windows)
   #:use-module (gnu packages crates-crypto)
   #:use-module (gnu packages crates-check)
+  #:use-module (gnu packages crates-gtk)
   #:use-module ((guix licenses)
                 #:prefix license:))
 
@@ -700,3 +701,704 @@ message passing.")
     (synopsis "Calculate statistics iteratively")
     (description "This package provides Calculate statistics iteratively.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-core-foundation-sys-0.7
+  (package
+    (name "rust-core-foundation-sys")
+    (version "0.7.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "core-foundation-sys" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1b5qfnnmg49sawwfsb0c0wbj81bqi7h7lh68pmhbidf0jjs1m9xk"))))
+    (build-system cargo-build-system)
+    (home-page "https://github.com/servo/core-foundation-rs")
+    (synopsis "Bindings to Core Foundation for macOS")
+    (description
+     "This package provides Bindings to Core Foundation for @code{macOS}.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-core-foundation-0.7
+  (package
+    (name "rust-core-foundation")
+    (version "0.7.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "core-foundation" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0wbias8f0m5kyn2pcksi0h58fdslams6nmf16w78fgn42dx4rljp"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-chrono" ,rust-chrono-0.4)
+                       ("rust-core-foundation-sys" ,rust-core-foundation-sys-0.7)
+                       ("rust-libc" ,rust-libc-0.2)
+                       ("rust-uuid" ,rust-uuid-0.5))))
+    (home-page "https://github.com/servo/core-foundation-rs")
+    (synopsis "Bindings to Core Foundation for macOS")
+    (description
+     "This package provides Bindings to Core Foundation for @code{macOS}.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-core-text-15
+  (package
+    (name "rust-core-text")
+    (version "15.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "core-text" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "07d6lbxrhzicmh3c6iyl0ky4mih8c3dlzylqngrbjpdxz38ky6qk"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-core-foundation" ,rust-core-foundation-0.7)
+                       ("rust-core-graphics" ,rust-core-graphics-0.19)
+                       ("rust-foreign-types" ,rust-foreign-types-0.3)
+                       ("rust-libc" ,rust-libc-0.2))))
+    (home-page "https://github.com/servo/core-foundation-rs")
+    (synopsis "Bindings to the Core Text framework")
+    (description "This package provides Bindings to the Core Text framework.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-servo-freetype-sys-4
+  (package
+    (name "rust-servo-freetype-sys")
+    (version "4.0.5")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "servo-freetype-sys" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1z0dvnakans4vn4vlpx4nxg984427lh8dskxxz9pglij1mnwnk1c"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-cmake" ,rust-cmake-0.1)
+                       ("rust-pkg-config" ,rust-pkg-config-0.3))))
+    (home-page "http://www.freetype.org/")
+    (synopsis
+     "FreeType is a freely available software library to render fonts")
+    (description
+     "This package provides @code{FreeType} is a freely available software library to render fonts.")
+    (license (list license:freetype license:gpl2))))
+
+(define-public rust-freetype-0.4
+  (package
+    (name "rust-freetype")
+    (version "0.4.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "freetype" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0a70x03n68997f08bi3n47q9wyi3pv5s9v4rjc79sihb84mnp4hi"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-libc" ,rust-libc-0.2)
+                       ("rust-servo-freetype-sys" ,rust-servo-freetype-sys-4))))
+    (home-page "https://github.com/servo/rust-freetype")
+    (synopsis "Bindings for Freetype used by Servo")
+    (description "This package provides Bindings for Freetype used by Servo.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-servo-fontconfig-sys-4
+  (package
+    (name "rust-servo-fontconfig-sys")
+    (version "4.0.9")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "servo-fontconfig-sys" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0v0mbicy74wd6cjd5jyqnm4nvrrr5lmg053cn16kylhg8mkf3cv2"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-expat-sys" ,rust-expat-sys-2)
+                       ("rust-pkg-config" ,rust-pkg-config-0.3)
+                       ("rust-servo-freetype-sys" ,rust-servo-freetype-sys-4))))
+    (home-page "http://fontconfig.org")
+    (synopsis "Font configuration and customization library")
+    (description
+     "This package provides Font configuration and customization library.")
+    (license license:expat)))
+
+(define-public rust-servo-fontconfig-0.4
+  (package
+    (name "rust-servo-fontconfig")
+    (version "0.4.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "servo-fontconfig" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1nach6s4hdf86jz5hlm4p5r7vin91cs7gg89mr533id5fpbzi250"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-libc" ,rust-libc-0.2)
+                       ("rust-servo-fontconfig-sys" ,rust-servo-fontconfig-sys-4))))
+    (home-page "https://github.com/servo/rust-fontconfig/")
+    (synopsis "Rust bindings for fontconfig")
+    (description "This package provides Rust bindings for fontconfig.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-font-kit-0.7
+  (package
+    (name "rust-font-kit")
+    (version "0.7.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "font-kit" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0kxas4dzv5n5p881yx20c6liwf69rnhsyfmjmi4mqm1bg7f2ravn"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-bitflags" ,rust-bitflags-1)
+                       ("rust-byteorder" ,rust-byteorder-1)
+                       ("rust-core-foundation" ,rust-core-foundation-0.7)
+                       ("rust-core-graphics" ,rust-core-graphics-0.19)
+                       ("rust-core-text" ,rust-core-text-15)
+                       ("rust-dirs" ,rust-dirs-2)
+                       ("rust-dwrote" ,rust-dwrote-0.11)
+                       ("rust-float-ord" ,rust-float-ord-0.2)
+                       ("rust-freetype" ,rust-freetype-0.4)
+                       ("rust-lazy-static" ,rust-lazy-static-1)
+                       ("rust-libc" ,rust-libc-0.2)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-pathfinder-geometry" ,rust-pathfinder-geometry-0.5)
+                       ("rust-pathfinder-simd" ,rust-pathfinder-simd-0.5)
+                       ("rust-servo-fontconfig" ,rust-servo-fontconfig-0.4)
+                       ("rust-servo-fontconfig" ,rust-servo-fontconfig-0.5)
+                       ("rust-walkdir" ,rust-walkdir-2)
+                       ("rust-winapi" ,rust-winapi-0.3))
+       #:cargo-development-inputs (("rust-clap" ,rust-clap-2)
+                                   ("rust-colored" ,rust-colored-1)
+                                   ("rust-pbr" ,rust-pbr-1)
+                                   ("rust-prettytable-rs" ,rust-prettytable-rs-0.8))))
+    (home-page "https://github.com/servo/font-kit")
+    (synopsis "cross-platform font loading library")
+    (description
+     "This package provides a cross-platform font loading library.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-palette-derive-0.5
+  (package
+    (name "rust-palette-derive")
+    (version "0.5.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "palette_derive" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1x5icddb877923rpl27bg4cjsf1x0d3layxmgwa3mpb01rh5yjqb"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
+                       ("rust-quote" ,rust-quote-1)
+                       ("rust-syn" ,rust-syn-1))))
+    (home-page "https://github.com/Ogeon/palette")
+    (synopsis "Automatically implement traits from the palette crate")
+    (description
+     "This package provides Automatically implement traits from the palette crate.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-palette-0.5
+  (package
+    (name "rust-palette")
+    (version "0.5.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "palette" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0nfc4ycdsx2qgf2wkcpxqxc0vmx7188jjjx3ppgs8qlf8qs06p50"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-approx" ,rust-approx-0.3)
+                       ("rust-num-traits" ,rust-num-traits-0.2)
+                       ("rust-palette-derive" ,rust-palette-derive-0.5)
+                       ("rust-phf" ,rust-phf-0.8)
+                       ("rust-phf-codegen" ,rust-phf-codegen-0.8)
+                       ("rust-serde" ,rust-serde-1))
+       #:cargo-development-inputs (("rust-clap" ,rust-clap-2)
+                                   ("rust-csv" ,rust-csv-1)
+                                   ("rust-image" ,rust-image-0.22)
+                                   ("rust-lazy-static" ,rust-lazy-static-1)
+                                   ("rust-serde" ,rust-serde-1)
+                                   ("rust-serde-derive" ,rust-serde-derive-1)
+                                   ("rust-serde-json" ,rust-serde-json-1))))
+    (home-page "https://github.com/Ogeon/palette")
+    (synopsis
+     "Convert and manage colors with a focus on correctness, flexibility and ease of use")
+    (description
+     "This package provides Convert and manage colors with a focus on correctness, flexibility and ease of
+use.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-piston-0.49
+  (package
+    (name "rust-piston")
+    (version "0.49.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "piston" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1y0rbw92mzagqmwk79wv9axq0m7aid0s0d5cppyzh33wrxhdl3xj"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-pistoncore-event-loop" ,rust-pistoncore-event-loop-0.49)
+                       ("rust-pistoncore-input" ,rust-pistoncore-input-0.28)
+                       ("rust-pistoncore-window" ,rust-pistoncore-window-0.44))))
+    (home-page "https://github.com/PistonDevelopers/piston")
+    (synopsis "The Piston game engine core libraries")
+    (description
+     "This package provides The Piston game engine core libraries.")
+    (license license:expat)))
+
+(define-public rust-interpolation-0.2
+  (package
+    (name "rust-interpolation")
+    (version "0.2.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "interpolation" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "00icvvgc72zdgyrwwg2p0wad4hry4d2vd6l9iqpyjpmw5dykbdyk"))))
+    (build-system cargo-build-system)
+    (home-page "https://github.com/pistondevelopers/interpolation")
+    (synopsis "library for interpolation")
+    (description "This package provides a library for interpolation.")
+    (license license:expat)))
+
+(define-public rust-read-color-1
+  (package
+    (name "rust-read-color")
+    (version "1.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "read_color" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1np0pk31ak7hni4hri3m75mbf8py1wdfjshmrj5krbd4p9c8hk4z"))))
+    (build-system cargo-build-system)
+    (home-page "https://github.com/pistondevelopers/read_color")
+    (synopsis "simple library for reading hex colors")
+    (description
+     "This package provides a simple library for reading hex colors.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-vecmath-1
+  (package
+    (name "rust-vecmath")
+    (version "1.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "vecmath" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0shmj76rj7rqv377vy365xwr5rx23kxqgkqxxrymdjjvv3hf2slm"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-piston-float" ,rust-piston-float-1))))
+    (home-page "https://github.com/pistondevelopers/vecmath")
+    (synopsis
+     "simple and type agnostic library for vector math designed for reexporting")
+    (description
+     "This package provides a simple and type agnostic library for vector math
+designed for reexporting.")
+    (license license:expat)))
+
+(define-public rust-piston2d-graphics-0.36
+  (package
+    (name "rust-piston2d-graphics")
+    (version "0.36.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "piston2d-graphics" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1wqzrs8qqksr8z3d3jizj1r57mxc4xmdagfasdrh8pnzyqv7qz0v"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-fnv" ,rust-fnv-1)
+                       ("rust-interpolation" ,rust-interpolation-0.2)
+                       ("rust-piston-texture" ,rust-piston-texture-0.8)
+                       ("rust-piston-viewport" ,rust-piston-viewport-1)
+                       ("rust-read-color" ,rust-read-color-1)
+                       ("rust-rusttype" ,rust-rusttype-0.8)
+                       ("rust-vecmath" ,rust-vecmath-1))))
+    (home-page "https://github.com/pistondevelopers/graphics")
+    (synopsis "library for 2D graphics that works with multiple back-ends")
+    (description
+     "This package provides a library for 2D graphics that works with multiple
+back-ends.")
+    (license license:expat)))
+
+(define-public rust-gl-generator-0.10
+  (package
+    (name "rust-gl-generator")
+    (version "0.10.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "gl_generator" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0146yd4i9wbgfrhnkc04w7n7civbanznc0q87skp6v7p7hbszzx0"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-khronos-api" ,rust-khronos-api-3)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-xml-rs" ,rust-xml-rs-0.8))))
+    (home-page "https://github.com/brendanzab/gl-rs/")
+    (synopsis
+     "Code generators for creating bindings to the Khronos OpenGL APIs")
+    (description
+     "This package provides Code generators for creating bindings to the Khronos @code{OpenGL} APIs.")
+    (license license:asl2.0)))
+
+(define-public rust-glutin-0.18
+  (package
+    (name "rust-glutin")
+    (version "0.18.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "glutin" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1zpaqq9zi8r7ldp7df5vp00hi75xwmwfg6rjn7jcvk0x5j2lps0b"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-android-glue" ,rust-android-glue-0.2)
+                       ("rust-cgl" ,rust-cgl-0.2)
+                       ("rust-cocoa" ,rust-cocoa-0.17)
+                       ("rust-core-foundation" ,rust-core-foundation-0.6)
+                       ("rust-core-graphics" ,rust-core-graphics-0.16)
+                       ("rust-gl-generator" ,rust-gl-generator-0.9)
+                       ("rust-lazy-static" ,rust-lazy-static-1)
+                       ("rust-libc" ,rust-libc-0.2)
+                       ("rust-objc" ,rust-objc-0.2)
+                       ("rust-osmesa-sys" ,rust-osmesa-sys-0.1)
+                       ("rust-shared-library" ,rust-shared-library-0.1)
+                       ("rust-wayland-client" ,rust-wayland-client-0.20)
+                       ("rust-winapi" ,rust-winapi-0.3)
+                       ("rust-winit" ,rust-winit-0.17)
+                       ("rust-x11-dl" ,rust-x11-dl-2))))
+    (home-page "https://github.com/rust-windowing/glutin")
+    (synopsis "Cross-platform OpenGL context provider")
+    (description
+     "This package provides Cross-platform @code{OpenGL} context provider.")
+    (license license:asl2.0)))
+
+(define-public rust-gl-0.11
+  (package
+    (name "rust-gl")
+    (version "0.11.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "gl" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1wcqpyhck0xriffkmgmldy33lwk2044hb4l02d44vm4fbvicin6p"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-gl-generator" ,rust-gl-generator-0.10))
+       #:cargo-development-inputs (("rust-glutin" ,rust-glutin-0.18))))
+    (home-page "https://github.com/brendanzab/gl-rs/")
+    (synopsis "OpenGL bindings")
+    (description "This package provides @code{OpenGL} bindings.")
+    (license license:asl2.0)))
+
+(define-public rust-pistoncore-glutin-window-0.63
+  (package
+    (name "rust-pistoncore-glutin-window")
+    (version "0.63.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "pistoncore-glutin_window" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0dhbyxarv5i742d400bmqdqq3f8c25kcgcg0xavrc18dc913rixc"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-gl" ,rust-gl-0.11)
+                       ("rust-glutin" ,rust-glutin-0.21)
+                       ("rust-pistoncore-input" ,rust-pistoncore-input-0.28)
+                       ("rust-pistoncore-window" ,rust-pistoncore-window-0.44)
+                       ("rust-shader-version" ,rust-shader-version-0.6))))
+    (home-page "https://github.com/pistondevelopers/glutin_window")
+    (synopsis "Piston window back-end using the Glutin library")
+    (description
+     "This package provides a Piston window back-end using the Glutin library.")
+    (license license:expat)))
+
+(define-public rust-shader-version-0.6
+  (package
+    (name "rust-shader-version")
+    (version "0.6.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "shader_version" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1yk651xc9irl3pl0rlplypzyzy44d0j03ji0j7hjjdjknwzpi3j7"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-piston-graphics-api-version" ,rust-piston-graphics-api-version-0.2))))
+    (home-page "https://github.com/pistondevelopers/shader_version")
+    (synopsis "helper library for detecting and picking compatible shaders")
+    (description
+     "This package provides a helper library for detecting and picking compatible
+shaders.")
+    (license license:expat)))
+
+(define-public rust-piston-gfx-texture-0.41
+  (package
+    (name "rust-piston-gfx-texture")
+    (version "0.41.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "piston-gfx_texture" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0z699bgwyv5llkb604ajm50fqrxnlayaakrgghcp95qgcabi33fy"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-gfx" ,rust-gfx-0.18)
+                       ("rust-gfx-core" ,rust-gfx-core-0.9)
+                       ("rust-image" ,rust-image-0.23)
+                       ("rust-piston-texture" ,rust-piston-texture-0.8))))
+    (home-page "https://github.com/pistondevelopers/gfx_texture")
+    (synopsis
+     "Gfx texture representation that works nicely with Piston libraries")
+    (description
+     "This package provides a Gfx texture representation that works nicely with Piston
+libraries.")
+    (license license:expat)))
+
+(define-public rust-find-folder-0.3
+  (package
+    (name "rust-find-folder")
+    (version "0.3.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "find_folder" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "06xr2sjiyjrwxlgjpf8ig6pq0ayfjv6qxmmfakw5j2ssp67h2vcz"))))
+    (build-system cargo-build-system)
+    (home-page "https://github.com/PistonDevelopers/find_folder")
+    (synopsis
+     "simple tool for finding the absolute path to a folder with a given name.")
+    (description
+     "This package provides a simple tool for finding the absolute path to a folder
+with a given name.")
+    (license license:expat)))
+
+(define-public rust-piston2d-gfx-graphics-0.68
+  (package
+    (name "rust-piston2d-gfx-graphics")
+    (version "0.68.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "piston2d-gfx_graphics" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "14kh0dwx5hl3035bx5v371jicwdld3bplrpn0xasrlivk88l5fyj"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-draw-state" ,rust-draw-state-0.8)
+                       ("rust-gfx" ,rust-gfx-0.18)
+                       ("rust-piston-gfx-texture" ,rust-piston-gfx-texture-0.41)
+                       ("rust-piston-shaders-graphics2d" ,rust-piston-shaders-graphics2d-0.3)
+                       ("rust-piston2d-graphics" ,rust-piston2d-graphics-0.36)
+                       ("rust-shader-version" ,rust-shader-version-0.6))
+       #:cargo-development-inputs (("rust-find-folder" ,rust-find-folder-0.3)
+                                   ("rust-gfx-device-gl" ,rust-gfx-device-gl-0.16)
+                                   ("rust-image" ,rust-image-0.23)
+                                   ("rust-piston" ,rust-piston-0.49)
+                                   ("rust-pistoncore-glutin-window" ,rust-pistoncore-glutin-window-0.63))))
+    (home-page "https://github.com/PistonDevelopers/gfx_graphics")
+    (synopsis "Gfx 2D back-end for the Piston game engine")
+    (description
+     "This package provides a Gfx 2D back-end for the Piston game engine.")
+    (license license:expat)))
+
+(define-public rust-piston-window-0.108
+  (package
+    (name "rust-piston-window")
+    (version "0.108.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "piston_window" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0w0k1dwx9ncyxc46qmff04v3vssafhjlbs1rv82hf89w0ydwvidq"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-gfx" ,rust-gfx-0.18)
+                       ("rust-gfx-device-gl" ,rust-gfx-device-gl-0.16)
+                       ("rust-piston" ,rust-piston-0.49)
+                       ("rust-piston-texture" ,rust-piston-texture-0.8)
+                       ("rust-piston2d-gfx-graphics" ,rust-piston2d-gfx-graphics-0.68)
+                       ("rust-piston2d-graphics" ,rust-piston2d-graphics-0.36)
+                       ("rust-pistoncore-glutin-window" ,rust-pistoncore-glutin-window-0.63)
+                       ("rust-shader-version" ,rust-shader-version-0.6))))
+    (home-page "https://github.com/pistondevelopers/piston_window")
+    (synopsis "The official Piston window wrapper for the Piston game engine")
+    (description
+     "This package provides The official Piston window wrapper for the Piston game engine.")
+    (license license:expat)))
+
+(define-public rust-gfx-gl-0.6
+  (package
+    (name "rust-gfx-gl")
+    (version "0.6.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "gfx_gl" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0ppzj4bgjawdqz3fvnscqk8lnmgh95pwzh0v96vwy809cxj83lzj"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-gl-generator" ,rust-gl-generator-0.14))))
+    (home-page "https://github.com/gfx-rs/gfx_gl")
+    (synopsis "OpenGL bindings for gfx, based on gl-rs")
+    (description
+     "This package provides @code{OpenGL} bindings for gfx, based on gl-rs.")
+    (license license:asl2.0)))
+
+(define-public rust-gfx-device-gl-0.16
+  (package
+    (name "rust-gfx-device-gl")
+    (version "0.16.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "gfx_device_gl" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1g5yg19jvxdmviljyakhd6253bnb2qg7v8iscf48ihc0ldgki70h"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-gfx-core" ,rust-gfx-core-0.9)
+                       ("rust-gfx-gl" ,rust-gfx-gl-0.6)
+                       ("rust-log" ,rust-log-0.4))))
+    (home-page "https://github.com/gfx-rs/gfx")
+    (synopsis "OpenGL backend for gfx-rs")
+    (description "This package provides @code{OpenGL} backend for gfx-rs.")
+    (license license:asl2.0)))
+
+(define-public rust-plotters-0.2
+  (package
+    (name "rust-plotters")
+    (version "0.2.15")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "plotters" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1fzn4h0mk5d8z5wpnggkajypbb2mv6lrsqih0gg37fmywzxqa5hd"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-cairo-rs" ,rust-cairo-rs-0.8)
+                       ("rust-chrono" ,rust-chrono-0.4)
+                       ("rust-font-kit" ,rust-font-kit-0.7)
+                       ("rust-gif" ,rust-gif-0.10)
+                       ("rust-image" ,rust-image-0.23)
+                       ("rust-js-sys" ,rust-js-sys-0.3)
+                       ("rust-lazy-static" ,rust-lazy-static-1)
+                       ("rust-num-traits" ,rust-num-traits-0.2)
+                       ("rust-palette" ,rust-palette-0.5)
+                       ("rust-piston-window" ,rust-piston-window-0.108)
+                       ("rust-rusttype" ,rust-rusttype-0.8)
+                       ("rust-wasm-bindgen" ,rust-wasm-bindgen-0.2)
+                       ("rust-web-sys" ,rust-web-sys-0.3))
+       #:cargo-development-inputs (("rust-criterion" ,rust-criterion-0.3)
+                                   ("rust-itertools" ,rust-itertools-0.9)
+                                   ("rust-rand" ,rust-rand-0.7)
+                                   ("rust-rand-distr" ,rust-rand-distr-0.2)
+                                   ("rust-rand-xorshift" ,rust-rand-xorshift-0.2)
+                                   ("rust-rayon" ,rust-rayon-1)
+                                   ("rust-wasm-bindgen-test" ,rust-wasm-bindgen-test-0.3))))
+    (home-page "https://plotters-rs.github.io/")
+    (synopsis
+     "Rust drawing library focus on data plotting for both WASM and native applications")
+    (description
+     "This package provides a Rust drawing library focus on data plotting for both
+WASM and native applications.")
+    (license license:expat)))
+
+(define-public rust-criterion-0.3.3
+  (package
+    (inherit rust-criterion-0.4)
+    (name "rust-criterion")
+    (version "0.3.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "criterion" version))
+       (file-name
+        (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1n24l95pgjig4nfhgm3vn9gxb49ky5ylr8390scl7wbcxk7agnkh"))))
+    (arguments
+     `(#:tests? #f
+       #:cargo-inputs
+       (("rust-async-std" ,rust-async-std-1)
+        ("rust-atty" ,rust-atty-0.2)
+        ("rust-cast" ,rust-cast-0.3)
+        ("rust-clap" ,rust-clap-2)
+        ("rust-criterion-plot" ,rust-criterion-plot-0.4)
+        ("rust-csv" ,rust-csv-1)
+        ("rust-futures" ,rust-futures-0.3)
+        ("rust-itertools" ,rust-itertools-0.9)
+        ("rust-lazy-static" ,rust-lazy-static-1)
+        ("rust-num-traits" ,rust-num-traits-0.2)
+        ("rust-oorandom" ,rust-oorandom-11)
+        ("rust-plotters" ,rust-plotters-0.2)
+        ("rust-rayon" ,rust-rayon-1)
+        ("rust-regex" ,rust-regex-1)
+        ("rust-serde" ,rust-serde-1)
+        ("rust-serde-cbor" ,rust-serde-cbor-0.11)
+        ("rust-serde-derive" ,rust-serde-derive-1)
+        ("rust-serde-json" ,rust-serde-json-1)
+        ("rust-smol" ,rust-smol-1)
+        ("rust-tinytemplate" ,rust-tinytemplate-1)
+        ("rust-tokio" ,rust-tokio-1)
+        ("rust-walkdir" ,rust-walkdir-2))
+       #:cargo-development-inputs
+       (("rust-approx" ,rust-approx-0.5)
+        ("rust-futures" ,rust-futures-0.3)
+        ("rust-quickcheck" ,rust-quickcheck-1)
+        ("rust-rand" ,rust-rand-0.8)
+        ("rust-tempfile" ,rust-tempfile-3))))))
