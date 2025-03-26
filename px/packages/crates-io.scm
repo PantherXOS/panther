@@ -7,6 +7,7 @@
   #:use-module (gnu packages crates-graphics)
   #:use-module (gnu packages crates-windows)
   #:use-module (gnu packages crates-crypto)
+  #:use-module (gnu packages crates-check)
   #:use-module ((guix licenses)
                 #:prefix license:))
 
@@ -506,3 +507,25 @@ widely-used Serde framework.")
     (synopsis "Core APIs for Rayon")
     (description "This package provides Core APIs for Rayon.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-byteorder-1.4
+  (package
+    (name "rust-byteorder")
+    (version "1.4.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "byteorder" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0456lv9xi1a5bcm32arknf33ikv76p3fr9yzki4lb2897p2qkh8l"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-development-inputs (("rust-quickcheck" ,rust-quickcheck-0.9)
+                                   ("rust-rand" ,rust-rand-0.7))))
+    (home-page "https://github.com/BurntSushi/byteorder")
+    (synopsis
+     "Library for reading/writing numbers in big-endian and little-endian")
+    (description
+     "This package provides Library for reading/writing numbers in big-endian and little-endian.")
+    (license (list license:unlicense license:expat))))
