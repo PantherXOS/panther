@@ -482,6 +482,32 @@ widely-used Serde framework.")
      "This package provides Simple work-stealing parallelism for Rust.")
     (license (list license:expat license:asl2.0))))
 
+(define-public rust-crossbeam-channel-0.5.8
+  (package
+    (name "rust-crossbeam-channel")
+    (version "0.5.8")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "crossbeam-channel" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "004jz4wxp9k26z657i7rsh9s7586dklx2c5aqf1n3w1dgzvjng53"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-test-flags '("--release" "--" "--skip=select2::main")
+       #:cargo-inputs (("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8.16))
+       #:cargo-development-inputs (("rust-num-cpus" ,rust-num-cpus-1)
+                                   ("rust-rand" ,rust-rand-0.8)
+                                   ("rust-signal-hook" ,rust-signal-hook-0.3))))
+    (home-page
+     "https://github.com/crossbeam-rs/crossbeam/tree/master/crossbeam-channel")
+    (synopsis "Multi-producer multi-consumer channels for message passing")
+    (description
+     "This package provides multi-producer multi-consumer channels for
+message passing.")
+    (license (list license:expat license:asl2.0))))
+
 (define-public rust-rayon-core-1.10
   (package
     (name "rust-rayon-core")
@@ -495,9 +521,9 @@ widely-used Serde framework.")
         (base32 "0nw3ds7agdc9a3swyjhzw9ndr60ic54apk8108676kwmy4jhcsim"))))
     (build-system cargo-build-system)
     (arguments
-     `(#:cargo-inputs (("rust-crossbeam-channel" ,rust-crossbeam-channel-0.5)
+     `(#:cargo-inputs (("rust-crossbeam-channel" ,rust-crossbeam-channel-0.5.8)
                        ("rust-crossbeam-deque" ,rust-crossbeam-deque-0.8)
-                       ("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8)
+                       ("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8.16)
                        ("rust-num-cpus" ,rust-num-cpus-1))
        #:cargo-development-inputs (("rust-libc" ,rust-libc-0.2)
                                    ("rust-rand" ,rust-rand-0.8)
