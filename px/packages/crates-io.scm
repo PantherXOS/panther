@@ -480,3 +480,29 @@ widely-used Serde framework.")
     (description
      "This package provides Simple work-stealing parallelism for Rust.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-rayon-core-1.10
+  (package
+    (name "rust-rayon-core")
+    (version "1.10.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "rayon-core" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0nw3ds7agdc9a3swyjhzw9ndr60ic54apk8108676kwmy4jhcsim"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-crossbeam-channel" ,rust-crossbeam-channel-0.5)
+                       ("rust-crossbeam-deque" ,rust-crossbeam-deque-0.8)
+                       ("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8)
+                       ("rust-num-cpus" ,rust-num-cpus-1))
+       #:cargo-development-inputs (("rust-libc" ,rust-libc-0.2)
+                                   ("rust-rand" ,rust-rand-0.8)
+                                   ("rust-rand-xorshift" ,rust-rand-xorshift-0.3)
+                                   ("rust-scoped-tls" ,rust-scoped-tls-1))))
+    (home-page "https://github.com/rayon-rs/rayon")
+    (synopsis "Core APIs for Rayon")
+    (description "This package provides Core APIs for Rayon.")
+    (license (list license:expat license:asl2.0))))
