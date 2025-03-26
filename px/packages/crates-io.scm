@@ -411,3 +411,25 @@ widely-used Serde framework.")
     (description
      "This package provides Hyper bindings for Unix domain sockets.")
     (license license:expat)))
+
+(define-public rust-prost-types-0.11
+  (package
+    (name "rust-prost-types")
+    (version "0.11.9")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "prost-types" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "04ryk38sqkp2nf4dgdqdfbgn6zwwvjraw6hqq6d9a6088shj4di1"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-arbitrary" ,rust-arbitrary-1)
+                       ("rust-prost" ,rust-prost-0.11))
+       #:cargo-development-inputs (("rust-proptest" ,rust-proptest-1))))
+    (home-page "https://github.com/tokio-rs/prost")
+    (synopsis "Prost definitions of Protocol Buffers well known types")
+    (description
+     "This package provides Prost definitions of Protocol Buffers well known types.")
+    (license license:asl2.0)))
