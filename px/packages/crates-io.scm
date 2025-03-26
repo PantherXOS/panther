@@ -459,7 +459,7 @@ widely-used Serde framework.")
 
 (define-public rust-rayon-1.6
   (package
-    (name "rust-rayon-v6")
+    (name "rust-rayon")
     (version "1.6.1")
     (source
      (origin
