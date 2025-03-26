@@ -9,6 +9,7 @@
   #:use-module (gnu packages crates-crypto)
   #:use-module (gnu packages crates-check)
   #:use-module (gnu packages crates-gtk)
+  #:use-module (gnu packages crates-tls)
   #:use-module ((guix licenses)
                 #:prefix license:))
 
@@ -1483,3 +1484,146 @@ WASM and native applications.")
      "This package provides a fast and concurrent cache library inspired by Java
 Caffeine.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-octseq-0.5
+  (package
+    (name "rust-octseq")
+    (version "0.5.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "octseq" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "04pycbrcxlmhxqmrs4jgd0kqjk9pwjil6zr4fp2wwi4wgjikqv0j"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-bytes" ,rust-bytes-1)
+                       ("rust-heapless" ,rust-heapless-0.8)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-smallvec" ,rust-smallvec-1))))
+    (home-page "https://github.com/NLnetLabs/octets/")
+    (synopsis "Abstractions for types representing octet sequences")
+    (description
+     "This package provides Abstractions for types representing octet sequences.")
+    (license license:bsd-3)))
+
+(define-public rust-siphasher-1
+  (package
+    (name "rust-siphasher")
+    (version "1.0.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "siphasher" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "17f35782ma3fn6sh21c027kjmd227xyrx06ffi8gw4xzv9yry6an"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-serde" ,rust-serde-1)
+                       ("rust-serde-json" ,rust-serde-json-1))))
+    (home-page "https://docs.rs/siphasher")
+    (synopsis "SipHash-2-4, SipHash-1-3 and 128-bit variants in pure Rust")
+    (description
+     "This package provides @code{SipHash-2-4}, @code{SipHash-1-3} and 128-bit variants in pure Rust.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-mock-instant-0.5
+  (package
+    (name "rust-mock-instant")
+    (version "0.5.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "mock_instant" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0sly2w66y6gi6d071ir94h2kiyx7rrcwxng1qv5fsn438524q7af"))))
+    (build-system cargo-build-system)
+    (home-page "https://github.com/museun/mock_instant")
+    (synopsis "a simple way to mock an std::time::Instant")
+    (description
+     "This package provides a simple way to mock an std::time::Instant.")
+    (license license:bsd-0)))
+
+(define-public rust-tokio-tfo-0.2
+  (package
+    (name "rust-tokio-tfo")
+    (version "0.2.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "tokio-tfo" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "17mb78dhn7j5d09777zjasjxhf1xpac37ivdajqckrid20zl62zk"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-cfg-if" ,rust-cfg-if-1)
+                       ("rust-futures" ,rust-futures-0.3)
+                       ("rust-libc" ,rust-libc-0.2)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-once-cell" ,rust-once-cell-1)
+                       ("rust-pin-project" ,rust-pin-project-1)
+                       ("rust-socket2" ,rust-socket2-0.5)
+                       ("rust-tokio" ,rust-tokio-1)
+                       ("rust-windows-sys" ,rust-windows-sys-0.48))))
+    (home-page "https://github.com/zonyitoo/tokio-tfo")
+    (synopsis "TCP Fast Open (TFO) in Rust for tokio")
+    (description
+     "This package provides TCP Fast Open (TFO) in Rust for tokio.")
+    (license license:expat)))
+
+(define-public rust-domain-0.10
+  (package
+    (name "rust-domain")
+    (version "0.10.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "domain" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "13f2l5g9890v1ilgn6z16y09p1as7a7ssa6dcf5aidpkv5k8c034"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-arc-swap" ,rust-arc-swap-1)
+                       ("rust-bytes" ,rust-bytes-1)
+                       ("rust-chrono" ,rust-chrono-0.4)
+                       ("rust-futures-util" ,rust-futures-util-0.3)
+                       ("rust-heapless" ,rust-heapless-0.8)
+                       ("rust-libc" ,rust-libc-0.2)
+                       ("rust-moka" ,rust-moka-0.12)
+                       ("rust-octseq" ,rust-octseq-0.5)
+                       ("rust-parking-lot" ,rust-parking-lot-0.12)
+                       ("rust-proc-macro2" ,rust-proc-macro2-1)
+                       ("rust-rand" ,rust-rand-0.8)
+                       ("rust-ring" ,rust-ring-0.17)
+                       ("rust-rustversion" ,rust-rustversion-1)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-siphasher" ,rust-siphasher-1)
+                       ("rust-smallvec" ,rust-smallvec-1)
+                       ("rust-time" ,rust-time-0.3)
+                       ("rust-tokio" ,rust-tokio-1)
+                       ("rust-tokio-rustls" ,rust-tokio-rustls-0.26)
+                       ("rust-tokio-stream" ,rust-tokio-stream-0.1)
+                       ("rust-tracing" ,rust-tracing-0.1)
+                       ("rust-tracing-subscriber" ,rust-tracing-subscriber-0.3))
+       #:cargo-development-inputs (("rust-lazy-static" ,rust-lazy-static-1)
+                                   ("rust-mock-instant" ,rust-mock-instant-0.5)
+                                   ("rust-rstest" ,rust-rstest-0.19)
+                                   ("rust-rustls-pemfile" ,rust-rustls-pemfile-2)
+                                   ("rust-serde-json" ,rust-serde-json-1)
+                                   ("rust-serde-test" ,rust-serde-test-1)
+                                   ("rust-serde-yaml" ,rust-serde-yaml-0.9)
+                                   ("rust-socket2" ,rust-socket2-0.5)
+                                   ("rust-tokio" ,rust-tokio-1)
+                                   ("rust-tokio-rustls" ,rust-tokio-rustls-0.26)
+                                   ("rust-tokio-test" ,rust-tokio-test-0.4)
+                                   ("rust-tokio-tfo" ,rust-tokio-tfo-0.2)
+                                   ("rust-webpki-roots" ,rust-webpki-roots-0.26))))
+    (home-page "https://github.com/nlnetlabs/domain/")
+    (synopsis "DNS library for Rust.")
+    (description "This package provides a DNS library for Rust.")
+    (license license:bsd-3)))
