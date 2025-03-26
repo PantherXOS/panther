@@ -1402,3 +1402,34 @@ WASM and native applications.")
         ("rust-quickcheck" ,rust-quickcheck-1)
         ("rust-rand" ,rust-rand-0.8)
         ("rust-tempfile" ,rust-tempfile-3))))))
+
+(define-public rust-quanta-0.12
+  (package
+    (name "rust-quanta")
+    (version "0.12.5")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "quanta" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "03kwh0xb7gr461jcjhrxvcj9157k1jyg2gyy0f4579nf4ilgxl9v"))))
+    (build-system cargo-build-system)
+    (arguments
+       ;; t1 should be greater than t0 by at least 14ms, was only 0ns (t0: 72038116156784, t1: 72038116152466)
+     `(#:tests? #f
+       #:cargo-inputs (("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8.16)
+                       ("rust-libc" ,rust-libc-0.2)
+                       ("rust-once-cell" ,rust-once-cell-1)
+                       ("rust-prost-types" ,rust-prost-types-0.11)
+                       ("rust-raw-cpuid" ,rust-raw-cpuid-11)
+                       ("rust-wasi" ,rust-wasi-0.11)
+                       ("rust-web-sys" ,rust-web-sys-0.3)
+                       ("rust-winapi" ,rust-winapi-0.3))
+       #:cargo-development-inputs (("rust-average" ,rust-average-0.14)
+                                   ("rust-criterion" ,rust-criterion-0.3.3)
+                                   ("rust-wasm-bindgen-test" ,rust-wasm-bindgen-test-0.3))))
+    (home-page "https://github.com/metrics-rs/quanta")
+    (synopsis "high-speed timing library")
+    (description "This package provides high-speed timing library.")
+    (license license:expat)))
