@@ -433,3 +433,26 @@ widely-used Serde framework.")
     (description
      "This package provides Prost definitions of Protocol Buffers well known types.")
     (license license:asl2.0)))
+
+(define-public rust-crossbeam-utils-0.8.16
+  (package
+    (name "rust-crossbeam-utils")
+    (version "0.8.16")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "crossbeam-utils" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "153j0gikblz7n7qdvdi8pslhi008s1yp9cmny6vw07ad7pbb48js"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-cfg-if" ,rust-cfg-if-1)
+                       ("rust-loom" ,rust-loom-0.5))
+       #:cargo-development-inputs (("rust-rand" ,rust-rand-0.8)
+                                   ("rust-rustversion" ,rust-rustversion-1))))
+    (home-page
+     "https://github.com/crossbeam-rs/crossbeam/tree/master/crossbeam-utils")
+    (synopsis "Utilities for concurrent programming")
+    (description "This package provides Utilities for concurrent programming.")
+    (license (list license:expat license:asl2.0))))
