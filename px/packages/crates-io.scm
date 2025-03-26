@@ -508,6 +508,29 @@ widely-used Serde framework.")
 message passing.")
     (license (list license:expat license:asl2.0))))
 
+(define-public rust-crossbeam-deque-0.8.3
+  (package
+    (name "rust-crossbeam-deque")
+    (version "0.8.3")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "crossbeam-deque" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1vqczbcild7nczh5z116w8w46z991kpjyw7qxkf24c14apwdcvyf"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-crossbeam-epoch" ,rust-crossbeam-epoch-0.9)
+        ("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8.16))
+       #:cargo-development-inputs (("rust-rand" ,rust-rand-0.8))))
+    (home-page
+     "https://github.com/crossbeam-rs/crossbeam/tree/master/crossbeam-deque")
+    (synopsis "Concurrent work-stealing deque")
+    (description "This package provides a concurrent work-stealing deque.")
+    (license (list license:expat license:asl2.0))))
+
 (define-public rust-rayon-core-1.10
   (package
     (name "rust-rayon-core")
@@ -522,7 +545,7 @@ message passing.")
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs (("rust-crossbeam-channel" ,rust-crossbeam-channel-0.5.8)
-                       ("rust-crossbeam-deque" ,rust-crossbeam-deque-0.8)
+                       ("rust-crossbeam-deque" ,rust-crossbeam-deque-0.8.3)
                        ("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8.16)
                        ("rust-num-cpus" ,rust-num-cpus-1))
        #:cargo-development-inputs (("rust-libc" ,rust-libc-0.2)
