@@ -508,6 +508,31 @@ widely-used Serde framework.")
 message passing.")
     (license (list license:expat license:asl2.0))))
 
+(define-public rust-crossbeam-epoch-0.9.15
+  (package
+    (name "rust-crossbeam-epoch")
+    (version "0.9.15")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "crossbeam-epoch" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1ixwc3cq816wb8rlh3ix4jnybqbyyq4l61nwlx0mfm3ck0s148df"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:tests? #f
+       #:cargo-inputs
+       (("rust-memoffset" ,rust-memoffset-0.9)
+        ("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8)
+        ("rust-loom" ,rust-loom-0.7))
+       #:cargo-development-inputs (("rust-rand" ,rust-rand-0.8))))
+    (home-page
+     "https://github.com/crossbeam-rs/crossbeam/tree/master/crossbeam-epoch")
+    (synopsis "Epoch-based garbage collection")
+    (description "This package provides an Epoch-based garbage collection.")
+    (license (list license:expat license:asl2.0))))
+
 (define-public rust-crossbeam-deque-0.8.3
   (package
     (name "rust-crossbeam-deque")
@@ -522,7 +547,7 @@ message passing.")
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
-       (("rust-crossbeam-epoch" ,rust-crossbeam-epoch-0.9)
+       (("rust-crossbeam-epoch" ,rust-crossbeam-epoch-0.9.15)
         ("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8.16))
        #:cargo-development-inputs (("rust-rand" ,rust-rand-0.8))))
     (home-page
