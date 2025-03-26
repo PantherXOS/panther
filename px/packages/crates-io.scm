@@ -529,3 +529,37 @@ widely-used Serde framework.")
     (description
      "This package provides Library for reading/writing numbers in big-endian and little-endian.")
     (license (list license:unlicense license:expat))))
+
+(define-public rust-proptest-1.0
+  (package
+    (name "rust-proptest")
+    (version "1.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "proptest" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1rdhjnf0xma5rmsq04d31n2vq1pgbm42pjc6jn3jsj8qgz09q38y"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:tests? #f 
+       #:cargo-inputs (("rust-bit-set" ,rust-bit-set-0.5)
+                       ("rust-bitflags" ,rust-bitflags-1)
+                       ("rust-byteorder" ,rust-byteorder-1)
+                       ("rust-lazy-static" ,rust-lazy-static-1)
+                       ("rust-num-traits" ,rust-num-traits-0.2)
+                       ("rust-quick-error" ,rust-quick-error-2)
+                       ("rust-rand" ,rust-rand-0.8)
+                       ("rust-rand-chacha" ,rust-rand-chacha-0.3)
+                       ("rust-rand-xorshift" ,rust-rand-xorshift-0.3)
+                       ("rust-regex-syntax" ,rust-regex-syntax-0.6)
+                       ("rust-rusty-fork" ,rust-rusty-fork-0.3)
+                       ("rust-tempfile" ,rust-tempfile-3)
+                       ("rust-x86" ,rust-x86-0.33))
+       #:cargo-development-inputs (("rust-regex" ,rust-regex-1))))
+    (home-page "https://proptest-rs.github.io/proptest/proptest/index.html")
+    (synopsis "Hypothesis-like property-based testing and shrinking.")
+    (description
+     "This package provides Hypothesis-like property-based testing and shrinking.")
+    (license (list license:expat license:asl2.0))))
