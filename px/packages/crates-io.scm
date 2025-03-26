@@ -383,3 +383,31 @@ and manipulating YAML data.")
 and deserialization of Rust data structures to and from YAML format using the
 widely-used Serde framework.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-hyperlocal-0.9
+  (package
+    (name "rust-hyperlocal")
+    (version "0.9.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "hyperlocal" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1iy8rhsap5iyigj6s86nk449zl5bahjycy2mswy6nlllp7imqv4q"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-hex" ,rust-hex-0.4)
+                       ("rust-http-body-util" ,rust-http-body-util-0.1)
+                       ("rust-hyper" ,rust-hyper-1)
+                       ("rust-hyper-util" ,rust-hyper-util-0.1)
+                       ("rust-pin-project-lite" ,rust-pin-project-lite-0.2)
+                       ("rust-tokio" ,rust-tokio-1)
+                       ("rust-tower-service" ,rust-tower-service-0.3))
+       #:cargo-development-inputs (("rust-thiserror" ,rust-thiserror-1)
+                                   ("rust-tokio" ,rust-tokio-1))))
+    (home-page "https://github.com/softprops/hyperlocal")
+    (synopsis "Hyper bindings for Unix domain sockets")
+    (description
+     "This package provides Hyper bindings for Unix domain sockets.")
+    (license license:expat)))
