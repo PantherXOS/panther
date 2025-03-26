@@ -456,3 +456,27 @@ widely-used Serde framework.")
     (synopsis "Utilities for concurrent programming")
     (description "This package provides Utilities for concurrent programming.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-rayon-1.6
+  (package
+    (name "rust-rayon-v6")
+    (version "1.6.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "rayon" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1dsr0yyfgdsg8ggh37kq678mfa5j3js6p16ksb7knazhml9s5cvd"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-either" ,rust-either-1)
+                       ("rust-rayon-core" ,rust-rayon-core-1))
+       #:cargo-development-inputs (("rust-lazy-static" ,rust-lazy-static-1)
+                                   ("rust-rand" ,rust-rand-0.8)
+                                   ("rust-rand-xorshift" ,rust-rand-xorshift-0.3))))
+    (home-page "https://github.com/rayon-rs/rayon")
+    (synopsis "Simple work-stealing parallelism for Rust")
+    (description
+     "This package provides Simple work-stealing parallelism for Rust.")
+    (license (list license:expat license:asl2.0))))
