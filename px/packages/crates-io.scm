@@ -2,6 +2,7 @@
   #:use-module (guix build-system cargo)
   #:use-module (guix download)
   #:use-module (guix packages)
+  #:use-module (gnu packages certs) ;; rust-libdav
   #:use-module (gnu packages crates-io)
   #:use-module (gnu packages crates-web)
   #:use-module (gnu packages crates-graphics)
@@ -1627,3 +1628,36 @@ Caffeine.")
     (synopsis "DNS library for Rust.")
     (description "This package provides a DNS library for Rust.")
     (license license:bsd-3)))
+
+(define-public rust-libdav-0.9
+  (package
+    (name "rust-libdav")
+    (version "0.9.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "libdav" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1646mcnalav3jiprn3xyslyncmcvn34jzw5qn0h4k1x0bppczqhm"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-domain" ,rust-domain-0.10)
+                       ("rust-http" ,rust-http-1)
+                       ("rust-http-body-util" ,rust-http-body-util-0.1)
+                       ("rust-hyper" ,rust-hyper-1)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-roxmltree" ,rust-roxmltree-0.20)
+                       ("rust-thiserror" ,rust-thiserror-1)
+                       ("rust-tokio" ,rust-tokio-1)
+                       ("rust-tower-service" ,rust-tower-service-0.3))
+       #:cargo-development-inputs (("rust-hyper-rustls" ,rust-hyper-rustls-0.26)
+                                   ("rust-hyper-util" ,rust-hyper-util-0.1)
+                                   ("rust-tokio" ,rust-tokio-1)
+                                   ("rust-tower-http" ,rust-tower-http-0.6))))
+    (native-inputs (list nss-certs-for-test))
+    (home-page "https://sr.ht/~whynothugo/vdirsyncer-rs/")
+    (synopsis "CalDAV and CardDAV client implementations")
+    (description
+     "This package provides @code{CalDAV} and @code{CardDAV} client implementations.")
+    (license license:isc)))
