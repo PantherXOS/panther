@@ -563,3 +563,29 @@ widely-used Serde framework.")
     (description
      "This package provides Hypothesis-like property-based testing and shrinking.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-tempfile-3.6
+  (package
+    (name "rust-tempfile")
+    (version "3.6.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "tempfile" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1mm6n3ijfsnk7grbbws3fc9qy4y5n3pshixa19wmhzimfqj47h1i"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-autocfg" ,rust-autocfg-1)
+                       ("rust-cfg-if" ,rust-cfg-if-1)
+                       ("rust-fastrand" ,rust-fastrand-1)
+                       ("rust-redox-syscall" ,rust-redox-syscall-0.3)
+                       ("rust-rustix" ,rust-rustix-0.37)
+                       ("rust-windows-sys" ,rust-windows-sys-0.48))
+       #:cargo-development-inputs (("rust-doc-comment" ,rust-doc-comment-0.3))))
+    (home-page "https://stebalien.com/projects/tempfile-rs/")
+    (synopsis "library for managing temporary files and directories.")
+    (description
+     "This package provides a library for managing temporary files and directories.")
+    (license (list license:expat license:asl2.0))))
