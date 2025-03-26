@@ -1661,3 +1661,105 @@ Caffeine.")
     (description
      "This package provides @code{CalDAV} and @code{CardDAV} client implementations.")
     (license license:isc)))
+
+(define-public rust-scfg-0.3
+  (package
+    (name "rust-scfg")
+    (version "0.3.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "scfg" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1xfqn2yy75jg0jzwh9x4bxfi575csgrjjym32sf93hhg9nmknf59"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-indexmap" ,rust-indexmap-1)
+                       ("rust-shell-words" ,rust-shell-words-1))))
+    (home-page "https://git.sr.ht/~cdv/scfg-rs")
+    (synopsis "An scfg parser")
+    (description "This package provides An scfg parser.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-sqlite3-src-0.5
+  (package
+    (name "rust-sqlite3-src")
+    (version "0.5.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "sqlite3-src" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0m74wrkpify3z0xvrw4i2yssn9m9sjwqa5ipk6aq6f7fl58mmjdz"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-cc" ,rust-cc-1)
+                       ("rust-pkg-config" ,rust-pkg-config-0.3))))
+    (home-page "https://github.com/stainless-steel/sqlite3-src")
+    (synopsis "The package provides SQLite")
+    (description "This package provides The package provides SQLite.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-sqlite3-sys-0.15
+  (package
+    (name "rust-sqlite3-sys")
+    (version "0.15.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "sqlite3-sys" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0fq6m21dnd5yqrzknsmnl2565nahdwa29s7x12xhxr1kjik2qxgj"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-libc" ,rust-libc-0.2)
+                       ("rust-sqlite3-src" ,rust-sqlite3-src-0.5))
+       #:cargo-development-inputs (("rust-temporary" ,rust-temporary-0.6))))
+    (home-page "https://github.com/stainless-steel/sqlite3-sys")
+    (synopsis "The package provides bindings to SQLite")
+    (description
+     "This package provides The package provides bindings to SQLite.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-sqlite-0.32
+  (package
+    (name "rust-sqlite")
+    (version "0.32.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "sqlite" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1rpqpkpxn2qdvghsnak2b73cn5ca37p6ri0ylyjdcmrq3481r003"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-libc" ,rust-libc-0.2)
+                       ("rust-sqlite3-sys" ,rust-sqlite3-sys-0.15))
+       #:cargo-development-inputs (("rust-temporary" ,rust-temporary-0.6))))
+    (home-page "https://github.com/stainless-steel/sqlite")
+    (synopsis "The package provides an interface to SQLite")
+    (description
+     "This package provides The package provides an interface to SQLite.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-vparser-1
+  (package
+    (name "rust-vparser")
+    (version "1.0.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "vparser" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0yjszxiqz9bwxd5qx4w8k1gcbgf1mi9wrk75d89443najyl3klzr"))))
+    (build-system cargo-build-system)
+    (home-page "https://sr.ht/~whynothugo/vdirsyncer-rs")
+    (synopsis "Low-level non-validating icalendar/vcard parser")
+    (description
+     "This package provides Low-level non-validating icalendar/vcard parser.")
+    (license license:isc)))
