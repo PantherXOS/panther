@@ -663,3 +663,40 @@ message passing.")
     (description
      "This package provides a library for managing temporary files and directories.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-average-0.14
+  (package
+    (name "rust-average")
+    (version "0.14.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "average" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "002sav5a1n5ligv4sl6gii2wp95k2ylrx8nb7vnbwbm1zk3v22f3"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-crossbeam-utils" ,rust-crossbeam-utils-0.8.16)
+                       ("rust-easy-cast" ,rust-easy-cast-0.5)
+                       ("rust-float-ord" ,rust-float-ord-0.3)
+                       ("rust-num-traits" ,rust-num-traits-0.2)
+                       ("rust-rayon" ,rust-rayon-1.6)
+                       ("rust-rayon-core" ,rust-rayon-core-1.10)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-serde-big-array" ,rust-serde-big-array-0.5)
+                       ("rust-serde-derive" ,rust-serde-derive-1))
+       #:cargo-development-inputs (("rust-bencher" ,rust-bencher-0.1)
+                                   ("rust-byteorder" ,rust-byteorder-1.4)
+                                   ("rust-proptest" ,rust-proptest-1.0)
+                                   ("rust-quantiles" ,rust-quantiles-0.7)
+                                   ("rust-rand" ,rust-rand-0.8)
+                                   ("rust-rand-distr" ,rust-rand-distr-0.4)
+                                   ("rust-rand-xoshiro" ,rust-rand-xoshiro-0.6)
+                                   ("rust-serde-json" ,rust-serde-json-1)
+                                   ("rust-streaming-stats" ,rust-streaming-stats-0.2)
+                                   ("rust-tempfile" ,rust-tempfile-3.6))))
+    (home-page "https://github.com/vks/average")
+    (synopsis "Calculate statistics iteratively")
+    (description "This package provides Calculate statistics iteratively.")
+    (license (list license:expat license:asl2.0))))
