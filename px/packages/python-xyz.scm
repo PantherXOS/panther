@@ -38,7 +38,8 @@
   #:use-module (gnu packages libffi)
   #:use-module (gnu packages libusb)
   #:use-module (gnu packages tls)
-  #:use-module (gnu packages compression))
+  #:use-module (gnu packages compression)
+  #:use-module (px packages framework))
 
 (define-public python-maestral-qt
   (package
@@ -618,3 +619,28 @@ upload, and reCAPTCHA.")
     (synopsis "Python client for Sentry (https://sentry.io)")
     (description "Python client for Sentry (https://sentry.io)")
     (license license:expat)))
+
+(define-public fw-fanctrl
+  (package
+    (name "fw-fanctrl")
+    (version "1.0.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/franzos/fw-fanctrl")
+             (commit "07f815846c75c2d5a490166f8e1f29947333cc1c")))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1a05rws1w4ml6ii4vb5nzlh6gz02n88mk5i5rn0qn5pbknixf2w5"))))
+    (build-system pyproject-build-system)
+    (arguments
+     (list
+      #:tests? #f))
+    (propagated-inputs (list python-setuptools python-wheel python-jsonschema ectool))
+    (home-page "https://github.com/TamtamHero/fw-fanctrl")
+    (synopsis "A service to better control Framework Laptop's fan(s)")
+    (description
+     "Fw-fanctrl is a simple Python CLI service that controls Framework Laptop's
+fan(s) speed according to a configurable speed/temperature curve.")
+    (license license:bsd-3)))
