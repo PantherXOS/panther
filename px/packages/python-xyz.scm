@@ -566,37 +566,99 @@ upload, and reCAPTCHA.")
     (description "Basically ansible, minus a lot of the features, plus speed.")
     (license license:bsd-3)))
 
+(define-public python-polyfactory
+  (package
+    (name "python-polyfactory")
+    (version "2.21.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "polyfactory" version))
+       (sha256
+        (base32 "0ykkn7jmj5w0z1l9llbjrdy3yqrmi3j5njq1ri2df5953flxpn56"))))
+    (build-system pyproject-build-system)
+    (arguments
+      (list #:tests? #f))
+    (propagated-inputs (list python-faker python-typing-extensions))
+    (native-inputs (list python-hatchling))
+    (home-page #f)
+    (synopsis "Mock data generation factories")
+    (description "Mock data generation factories.")
+    (license license:expat)))
+
+(define-public python-litestar-htmx
+  (package
+    (name "python-litestar-htmx")
+    (version "0.4.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "litestar_htmx" version))
+       (sha256
+        (base32 "026ajqb24jxfkvbndh5iif0wf909535wxrdyr2ziik5qiq03f9ds"))))
+    (build-system pyproject-build-system)
+    (arguments
+      (list #:tests? #f))
+    (native-inputs (list python-hatchling))
+    (home-page #f)
+    (synopsis "HTMX Integration for Litesstar")
+    (description "HTMX Integration for Litesstar.")
+    (license license:expat)))
+
+(define-public python-litestar
+  (package
+    (name "python-litestar")
+    (version "2.15.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "litestar" version))
+       (sha256
+        (base32 "0dssvxyqrnnphh2as393fx9ilpr90jzkqw5i43s0kgqjwkkj0cyy"))))
+    (build-system pyproject-build-system)
+    (arguments
+      (list #:tests? #f))
+    (propagated-inputs (list python-anyio
+                             python-click
+                             python-exceptiongroup
+                             python-httpx
+                             python-importlib-metadata
+                             python-importlib-resources
+                             python-litestar-htmx
+                             python-msgspec
+                             python-multidict
+                             python-multipart
+                             python-polyfactory
+                             python-pyyaml
+                             python-rich
+                             python-rich-click
+                             python-typing-extensions))
+    (native-inputs (list python-hatchling))
+    (home-page #f)
+    (synopsis
+     "Litestar - A production-ready, highly performant, extensible ASGI API Framework")
+    (description
+     "Litestar - A production-ready, highly performant, extensible ASGI API Framework.")
+    (license license:expat)))
+
 (define-public python-sentry-sdk-2
   (package
     (name "python-sentry-sdk")
-    (version "2.1.1")
+    (version "2.26.1")
     (source
      (origin
        (method url-fetch)
        (uri (pypi-uri "sentry_sdk" version))
        (sha256
-        (base32 "1hbfj9dxf705ap7cvx05xsc47f2v5552qb10mcvvrc6886xw1n4m"))))
-    (build-system python-build-system)
+        (base32 "1iq2kk56wbpfvbd266bnah8azd0zv7vcxrlmk98j26jm86f037km"))))
+    (build-system pyproject-build-system)
     (arguments
-      (list #:tests? #f
-            #:phases
-            #~(modify-phases %standard-phases
-                (delete 'sanity-check))))
-    (propagated-inputs (list python-certifi 
-                             python-urllib3
-                             python-setuptools-57))
-                             ;; tests
-                             ;; django fails: Requested settings, but settings are not configured.
-                             ;  python-starlette
-                             ;  python-fastapi
-                             ;  python-rq
-                             ;  python-loguru
-                             ;  python-celery
-                             ;  python-dateutil
-                             ;  python-django))
+      (list #:tests? #f))
+    (propagated-inputs (list python-certifi python-urllib3))
+    (native-inputs (list python-litestar python-setuptools python-wheel))
     (home-page "https://github.com/getsentry/sentry-python")
     (synopsis "Python client for Sentry (https://sentry.io)")
-    (description "Python client for Sentry (https://sentry.io)")
+    (description "Python client for Sentry (https://sentry.io).")
     (license license:expat)))
 
 (define-public fw-fanctrl
