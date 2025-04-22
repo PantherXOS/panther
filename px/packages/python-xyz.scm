@@ -83,7 +83,7 @@
                          ("python-fasteners" ,python-fasteners)
                          ("python-importlib-metadata" ,python-importlib-metadata)
                          ("python-keyring" ,python-keyring)
-                         ("python-keyrings.alt" ,python-keyrings.alt)
+                         ("python-keyrings-alt" ,python-keyrings-alt)
                          ("python-packaging" ,python-packaging)
                          ("python-pathspec" ,python-pathspec)
                          ("python-pyro5" ,python-pyro5)
