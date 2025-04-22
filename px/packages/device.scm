@@ -94,7 +94,7 @@
     (propagated-inputs `(("python-requests" ,python-requests)
                          ("python-pycryptodomex" ,python-pycryptodomex)
                          ("python-pyyaml" ,python-pyyaml)
-                         ("python-shortuuid" ,python-shortuuid-v1)
+                         ("python-shortuuid" ,python-shortuuid)
                          ("python-appdirs" ,python-appdirs)
                          ("python-psutil" ,python-psutil)
                          ("python-joserfc", python-joserfc)))

@@ -246,27 +246,6 @@ It give you an easy way to pass from raw mail to Python object that you can
 use in your code.")
     (license license:asl2.0)))
 
-(define-public python-shortuuid-v1
-  (package
-    (inherit python-shortuuid)
-    (name "python-shortuuid")
-    (version "1.0.11")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "shortuuid" version))
-       (sha256
-        (base32 "12gph4sgmhzqp5pzrm8gxxkcni9pa4x1nl5i9j75m08lb5hz4xgw"))))
-    (build-system python-build-system)
-    (native-inputs (list python-pep8 python-django))
-    (home-page "https://github.com/skorokithakis/shortuuid")
-    (synopsis "Generator library for concise, unambiguous and URL-safe UUIDs")
-    (description
-     "@code{shortuuid} is a Python library for generating concise, unambiguous
-and URL-safe UUIDs.  UUIDs are generated using the built-in Python @code{uuid}
-module and then similar looking characters are removed.")
-    (license license:bsd-3)))
-
 (define-public python-exitstatus
   (package
     (name "python-exitstatus")
