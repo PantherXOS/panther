@@ -37,6 +37,7 @@
   #:use-module (gnu packages xfce)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages kde-frameworks)
+  #:use-module (gnu packages serialization)
   #:use-module (px packages qt)
   #:use-module (px packages common)
   #:use-module (px packages library)
@@ -289,21 +290,21 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
 (define-public px-terminal-launcher
   (package
     (name "px-terminal-launcher")
-    (version "v0.3.0")
+    (version "v0.4.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_" version
                            ".tgz"))
        (sha256
-        (base32 "01mvvgm25xl869hca8qrj3wyn04s5dwnlfn590j3g18kijg8szgi"))))
+        (base32 "0z7m63dr99sm287ibcvpb6wbln9slfdxpnxg9ksgi8k92b48z9j2"))))
     (build-system qt-build-system)
-    (native-inputs (list qttools-5 pkg-config extra-cmake-modules))
-    (inputs (list capnproto-0.9
-                  qtbase-5
-                  qtsvg-5
-                  qtcharts-5
-                  networkmanager-qt5))
+    (native-inputs (list qttools pkg-config extra-cmake-modules))
+    (inputs (list capnproto
+                  qtbase
+                  qtsvg
+                  qtcharts
+                  networkmanager-qt))
     (propagated-inputs (list px-icons))
     (home-page "https://www.pantherx.dev")
     (synopsis "PantherX Terminal Launcher")
