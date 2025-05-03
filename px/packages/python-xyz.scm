@@ -41,101 +41,6 @@
   #:use-module (gnu packages compression)
   #:use-module (px packages framework))
 
-(define-public python-maestral-qt
-  (package
-    (name "python-maestral-qt")
-    (version "1.4.8")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://github.com/SamSchott/maestral-qt/archive/refs/tags/v"
-             version ".tar.gz"))
-       (sha256
-        (base32 "1m5lvgjyad8lvkvx0fx9xnjakg6ljxp3kbfhhw9fsk7cbkc1l70k"))))
-    (build-system python-build-system)
-    (native-inputs `(("python-click" ,python-click-8)
-                     ("python-pyqt" ,python-pyqt)
-                     ("python-markdown2" ,python-markdown2)
-                     ("python-wheel" ,python-wheel)
-                     ("python-packaging" ,python-packaging)
-                     ("python-importlib-resources" ,python-importlib-resources)
-                     ("python-maestral" ,python-maestral)))
-    (home-page "https://github.com/SamSchott/maestral-qt")
-    (synopsis "A Qt user interface for the Maestral Daemon.")
-    (description "A Qt user interface for the Maestral Daemon.")
-    (license license:asl2.0)))
-
-(define-public python-maestral
-  (package
-    (name "python-maestral")
-    (version "1.6.4") ;1.7.2 fails with no setup.py found
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "maestral" version))
-       (sha256
-        (base32 "1ik6hff1vc8swmpwzlv6bhzca4yha4mjk9j78jbyf7nnc5mnl0xs"))))
-    (build-system python-build-system)
-    (propagated-inputs `(("python-click" ,python-click-8)
-                         ("python-desktop-notifier" ,python-desktop-notifier)
-                         ("python-dropbox" ,python-dropbox)
-                         ("python-fasteners" ,python-fasteners)
-                         ("python-importlib-metadata" ,python-importlib-metadata)
-                         ("python-keyring" ,python-keyring)
-                         ("python-keyrings-alt" ,python-keyrings-alt)
-                         ("python-packaging" ,python-packaging)
-                         ("python-pathspec" ,python-pathspec)
-                         ("python-pyro5" ,python-pyro5)
-                         ("python-requests" ,python-requests)
-                         ("python-sdnotify" ,python-sdnotify)
-                         ("python-survey" ,python-survey)
-                         ("python-watchdog" ,python-watchdog)))
-    (native-inputs `(("python-black" ,python-black)
-                     ("python-bump2version" ,python-bump2version)
-                     ("python-flake8" ,python-flake8)
-                     ("python-mypy" ,python-mypy)
-                     ("python-pre-commit" ,python-pre-commit)
-                     ("python-pytest" ,python-pytest)
-                     ("python-wheel" ,python-wheel)
-                     ("python-pytest-benchmark" ,python-pytest-benchmark)
-                     ("python-pytest-cov" ,python-pytest-cov)
-                     ("python-pytest-rerunfailures" ,python-pytest-rerunfailures)
-                     ("python-types-requests" ,python-types-requests)))
-    (home-page "https://maestral.app")
-    (synopsis "Open-source Dropbox client for macOS and Linux.")
-    (description "Open-source Dropbox client for macOS and Linux.")
-    (license license:expat)))
-
-(define-public python-desktop-notifier
-  (package
-    (name "python-desktop-notifier")
-    (version "3.3.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "desktop-notifier" version))
-       (sha256
-        (base32 "0wrqgbvhi0implwqzy5as0hk3lh7cc83h9942rz1jrdw797vvmhd"))))
-    (build-system python-build-system)
-    (propagated-inputs `(("python-dbus-next" ,python-dbus-next)
-                         ("python-importlib-resources" ,python-importlib-resources)
-                         ("python-packaging" ,python-packaging)
-                         ;; ("python-rubicon-objc" ,python-rubicon-objc)
-                         ))
-    (native-inputs `(("python-black" ,python-black)
-                     ("python-bump2version" ,python-bump2version)
-                     ("python-wheel" ,python-wheel)
-                     ("python-flake8" ,python-flake8)
-                     ("python-mypy" ,python-mypy)
-                     ("python-pre-commit" ,python-pre-commit)
-                     ("python-pytest" ,python-pytest)
-                     ("python-pytest-cov" ,python-pytest-cov)))
-    (home-page "https://github.com/samschott/desktop-notifier")
-    (synopsis "Python library for cross-platform desktop notifications")
-    (description "Python library for cross-platform desktop notifications")
-    (license license:expat)))
-
 (define-public python2-pymongo
   (package-with-python2 python-pymongo))
 
@@ -348,32 +253,6 @@ use in your code.")
        (uri (pypi-uri "click" version))
        (sha256
         (base32 "0ymdyf37acq4qxh038q0xx44qgj6y2kf0jd0ivvix6qij88w214c"))))))
-
-(define-public python-mypy
-  (package
-    (name "python-mypy")
-    (version "0.701")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "mypy" version))
-       (sha256
-        (base32 "05479r3gbq17r22hyhxjg49smx5q864pgx8ayy23rsdj4w6z2r2p"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f
-       #:phases (modify-phases %standard-phases
-                  (delete 'sanity-check))))
-    (inputs `(("python-typed-ast" ,python-typed-ast)
-              ("python-mypy-extensions" ,python-mypy-extensions)))
-    (home-page "http://www.mypy-lang.org/")
-    (synopsis "Optional static typing for Python (mypyc-compiled version)")
-    (description
-     "Add type annotations to your Python programs, and use mypy to type check them.
-	 Mypy is essentially a Python linter on steroids, and it can catch many programming errors by analyzing your program,
-	 without actually having to run it. Mypy has a powerful type system with features such as type inference,
-	 gradual typing, generics and union types.")
-    (license license:expat)))
 
 (define-public python-persist-queue
   (package
