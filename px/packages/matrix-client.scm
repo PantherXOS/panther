@@ -20,7 +20,6 @@
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages image)
   #:use-module (gnu packages libevent)
-  #:use-module (gnu packages logging)
   #:use-module (gnu packages markup)
   #:use-module (gnu packages messaging)
   #:use-module (gnu packages networking)
@@ -107,11 +106,11 @@
                            (string-append pulseaudio "/bin/pacmd"))) #t))))))
     (inputs `(("cmark" ,cmark)
               ("gst-plugins-base" ,gst-plugins-base)
-              ("gst-plugins-bad" ,gst-plugins-bad)         ;sdp & webrtc for voip
-              ("gst-plugins-good-qt" ,gst-plugins-good-qt) ;rtpmanager for voip
+              ("gst-plugins-bad" ,gst-plugins-bad)              ;sdp & webrtc for voip
+              ("gst-plugins-good-qt" ,gst-plugins-good-qmlgl)   ;rtpmanager for voip
               ("json-modern-cxx" ,json-modern-cxx)
               ("libevent" ,libevent)
-              ("libnice" ,libnice)                         ;for voip
+              ("libnice" ,libnice)                              ;for voip
               ("libolm" ,libolm)
               ("lmdb" ,lmdb)
               ("lmdbxx" ,lmdbxx)
@@ -193,11 +192,10 @@ notification, emojis, E2E encryption, and voip calls.")
                   xcb-util-wm
                   zlib
                   zxing-cpp-08978e2))
-    (propagated-inputs (list libnice               ;for voip
-                             gst-plugins-good-qt   ;rtpmanager for voip
+    (propagated-inputs (list libnice                  ;for voip
+                             gst-plugins-good-qmlgl   ;rtpmanager for voip
                              gst-plugins-base
-                             gst-plugins-bad       ;sdp & webrtc for voip
-                             ))
+                             gst-plugins-bad))        ;sdp & webrtc for voip
     (native-inputs (list pkg-config qttools-5))
     (home-page "")
     (synopsis "")
