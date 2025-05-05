@@ -36,6 +36,7 @@
   #:use-module (px packages gstreamer)
   #:use-module (px packages common)
   #:use-module (px packages library)
+  #:use-module (px packages logging)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system meson)
@@ -70,7 +71,7 @@
                   libolm
                   libsodium
                   openssl
-                  spdlog
+                  spdlog-fmt
                   zlib))
     (native-inputs (list pkg-config))
     (home-page "https://git.pantherx.org/development/libraries/qmtxclient")
@@ -106,11 +107,11 @@
                            (string-append pulseaudio "/bin/pacmd"))) #t))))))
     (inputs `(("cmark" ,cmark)
               ("gst-plugins-base" ,gst-plugins-base)
-              ("gst-plugins-bad" ,gst-plugins-bad) ;sdp & webrtc for voip
-              ("gst-plugins-good-qmlgl" ,gst-plugins-good-qmlgl) ;rtpmanager for voip (using good plugins with qmlgl)
+              ("gst-plugins-bad" ,gst-plugins-bad)         ;sdp & webrtc for voip
+              ("gst-plugins-good-qt" ,gst-plugins-good-qt) ;rtpmanager for voip
               ("json-modern-cxx" ,json-modern-cxx)
               ("libevent" ,libevent)
-              ("libnice" ,libnice) ;for voip
+              ("libnice" ,libnice)                         ;for voip
               ("libolm" ,libolm)
               ("lmdb" ,lmdb)
               ("lmdbxx" ,lmdbxx)
@@ -123,7 +124,7 @@
               ("qtmultimedia" ,qtmultimedia-5)
               ("qtquickcontrols2" ,qtquickcontrols2-5)
               ("qtsvg" ,qtsvg-5)
-              ("spdlog" ,spdlog)
+              ("spdlog" ,spdlog-fmt)
               ("zlib" ,zlib)))
     (native-inputs `(("pkg-config" ,pkg-config)))
     (home-page
@@ -188,14 +189,14 @@ notification, emojis, E2E encryption, and voip calls.")
                   qtquickcontrols2-5
                   qtsvg-5
                   scodes
-                  spdlog
+                  spdlog-fmt
                   xcb-util-wm
                   zlib
                   zxing-cpp-08978e2))
-    (propagated-inputs (list libnice ;for voip
-                             gst-plugins-good-qmlgl ;rtpmanager for voip
+    (propagated-inputs (list libnice               ;for voip
+                             gst-plugins-good-qt   ;rtpmanager for voip
                              gst-plugins-base
-                             gst-plugins-bad ;sdp & webrtc for voip
+                             gst-plugins-bad       ;sdp & webrtc for voip
                              ))
     (native-inputs (list pkg-config qttools-5))
     (home-page "")
