@@ -1,12 +1,21 @@
 (define-module (px packages cpp)
   #:use-module ((guix licenses)
                 #:prefix license:)
+  #:use-module (guix build-system qt)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix utils)
   #:use-module (guix build-system cmake)
   #:use-module (gnu packages)
   #:use-module (gnu packages autotools)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages qt)
+  #:use-module (gnu packages gstreamer)
+  #:use-module (gnu packages gnome) ;; libsoup, json-glib
+  #:use-module (gnu packages networking) ;; libnice
+  #:use-module (gnu packages cpp) ;; cli11
+  #:use-module (gnu packages compression) ;; xz
+  #:use-module (px packages gstreamer) ;; gst-plugins-good-qmlgl
   #:use-module (ice-9 match))
 
 (define-public cpp-qr-code-generator
@@ -50,4 +59,40 @@
     (description
      "This project aims to be the best, clearest QR Code generator library
 in multiple languages.")
+    (license license:expat)))
+
+(define-public webrtc-cpp
+  (package
+    (name "webrtc-cpp")
+    (version "0.1.1")
+    (source
+    (origin
+      (method url-fetch)
+      (uri (string-append "https://source.pantherx.org/" name "_v" version ".tgz"))
+      (sha256
+       (base32 "0rxfs2xyf0q4fgjxnjdb0bd7nl3miwb8q2d1r01iyv148h24y7n0"))))
+    (build-system qt-build-system)
+    (arguments
+     `(#:tests? #f))
+    (inputs (list qtbase-5
+                  qtwayland-5
+                  qtdeclarative-5
+                  qtmultimedia-5
+                  qtquickcontrols-5
+                  qtquickcontrols2-5
+                  qtwebsockets-5
+                  gstreamer
+                  gst-plugins-base
+                  gst-plugins-good
+                  gst-plugins-bad
+                  gst-plugins-good-qmlgl
+                  libnice
+                  libsoup
+                  json-glib
+                  cli11
+                  xz))
+    (native-inputs (list pkg-config))
+    (home-page "https://www.pantherx.org/")
+    (synopsis "GStreamer WebRTC C++ library")
+    (description "Ease integration of GStreamer WebRTC in C++/Qt applications.")
     (license license:expat)))
