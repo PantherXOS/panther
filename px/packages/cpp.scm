@@ -64,13 +64,13 @@ in multiple languages.")
 (define-public webrtc-cpp
   (package
     (name "webrtc-cpp")
-    (version "0.1.3")
+    (version "0.1.4")
     (source
     (origin
       (method url-fetch)
       (uri (string-append "https://source.pantherx.org/" name "_v" version ".tgz"))
       (sha256
-       (base32 "1290fajdv63j4ha72434xfcn2s8arv3iiq3cdzs4hhk62rylvfgh"))))
+       (base32 "0zgiabg9ahv1s050pcsw71v4qhszjjlp36pab17i77alfhh92idz"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f))
