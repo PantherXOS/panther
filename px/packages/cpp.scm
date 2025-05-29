@@ -64,13 +64,13 @@ in multiple languages.")
 (define-public webrtc-cpp
   (package
     (name "webrtc-cpp")
-    (version "0.1.4")
+    (version "0.1.5")
     (source
     (origin
       (method url-fetch)
       (uri (string-append "https://source.pantherx.org/" name "_v" version ".tgz"))
       (sha256
-       (base32 "0zgiabg9ahv1s050pcsw71v4qhszjjlp36pab17i77alfhh92idz"))))
+       (base32 "0q8jw8hl67l24d4anf22npjglsmp88y4hza5y6vai42vinfydwz9"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f))
@@ -140,7 +140,7 @@ find_package(webrtclib REQUIRED)
 add_subdirectory(tests)
 
 # Install the demo binary
-install(TARGETS webrtc_test
+install(TARGETS webrtc-cpp-demo
     RUNTIME DESTINATION bin
 )
 " port)))
