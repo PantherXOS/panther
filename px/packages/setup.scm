@@ -63,14 +63,14 @@
 (define-public px-install
   (package
     (name "px-install")
-    (version "0.2.1")
+    (version "0.2.2")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "0wq9swhcv6id3zxhrys69lz6f3dr4xq846j3mif2sj7m87q02fxm"))))
+        (base32 "09b6jg6vbvba7rz3gqszqhljlcm62bds3a4gl17wnbfbl6kikvc6"))))
     (build-system python-build-system)
     (arguments
      `(#:tests? #f))
@@ -79,8 +79,7 @@
               ("python-pytz" ,python-pytz)
               ("python-qrcode" ,python-qrcode)
               ("python-py-cpuinfo" ,python-py-cpuinfo)
-              ("python-urllib3" ,python-urllib3)
-              ("python-psutil" ,python-psutil)))
+              ("python-urllib3" ,python-urllib3)))
     (native-inputs `(("pkg-config" ,pkg-config)))
     (home-page "https://www.pantherx.org/")
     (synopsis "PantherX OS Installer")
