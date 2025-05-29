@@ -92,7 +92,92 @@ in multiple languages.")
                   cli11
                   xz))
     (native-inputs (list pkg-config))
-    (home-page "https://www.pantherx.org/")
+    (home-page "https://f-a.nz/")
     (synopsis "GStreamer WebRTC C++ library")
     (description "Ease integration of GStreamer WebRTC in C++/Qt applications.")
+    (license license:expat)))
+
+(define-public webrtc-cpp-demo
+  (package
+    (inherit webrtc-cpp)
+    (name "webrtc-cpp-demo")
+    (arguments
+     `(#:tests? #f
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'configure-for-demo
+           (lambda _
+             ;; Create a custom CMakeLists.txt that only builds the demo
+             (call-with-output-file "CMakeLists.txt"
+               (lambda (port)
+                 (display "cmake_minimum_required(VERSION 3.14)
+project(webrtc_demo)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# Find required packages (same as main library)
+find_package(PkgConfig REQUIRED)
+
+set(GSTREAMER_MODULES
+    gstreamer-1.0
+    gstreamer-sdp-1.0
+    gstreamer-webrtc-1.0
+    gstreamer-gl-1.0
+    libsoup-3.0
+    json-glib-1.0
+)
+
+pkg_check_modules(GSTREAMER REQUIRED IMPORTED_TARGET ${GSTREAMER_MODULES})
+find_package(Qt5 COMPONENTS Core Gui Qml Quick REQUIRED)
+
+# Find webrtclib
+find_package(webrtclib REQUIRED)
+
+# Build the demo
+add_subdirectory(tests)
+
+# Install the demo binary
+install(TARGETS webrtc_test
+    RUNTIME DESTINATION bin
+)
+" port)))
+             #t))
+         (add-after 'configure-for-demo 'fix-tests-cmake
+           (lambda _
+             ;; Ensure the tests/CMakeLists.txt uses the installed webrtclib
+             (substitute* "tests/CMakeLists.txt"
+               (("webrtclib") "webrtclib::webrtclib"))
+             #t))
+         (add-after 'fix-tests-cmake 'fix-include-path
+           (lambda _
+             ;; Fix the include path in main.cpp to use the installed header location
+             (substitute* "tests/main.cpp"
+               (("#include <webrtc.hpp>") "#include <webrtclib/webrtc.hpp>"))
+             #t)))))
+    (inputs (list webrtc-cpp
+                  qtbase-5
+                  qtwayland-5
+                  qtdeclarative-5
+                  qtmultimedia-5
+                  qtquickcontrols-5
+                  qtquickcontrols2-5
+                  qtwebsockets-5
+                  libnice
+                  libsoup
+                  json-glib
+                  cli11
+                  xz))
+    (propagated-inputs (list libnice
+                             gstreamer
+                             gst-plugins-base
+                             gst-plugins-good
+                             gst-plugins-bad
+                             gst-plugins-good-qmlgl))
+    (native-inputs (list pkg-config))
+    (home-page "https://f-a.nz/")
+    (synopsis "WebRTC C++ library demo application")
+    (description "Demo application showcasing the webrtc-cpp library functionality.")
     (license license:expat)))
