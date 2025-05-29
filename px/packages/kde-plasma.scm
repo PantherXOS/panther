@@ -1,3 +1,5 @@
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
 
 (define-module (px packages kde-plasma)
   #:use-module (guix build-system qt)

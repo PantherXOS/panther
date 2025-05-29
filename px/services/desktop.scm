@@ -1,6 +1,6 @@
-;;; Desktop service definitions for PantherX
-;;; Reza Alizadeh Majd <r.majd@pantherx.org>
-;;; Franz Geffke <franz@pantherx.org>
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2023 Reza Alizadeh Majd <r.majd@pantherx.org>
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
 
 (define-module (px services desktop)
   #:use-module (gnu packages admin)
@@ -167,12 +167,10 @@
 
          ;; Allow desktop users to also mount NTFS and NFS file systems
          ;; without root.
-         (simple-service 'mount-setuid-helpers setuid-program-service-type
-                         (map (lambda (program)
-                                (setuid-program
-                                  (program program)))
+         (simple-service 'mount-setuid-helpers privileged-program-service-type
+                         (map file-like->setuid-program
                               (list (file-append nfs-utils "/sbin/mount.nfs")
-                                    (file-append ntfs-3g "/sbin/mount.ntfs-3g"))))
+                               (file-append ntfs-3g "/sbin/mount.ntfs-3g"))))
 
          ;; This is a volatile read-write file system mounted at /var/lib/gdm,
          ;; to avoid GDM stale cache and permission issues.

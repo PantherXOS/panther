@@ -1,9 +1,6 @@
-;;; PantherX System Configuration Module
-;;; This module supports configuration modules for PantherX OS definitions
-;;;
-;;; Reza Alizadeh Majd <r.majd@pantherx.org>
-;;; Franz Geffke <franz@pantherx.org>
-;;;
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2023 Reza Alizadeh Majd <r.majd@pantherx.org>
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
 
 (define-module (px services base)
   #:use-module (guix gexp)

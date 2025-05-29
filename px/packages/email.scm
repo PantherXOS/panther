@@ -1,3 +1,6 @@
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+
 (define-module (px packages email)
   #:use-module (guix download)
   #:use-module (guix build-system qt)

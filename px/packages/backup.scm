@@ -1,4 +1,5 @@
-;;; Backup Packages Module for PantherX
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
 
 (define-module (px packages backup)
   #:use-module ((guix licenses)

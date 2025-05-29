@@ -1,3 +1,6 @@
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+
 (define-module (px packages atril-thumbnailer)
   #:use-module (guix packages)
   #:use-module (guix utils)

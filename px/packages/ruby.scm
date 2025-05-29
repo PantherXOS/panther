@@ -1,3 +1,6 @@
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+
 (define-module (px packages ruby)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system ruby)

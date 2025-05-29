@@ -1,3 +1,6 @@
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+
 (define-module (px packages mail)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
@@ -43,7 +46,6 @@
         ("rust-hyper" ,rust-hyper-1)
         ("rust-hyper-rustls" ,rust-hyper-rustls-0.26)
         ("rust-hyper-util" ,rust-hyper-util-0.1)
-        ;; only 0.8 available
         ("rust-hyperlocal" ,rust-hyperlocal-0.9)
         ("rust-lexopt" ,rust-lexopt-0.3)
         ("rust-libdav" ,rust-libdav-0.9)

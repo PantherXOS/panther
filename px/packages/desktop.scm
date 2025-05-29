@@ -1,6 +1,6 @@
-;;; Desktop related packages Module for PantherX
-;;; Reza Alizadeh Majd <r.majd@pantherc.org>
-;;; Franz Geffke <franz@pantherx.org>
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2023 Reza Alizadeh Majd <r.majd@pantherx.org>
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
 
 (define-module (px packages desktop)
   #:use-module ((guix licenses)
@@ -107,7 +107,7 @@
         blueman))
 
 
-(define %common-desktop-applications
+(define desktop-applications
   (list libreoffice
   
         px-sddm-theme

@@ -1,9 +1,6 @@
-;;; PantherX Desktop Packages and Tools
-;;; Reza Alizadeh Majd (r.majd@pantherx.org)
-;;;
-;;; Note: This module is exported from (px packages desktop) to prevent
-;;;       circular import problem.
-;;;
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2023 Reza Alizadeh Majd <r.majd@pantherx.org>
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
 
 (define-module (px packages desktop-tools)
   #:use-module ((guix licenses)

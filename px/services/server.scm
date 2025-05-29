@@ -1,3 +1,6 @@
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+
 (define-module (px services server)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages node)

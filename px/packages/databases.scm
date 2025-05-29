@@ -1,3 +1,6 @@
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+
 (define-module (px packages databases)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages sqlite)

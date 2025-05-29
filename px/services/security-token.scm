@@ -1,5 +1,6 @@
-;;; module for security tokens and hardware wallet related services
-;;; Reza Alizadeh Majd (r.majd@pantherx.org)
+;;; Package Repository for GNU Guix
+;;; Copyright © 2021-2023 Reza Alizadeh Majd <r.majd@pantherx.org>
+;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
 
 (define-module (px services security-token)
   #:use-module (gnu services base)
