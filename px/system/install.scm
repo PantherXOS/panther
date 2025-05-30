@@ -20,7 +20,6 @@
   #:use-module (gnu system install)
   #:use-module (nongnu packages linux)
   #:use-module (px packages setup)
-  #:use-module (px system config)
   #:use-module (px system os)
   #:export (installation-os-nonfree))
 
