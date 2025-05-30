@@ -1,9 +1,11 @@
 ;; PantherX disk image configuration file
 ;;
 ;; Generate a bootable image (e.g. for USB sticks, etc.) with:
-;; $ guix system disk-image path/to/px-install.scm
+;; $ guix system image --image-type=iso9660 px/system/install.scm
 ;; Using Guix time-machine
 ;; $ guix time-machine --channels=/path/to/channels.scm -- system disk-image -t iso9660 px/system/install.scm
+;; Flash to USB stick (e.g. /dev/sdb) with:
+;; $ dd if=/path/to/disk-image of=/dev/sdb bs=4M status=progress oflag=sync
 
 (define-module (px system install)
   #:use-module (guix channels)
@@ -36,8 +38,7 @@
   (operating-system
     (inherit installation-os)
     (host-name "panther")
-    (locale "en_US.utf8")
-    (kernel linux)
+    (kernel linux-lts)
     (firmware (list linux-firmware))
 
     (issue %issue)
