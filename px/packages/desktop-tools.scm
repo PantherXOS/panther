@@ -302,7 +302,6 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
                   qtsvg
                   qtcharts
                   networkmanager-qt))
-    (propagated-inputs (list px-icons))
     (home-page "https://www.pantherx.dev")
     (synopsis "PantherX Terminal Launcher")
     (description "PantherX Terminal Launcher")
