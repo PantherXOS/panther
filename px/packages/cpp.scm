@@ -14,7 +14,6 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages qt)
   #:use-module (gnu packages gstreamer)
-  #:use-module (gnu packages gnome) ;; libsoup, json-glib
   #:use-module (gnu packages networking) ;; libnice
   #:use-module (gnu packages cpp) ;; cli11
   #:use-module (gnu packages compression) ;; xz
@@ -67,13 +66,13 @@ in multiple languages.")
 (define-public webrtc-cpp
   (package
     (name "webrtc-cpp")
-    (version "0.1.5")
+    (version "0.2.0")
     (source
     (origin
       (method url-fetch)
       (uri (string-append "https://source.pantherx.org/" name "_v" version ".tgz"))
       (sha256
-       (base32 "0q8jw8hl67l24d4anf22npjglsmp88y4hza5y6vai42vinfydwz9"))))
+       (base32 "1n0hm8sv0057vzz8bjamzz99z5cn8l8nr0g2sf0asyp0gr4y08fx"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f))
@@ -90,8 +89,6 @@ in multiple languages.")
                   gst-plugins-bad
                   gst-plugins-good-qmlgl
                   libnice
-                  libsoup
-                  json-glib
                   cli11
                   xz))
     (native-inputs (list pkg-config))
@@ -129,8 +126,6 @@ set(GSTREAMER_MODULES
     gstreamer-sdp-1.0
     gstreamer-webrtc-1.0
     gstreamer-gl-1.0
-    libsoup-3.0
-    json-glib-1.0
 )
 
 pkg_check_modules(GSTREAMER REQUIRED IMPORTED_TARGET ${GSTREAMER_MODULES})
@@ -169,8 +164,6 @@ install(TARGETS webrtc-cpp-demo
                   qtquickcontrols2-5
                   qtwebsockets-5
                   libnice
-                  libsoup
-                  json-glib
                   cli11
                   xz))
     (propagated-inputs (list libnice
