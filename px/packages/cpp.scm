@@ -129,7 +129,7 @@ set(GSTREAMER_MODULES
 )
 
 pkg_check_modules(GSTREAMER REQUIRED IMPORTED_TARGET ${GSTREAMER_MODULES})
-find_package(Qt5 COMPONENTS Core Gui Qml Quick REQUIRED)
+find_package(Qt5 COMPONENTS Core Network WebSockets Gui Qml Quick REQUIRED)
 
 # Find webrtclib
 find_package(webrtclib REQUIRED)
