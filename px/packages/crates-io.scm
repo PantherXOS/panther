@@ -5,7 +5,9 @@
   #:use-module (guix build-system cargo)
   #:use-module (guix download)
   #:use-module (guix packages)
+  #:use-module (gnu packages tls)   ;; openssl
   #:use-module (gnu packages certs) ;; rust-libdav
+  #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages crates-io)
   #:use-module (gnu packages crates-web)
   #:use-module (gnu packages crates-graphics)
@@ -5588,3 +5590,122 @@ way to opt-out.")
      "This package provides Build fullstack web, desktop, and mobile apps with a single codebase.")
     (license (list license:expat license:asl2.0))))
 
+(define-public rust-wiremock-0.5
+  (package
+    (name "rust-wiremock")
+    (version "0.5.22")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "wiremock" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1sf2adr5q3xqrj4sa89fmbr5vl3x51wb1cfp63fr1wrlmwzab8qk"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-assert-json-diff" ,rust-assert-json-diff-2)
+                       ("rust-async-trait" ,rust-async-trait-0.1)
+                       ("rust-base64" ,rust-base64-0.21)
+                       ("rust-deadpool" ,rust-deadpool-0.9)
+                       ("rust-futures" ,rust-futures-0.3)
+                       ("rust-futures-timer" ,rust-futures-timer-3)
+                       ("rust-http-types" ,rust-http-types-2)
+                       ("rust-hyper" ,rust-hyper-0.14)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-once-cell" ,rust-once-cell-1)
+                       ("rust-regex" ,rust-regex-1)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-serde-json" ,rust-serde-json-1)
+                       ("rust-tokio" ,rust-tokio-1))))
+    (home-page "https://github.com/LukeMathWalker/wiremock-rs")
+    (synopsis "HTTP mocking to test Rust applications")
+    (description
+     "This package provides HTTP mocking to test Rust applications.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-uuid-rng-internal-1
+  (package
+    (name "rust-uuid-rng-internal")
+    (version "1.17.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "uuid-rng-internal" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1s97wihyn5x9m7k2yl4i9xzzy3fpc4p8plk08vfwbv986pj7ghhi"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-getrandom" ,rust-getrandom-0.3)
+                       ("rust-rand" ,rust-rand-0.9))))
+    (home-page "https://github.com/uuid-rs/uuid")
+    (synopsis "Private implementation details of the uuid crate")
+    (description
+     "This package provides Private implementation details of the uuid crate.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-uuid-macro-internal-1
+  (package
+    (name "rust-uuid-macro-internal")
+    (version "1.17.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "uuid-macro-internal" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1dy26dxy0l1gd34cd0xlkry5n00fis983qrh66h5x6c1qgl85di6"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-proc-macro2" ,rust-proc-macro2-1)
+                       ("rust-quote" ,rust-quote-1)
+                       ("rust-syn" ,rust-syn-2))))
+    (home-page "https://github.com/uuid-rs/uuid")
+    (synopsis "Private implementation details of the uuid! macro")
+    (description
+     "This package provides Private implementation details of the uuid! macro.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-openrouter-api-0.1
+  (package
+    (name "rust-openrouter-api")
+    (version "0.1.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "openrouter_api" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1hqv9dk4gznr9yv13a7dydg9gb2dpwdngfjg476nwnlw0pk4wbhc"))
+       (snippet
+        '(begin
+           (use-modules (guix build utils))
+           ;; Update Cargo.toml to use uuid 1.11.0 instead of 1.16.0
+           (substitute* "Cargo.toml"
+             (("1.16.0") "1.11.0"))))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:tests? #f
+       #:cargo-inputs (("rust-async-stream" ,rust-async-stream-0.3)
+                       ("rust-futures" ,rust-futures-0.3)
+                       ("rust-reqwest" ,rust-reqwest-0.11)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-serde-json" ,rust-serde-json-1)
+                       ("rust-thiserror" ,rust-thiserror-1)
+                       ("rust-tokio" ,rust-tokio-1)
+                       ("rust-tokio-util" ,rust-tokio-util-0.7)
+                       ("rust-url" ,rust-url-2)
+                       ("rust-uuid" ,rust-uuid-1))
+       #:cargo-development-inputs (("rust-test-case" ,rust-test-case-3)
+                                   ("rust-tokio-test" ,rust-tokio-test-0.4)
+                                   ("rust-wiremock" ,rust-wiremock-0.5))))
+    (native-inputs (list pkg-config))
+    (inputs (list openssl))
+    (home-page "https://github.com/socrates8300/openrouter_api")
+    (synopsis "Rust client library for the OpenRouter API")
+    (description
+     "This package provides a Rust client library for the @code{OpenRouter} API.")
+    (license (list license:expat license:asl2.0))))
