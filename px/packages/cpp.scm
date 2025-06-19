@@ -66,13 +66,13 @@ in multiple languages.")
 (define-public webrtc-cpp
   (package
     (name "webrtc-cpp")
-    (version "0.2.3")
+    (version "0.3.0")
     (source
     (origin
       (method url-fetch)
       (uri (string-append "https://source.pantherx.org/" name "_v" version ".tgz"))
       (sha256
-       (base32 "06g405l8a8rfdx71ar5r9ljik6jq1l28g58cbisc38qiiks4yca8"))))
+       (base32 "12k910nq20crkghvzb1pwil7iph2brqf94cfcc31px1nrzqv359w"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f))
@@ -120,6 +120,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Find required packages (same as main library)
 find_package(PkgConfig REQUIRED)
+find_package(CLI11 REQUIRED)
 
 set(GSTREAMER_MODULES
     gstreamer-1.0
@@ -135,7 +136,7 @@ find_package(Qt5 COMPONENTS Core Network WebSockets Gui Qml Quick REQUIRED)
 find_package(webrtclib REQUIRED)
 
 # Build the demo
-add_subdirectory(tests)
+add_subdirectory(example)
 
 # Install the demo binary
 install(TARGETS webrtc-cpp-demo
@@ -143,17 +144,18 @@ install(TARGETS webrtc-cpp-demo
 )
 " port)))
              #t))
-         (add-after 'configure-for-demo 'fix-tests-cmake
+         (add-after 'configure-for-demo 'fix-example-cmake
            (lambda _
-             ;; Ensure the tests/CMakeLists.txt uses the installed webrtclib
-             (substitute* "tests/CMakeLists.txt"
+             ;; Ensure the example/CMakeLists.txt uses the installed webrtclib
+             (substitute* "example/CMakeLists.txt"
                (("webrtclib") "webrtclib::webrtclib"))
              #t))
-         (add-after 'fix-tests-cmake 'fix-include-path
+         (add-after 'fix-example-cmake 'fix-include-path
            (lambda _
              ;; Fix the include path in main.cpp to use the installed header location
-             (substitute* "tests/main.cpp"
-               (("#include <webrtc.hpp>") "#include <webrtclib/webrtc.hpp>"))
+             (substitute* "example/main.cpp"
+               (("#include <webrtc.hpp>") "#include <webrtclib/webrtc.hpp>")
+               (("#include <logger.hpp>") "#include <webrtclib/logger.hpp>"))
              #t)))))
     (inputs (list webrtc-cpp
                   qtbase-5
