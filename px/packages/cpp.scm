@@ -67,9 +67,9 @@
 in multiple languages.")
     (license license:expat)))
 
-(define-public webrtc-cpp
+(define-public cpp-webrtc
   (package
-    (name "webrtc-cpp")
+    (name "cpp-webrtc")
     (version "0.3.0")
     (source
     (origin
@@ -101,10 +101,10 @@ in multiple languages.")
     (description "Ease integration of GStreamer WebRTC in C++/Qt applications.")
     (license license:expat)))
 
-(define-public webrtc-cpp-demo
+(define-public cpp-webrtc-demo
   (package
-    (inherit webrtc-cpp)
-    (name "webrtc-cpp-demo")
+    (inherit cpp-webrtc)
+    (name "cpp-webrtc-demo")
     (arguments
      `(#:tests? #f
        #:phases
@@ -161,7 +161,7 @@ install(TARGETS webrtc-cpp-demo
                (("#include <webrtc.hpp>") "#include <webrtclib/webrtc.hpp>")
                (("#include <logger.hpp>") "#include <webrtclib/logger.hpp>"))
              #t)))))
-    (inputs (list webrtc-cpp
+    (inputs (list cpp-webrtc
                   qtbase-5
                   qtwayland-5
                   qtdeclarative-5
