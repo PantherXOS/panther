@@ -184,9 +184,9 @@ install(TARGETS webrtc-cpp-demo
     (description "Demo application showcasing the webrtc-cpp library functionality.")
     (license license:expat)))
 
-(define-public socket.io-client-cpp
+(define-public cpp-socketio-client
   (package
-    (name "socket.io-client-cpp")
+    (name "cpp-socketio-client")
     (version "3.1.0")
     (source
      (origin
