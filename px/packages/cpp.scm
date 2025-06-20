@@ -17,6 +17,10 @@
   #:use-module (gnu packages networking) ;; libnice
   #:use-module (gnu packages cpp) ;; cli11
   #:use-module (gnu packages compression) ;; xz
+  #:use-module (gnu packages boost) ;; boost
+  #:use-module (gnu packages web) ;; rapidjson, websocketpp
+  #:use-module (gnu packages tls) ;; openssl
+  #:use-module (gnu packages networking) ;; asio
   #:use-module (px packages gstreamer) ;; gst-plugins-good-qmlgl
   #:use-module (ice-9 match))
 
@@ -178,4 +182,33 @@ install(TARGETS webrtc-cpp-demo
     (home-page "https://f-a.nz/")
     (synopsis "WebRTC C++ library demo application")
     (description "Demo application showcasing the webrtc-cpp library functionality.")
+    (license license:expat)))
+
+(define-public socket.io-client-cpp
+  (package
+    (name "socket.io-client-cpp")
+    (version "3.1.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/socketio/socket.io-client-cpp/archive/refs/tags/"
+             version ".tar.gz"))
+       (sha256
+        (base32 "15wmj0jvj0kb1xvlpkrrja7sblx0hcd0qby4qwld062nirmx6kgm"))))
+    (build-system cmake-build-system)
+    (arguments
+     `(#:tests? #f
+       #:configure-flags '("-DCMAKE_BUILD_TYPE=Release")))
+    (inputs (list boost
+                  rapidjson
+                  openssl
+                  websocketpp
+                  asio))
+    (native-inputs (list pkg-config))
+    (home-page "https://github.com/socketio/socket.io-client-cpp")
+    (synopsis "Socket.IO C++ client library")
+    (description "A Socket.IO client library written in C++11 with support for 
+modern Socket.IO server versions. Provides real-time bidirectional 
+event-based communication.")
     (license license:expat)))
