@@ -7,7 +7,7 @@
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (gnu packages)
-  #:use-module (gnu packages ruby))
+  #:use-module (gnu packages ruby-xyz))
 
 (define-public ruby-jekyll-polyglot
   (package
