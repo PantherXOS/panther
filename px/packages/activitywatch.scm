@@ -18,6 +18,7 @@
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages gl)
@@ -48,7 +49,7 @@
 (define-public activitywatch
   (package
     (name "activitywatch")
-    (version "0.11.0")
+    (version "0.13.2")
     (source
      #f)
     (build-system binary-build-system)
@@ -74,6 +75,12 @@
                          (string-append %output "/bin/aw-qt")))
                       ;; remove for conflicting issue with libpng
                       (invoke "rm" "opt/activitywatch/libz.so.1")
+                      ;; remove for conflicting issue with mesa
+                      (invoke "rm" "opt/activitywatch/libstdc++.so.6")
+                      ;; remove for conflicting wayland libraries
+                      (invoke "rm" "opt/activitywatch/libwayland-client.so.0")
+                      (invoke "rm" "opt/activitywatch/libwayland-egl.so.1")
+                      (invoke "rm" "opt/activitywatch/libwayland-cursor.so.0")
                       ;; mv desktop file
                       (mkdir-p "share/applications/")
                       (invoke "mv" "opt/activitywatch/aw-qt.desktop"
@@ -81,7 +88,7 @@
                       ;;
                       (mkdir-p "share/icons/hicolor/512x512/apps/")
                       (invoke "cp"
-                       "opt/activitywatch/aw-server/aw_server/static/static/logo.png"
+                       "opt/activitywatch/aw-server/aw_server/static/logo.png"
                        "share/icons/hicolor/512x512/apps/activitywatch.png")
                       #t))
                   (add-after 'install 'symlink-binary-file-and-cleanup
@@ -147,6 +154,10 @@
                                                                 "/lib")
                                                  (string-append (assoc-ref
                                                                  inputs
+                                                                 "xcb-util-cursor")
+                                                                "/lib")
+                                                 (string-append (assoc-ref
+                                                                 inputs
                                                                  "glibc")
                                                                 "/lib")
                                                  (string-append (assoc-ref
@@ -161,13 +172,14 @@
                                                  out) ":"))))) #t)))))
     (native-inputs `(("unzip" ,unzip)))
     (inputs `(("activitywatch" ,(make-aw-release-asset version "activitywatch"
-                                 "1w62s9y8z6yn2mv55npsg1rfi2az4lim62v4awxwq1xzx4249pi0"))
+                                 "0q1k7s06nhdk63r3b5gsf2ly475w5z06fwnzrc4g3a7qmc5v2qlg"))
               ("gcc:lib" ,gcc "lib")
               ("gcc" ,gcc "lib")
               ("glibc" ,glibc)
               ("fontconfig" ,fontconfig)
               ("freetype" ,freetype)
               ("libxcb" ,libxcb)
+              ("xcb-util-cursor" ,xcb-util-cursor)
               ("libxkbcommon" ,libxkbcommon)
               ("mesa" ,mesa)
               ("xkeyboard-config" ,xkeyboard-config)
