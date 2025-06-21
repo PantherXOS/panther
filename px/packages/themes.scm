@@ -151,40 +151,6 @@
      "SDDM theme from Darkine KDE collection, a pure QtQuick2 based SDDM login theme")
     (license license:expat)))
 
-(define-public px-sddm-theme
-  (package
-    (name "px-sddm-theme")
-    (version "0.0.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "_v" version
-                           ".tgz"))
-       (sha256
-        (base32 "1hjyi7mw8rkpkziq8wip2xsy8cwdjcwmyd7wjaq8892yir3rr66q"))))
-    (build-system trivial-build-system)
-    (arguments
-     `(#:modules ((guix build utils))
-       #:builder (begin
-                   (use-modules (guix build utils)
-                                (srfi srfi-26))
-                   (let ((tar (assoc-ref %build-inputs "tar"))
-                         (gzip (assoc-ref %build-inputs "gzip"))
-                         (src (assoc-ref %build-inputs "source"))
-                         (theme-dir (string-append %output
-                                                   "/share/sddm/themes")))
-                     (mkdir-p theme-dir)
-                     (setenv "PATH"
-                             (string-append gzip "/bin"))
-                     (invoke (string-append tar "/bin/tar") "xvf" src "-C"
-                             theme-dir) #t))))
-    (native-inputs `(("tar" ,tar)
-                     ("gzip" ,gzip)))
-    (home-page "https://pantherx.org")
-    (synopsis "PantherX login theme")
-    (description "SDDM login theme for PantherX")
-    (license license:expat)))
-
 (define-public chilie-login-theme
   (package
     (name "chilie-login-theme")
