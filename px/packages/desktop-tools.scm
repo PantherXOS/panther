@@ -296,6 +296,16 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
        (sha256
         (base32 "1z56s4179nh2bn4g19y84lcw1xj7qsickqqhk99pij6k5hibcpz2"))))
     (build-system qt-build-system)
+    (arguments
+     ;; make qtsvg work
+     (list #:phases
+           #~(modify-phases %standard-phases
+               (add-after 'install 'wrap-executable
+                 (lambda* (#:key inputs outputs #:allow-other-keys)
+                   (let ((out (assoc-ref outputs "out"))
+                         (plugin-path (getenv "QT_PLUGIN_PATH")))
+                     (wrap-program (string-append out "/bin/launcher")
+                       `("QT_PLUGIN_PATH" ":" prefix (,plugin-path)))))))))
     (native-inputs (list qttools pkg-config extra-cmake-modules))
     (inputs (list capnproto
                   qtbase
