@@ -204,7 +204,17 @@ install(TARGETS webrtc-cpp-demo
                            "-DCMAKE_INSTALL_LIBDIR=lib")
        #:phases
        (modify-phases %standard-phases
-         (add-after 'install 'install-cmake-config
+         (add-after 'install 'verify-tls-lib
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (lib (string-append out "/lib")))
+               ;; Check that both libraries were built and installed
+               (unless (file-exists? (string-append lib "/libsioclient.a"))
+                 (error "libsioclient.a was not installed"))
+               (unless (file-exists? (string-append lib "/libsioclient_tls.a"))
+                 (error "libsioclient_tls.a was not installed - OpenSSL may not be found during build"))
+               #t)))
+         (add-after 'verify-tls-lib 'install-cmake-config
            (lambda* (#:key outputs #:allow-other-keys)
              (let* ((out (assoc-ref outputs "out"))
                     (lib (string-append out "/lib"))
@@ -217,21 +227,23 @@ install(TARGETS webrtc-cpp-demo
 include(CMakeFindDependencyMacro)
 
 # Find dependencies
-find_dependency(Boost REQUIRED)
 find_dependency(OpenSSL REQUIRED)
+
+# Get the package prefix
+get_filename_component(PACKAGE_PREFIX_DIR \"${CMAKE_CURRENT_LIST_DIR}/../../../\" ABSOLUTE)
 
 # Define the library targets
 add_library(sioclient::sioclient STATIC IMPORTED)
 set_target_properties(sioclient::sioclient PROPERTIES
-    IMPORTED_LOCATION \"${CMAKE_CURRENT_LIST_DIR}/../../libsioclient.a\"
-    INTERFACE_INCLUDE_DIRECTORIES \"${CMAKE_CURRENT_LIST_DIR}/../../include\"
+    IMPORTED_LOCATION \"${PACKAGE_PREFIX_DIR}/lib/libsioclient.a\"
+    INTERFACE_INCLUDE_DIRECTORIES \"${PACKAGE_PREFIX_DIR}/include\"
     INTERFACE_COMPILE_DEFINITIONS \"ASIO_STANDALONE;BOOST_DATE_TIME_NO_LIB;BOOST_REGEX_NO_LIB;_WEBSOCKETPP_CPP11_FUNCTIONAL_;_WEBSOCKETPP_CPP11_STL_\"
 )
 
 add_library(sioclient::sioclient_tls STATIC IMPORTED)
 set_target_properties(sioclient::sioclient_tls PROPERTIES
-    IMPORTED_LOCATION \"${CMAKE_CURRENT_LIST_DIR}/../../libsioclient_tls.a\"
-    INTERFACE_INCLUDE_DIRECTORIES \"${CMAKE_CURRENT_LIST_DIR}/../../include\"
+    IMPORTED_LOCATION \"${PACKAGE_PREFIX_DIR}/lib/libsioclient_tls.a\"
+    INTERFACE_INCLUDE_DIRECTORIES \"${PACKAGE_PREFIX_DIR}/include\"
     INTERFACE_COMPILE_DEFINITIONS \"ASIO_STANDALONE;BOOST_DATE_TIME_NO_LIB;BOOST_REGEX_NO_LIB;SIO_TLS;_WEBSOCKETPP_CPP11_FUNCTIONAL_;_WEBSOCKETPP_CPP11_STL_\"
     INTERFACE_LINK_LIBRARIES \"OpenSSL::SSL;OpenSSL::Crypto\"
 )
