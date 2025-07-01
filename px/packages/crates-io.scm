@@ -5709,3 +5709,154 @@ way to opt-out.")
     (description
      "This package provides a Rust client library for the @code{OpenRouter} API.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-custom-debug-derive-0.6
+  (package
+    (name "rust-custom-debug-derive")
+    (version "0.6.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "custom_debug_derive" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "04cw7wqf42rjnah5b79vpwawh94m5rjjbrrb9xicgxjjhvdcw1x7"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-darling" ,rust-darling-0.20)
+                       ("rust-proc-macro2" ,rust-proc-macro2-1)
+                       ("rust-quote" ,rust-quote-1)
+                       ("rust-syn" ,rust-syn-2)
+                       ("rust-synstructure" ,rust-synstructure-0.13))))
+    (home-page "https://github.com/panicbit/custom_debug")
+    (synopsis "Derive Debug with a custom format per field")
+    (description
+     "This package provides Derive Debug with a custom format per field.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-custom-debug-0.6
+  (package
+    (name "rust-custom-debug")
+    (version "0.6.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "custom_debug" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "13i9cldd9glg8k25z5ll5wb083rnl07pl7bzhwgf3cv7jnnx39rd"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-custom-debug-derive" ,rust-custom-debug-derive-0.6))))
+    (home-page "https://github.com/panicbit/custom_debug")
+    (synopsis "Derive Debug with a custom format per field")
+    (description
+     "This package provides Derive Debug with a custom format per field.")
+    (license (list license:asl2.0 license:expat))))
+
+(define-public rust-bluer-0.17
+  (package
+    (name "rust-bluer")
+    (version "0.17.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "bluer" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "00d9n6gx05kr8yr08nyzcpsmay41961sdvmhr2an86b0bhpi2s5g"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-custom-debug" ,rust-custom-debug-0.6)
+                       ("rust-dbus" ,rust-dbus-0.9)
+                       ("rust-dbus-crossroads" ,rust-dbus-crossroads-0.5)
+                       ("rust-dbus-tokio" ,rust-dbus-tokio-0.7)
+                       ("rust-displaydoc" ,rust-displaydoc-0.2)
+                       ("rust-futures" ,rust-futures-0.3)
+                       ("rust-hex" ,rust-hex-0.4)
+                       ("rust-lazy-static" ,rust-lazy-static-1)
+                       ("rust-libc" ,rust-libc-0.2)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-macaddr" ,rust-macaddr-1)
+                       ("rust-nix" ,rust-nix-0.29)
+                       ("rust-num-derive" ,rust-num-derive-0.4)
+                       ("rust-num-traits" ,rust-num-traits-0.2)
+                       ("rust-pin-project" ,rust-pin-project-1)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-serde-json" ,rust-serde-json-1)
+                       ("rust-strum" ,rust-strum-0.26)
+                       ("rust-tokio" ,rust-tokio-1)
+                       ("rust-tokio-stream" ,rust-tokio-stream-0.1)
+                       ("rust-uuid" ,rust-uuid-1)
+                       ("rust-uuid" ,rust-uuid-1))
+       #:cargo-development-inputs (("rust-clap" ,rust-clap-4)
+                                   ("rust-env-logger" ,rust-env-logger-0.11)
+                                   ("rust-rand" ,rust-rand-0.8)
+                                   ("rust-tokio" ,rust-tokio-1))))
+    (home-page "https://github.com/bluez/bluer")
+    (synopsis
+     "BlueR: official Rust interface to the Linux Bluetooth protocol stack (BlueZ)")
+    (description
+     "This package provides @code{BlueR}: official Rust interface to the Linux Bluetooth protocol stack
+(@code{BlueZ}).")
+    (license license:bsd-2)))
+
+(define-public rust-bluez-generated-0.4
+  (package
+    (name "rust-bluez-generated")
+    (version "0.4.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "bluez-generated" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0qnhgliwypb8hjizpv8ls1a3hgrhdwn7k0lrh88nzpgaclr7hxln"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:skip-build? #t
+       #:cargo-inputs (("rust-dbus" ,rust-dbus-0.9))))
+    (home-page "https://github.com/bluez-rs/bluez-async/")
+    (synopsis "Generated async D-Bus bindings for talking to BlueZ on Linux")
+    (description
+     "This package provides Generated async D-Bus bindings for talking to @code{BlueZ} on Linux.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-bluez-async-0.8
+  (package
+    (name "rust-bluez-async")
+    (version "0.8.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "bluez-async" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0023v0429pvzq29y01zmcg54dsnbgbq1dzzxdw31vawlskxw0g9m"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs (("rust-bitflags" ,rust-bitflags-2)
+                       ("rust-bluez-generated" ,rust-bluez-generated-0.4)
+                       ("rust-dbus" ,rust-dbus-0.9)
+                       ("rust-dbus-tokio" ,rust-dbus-tokio-0.7)
+                       ("rust-futures" ,rust-futures-0.3)
+                       ("rust-itertools" ,rust-itertools-0.13)
+                       ("rust-log" ,rust-log-0.4)
+                       ("rust-serde" ,rust-serde-1)
+                       ("rust-serde-xml-rs" ,rust-serde-xml-rs-0.6)
+                       ("rust-thiserror" ,rust-thiserror-2)
+                       ("rust-tokio" ,rust-tokio-1)
+                       ("rust-uuid" ,rust-uuid-1))
+       #:cargo-development-inputs (("rust-eyre" ,rust-eyre-0.6)
+                                   ("rust-pretty-env-logger" ,rust-pretty-env-logger-0.5)
+                                   ("rust-tokio" ,rust-tokio-1))))
+    (home-page "https://github.com/bluez-rs/bluez-async/")
+    (synopsis
+     "An async wrapper around the D-Bus interface of BlueZ (the Linux Bluetooth daemon), supporting GATT client (central) functionality")
+    (description
+     "This package provides An async wrapper around the D-Bus interface of @code{BlueZ} (the Linux Bluetooth
+daemon), supporting GATT client (central) functionality.")
+    (license (list license:expat license:asl2.0))))
