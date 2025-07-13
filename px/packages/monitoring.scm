@@ -124,32 +124,6 @@
 for native applications, optimized for C and C++.")
     (license license:expat)))
     
-(define-public sentry-native-0.7
-  (package
-    (name "sentry-native")
-    (version "0.7.4")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/getsentry/sentry-native")
-             (commit version)
-             (recursive? #t)))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "0jkxxc9hqinsb5bw6dy400287py93sar3z6f1kc161a274f5hq75"))))
-    (build-system cmake-build-system)
-    (arguments
-     `(#:tests? #f))
-    (inputs `(("curl" ,curl)))
-    (native-inputs `(("pkg-config" ,pkg-config)
-                     ("zlib", zlib)))
-    (home-page "https://github.com/getsentry/sentry-native")
-    (synopsis "Official Sentry SDK for C/C++")
-    (description "The Sentry Native SDK is an error and crash reporting client
-for native applications, optimized for C and C++.")
-    (license license:expat)))
-    
 (define-public sentry-native-0.9
   (package
     (name "sentry-native")
