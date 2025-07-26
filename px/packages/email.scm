@@ -92,7 +92,7 @@ This library does not implement an IMAP client; it merely makes it easier to do 
         (base32 "1sy1kiwx8six711frpav7a3py7g66cv8ryy0my7rr7kdv8r82r7k"))))
     (build-system qt-build-system)
     (native-inputs (list extra-cmake-modules kdoctools pkg-config))
-    (inputs (list qtbase-5 qtxmlpatterns kcoreaddons))
+    (inputs (list qtbase-5 qtxmlpatterns-5 kcoreaddons))
     (arguments
      `(#:tests? #f))
     (synopsis "This is an DAV protocol implemention with KJobs")
