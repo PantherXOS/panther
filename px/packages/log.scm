@@ -37,33 +37,3 @@
      "Remote_syslog tails one or more log files and sends syslog messages to a remote central syslog server. 
 It generates packets itself, ignoring the system syslog daemon, so its configuration doesn't affect system-wide logging.")
     (license license:expat)))
-
-(define-public loggily
-  (package
-    (name "loggily")
-    (version "0.0.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://source.pantherx.org/" name "-" version
-                           ".crate"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32 "1z0008ydim1x9z7gbn87zrng8ykyh0hpasvzfxyx4r48a6mw98ra"))))
-    (build-system cargo-build-system)
-    (arguments
-     `(#:tests? #f
-       #:cargo-inputs (("rust-chrono" ,rust-chrono-0.4)
-                       ("rust-clap" ,rust-clap-3)
-                       ("rust-openssl" ,rust-openssl-0.10)
-                       ("rust-postgres" ,rust-postgres-0.19)
-                       ("rust-regex" ,rust-regex-1)
-                       ("rust-xmlrpc" ,rust-xmlrpc-0.15)
-                       ("rust-serde" ,rust-serde-1)
-                       ("rust-serde-json" ,rust-serde-json-1)
-                       ("rust-serde-yaml" ,rust-serde-yaml-0.8))))
-    (inputs (list openssl))
-    (home-page "https://pantherx.org")
-    (synopsis "A simple logging library for Rust")
-    (description "A simple logging library for Rust")
-    (license license:expat)))
