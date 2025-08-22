@@ -10,7 +10,6 @@
   #:use-module (gnu packages logging)
   #:use-module (gnu packages screen)
   #:use-module (gnu services shepherd)
-  #:use-module (px packages log)
   #:use-module (gnu system)
   #:use-module (gnu system shadow)
   #:use-module (guix gexp)
@@ -18,85 +17,10 @@
   #:use-module (ice-9 match)
   #:use-module (ice-9 pretty-print)
 
-  #:export (remote-syslog-service-configuration 
-            remote-syslog-service-type
-            %rsyslog-default-config
+  #:export (%rsyslog-default-config
             %rsyslog-default-config-file
             rsyslog-configuration
             rsyslog-service-type))
-
-;;
-;; remote-syslog SERVICE
-;;
-
-(define (script-builder destionation-host destionation-port hostname log-files
-                        package)
-  "Return the chorny configuration file corresponding to CONFIG."
-  (computed-file "remote-syslog-script.sh"
-                 (with-imported-modules '((guix build utils))
-                                        #~(begin
-                                            (use-modules (guix build utils))
-                                            (call-with-output-file #$output
-                                              (lambda (port)
-                                                (format port
-                                                 "#!~a~% exec ~a \"$@\"~%"
-                                                 #+(file-append bash "/bin/sh")
-                                                 (string-append #$package
-                                                  "/bin/remote_syslog2"
-                                                  " --no-detach"
-                                                  " -d "
-                                                  #$destionation-host
-                                                  " -p "
-                                                  #$destionation-port
-                                                  " --pid-file=/var/run/remote_syslog.pid"
-                                                  " --hostname "
-                                                  #$hostname
-                                                  " "
-                                                  #$log-files))
-                                                (chmod port #o555)))))))
-
-(define-record-type* <remote-syslog-service-configuration>
-                     remote-syslog-service-configuration
-                     make-remote-syslog-service-configuration
-  remote-syslog-service-configuration?
-  (destionation-host remote-syslog-service-configuration-destionation-host
-                     (default "logs.papertrailapp.com"))
-  (destionation-port remote-syslog-service-configuration-destionation-port
-                     (default "46169"))
-  (hostname remote-syslog-service-configuration-host
-            (default "$(hostname)"))
-  (log-files remote-syslog-service-configuration-log-files
-             (default "/var/log/messages"))
-  (package
-    remote-syslog-service-configuration-package
-    (default remote_syslog2)))
-
-(define remote-syslog-shepherd-service
-  (match-lambda
-    (($ <remote-syslog-service-configuration>
-        destionation-host
-        destionation-port
-        hostname
-        log-files
-        package)
-     (list (shepherd-service (provision '(remote-syslog))
-                             (documentation "Run remote-syslog as a daemon")
-                             (requirement '(networking syslogd))
-                             (start #~(make-forkexec-constructor (list #$(script-builder
-                                                                          destionation-host
-                                                                          destionation-port
-                                                                          hostname
-                                                                          log-files
-                                                                          package))))
-                             (stop #~(make-kill-destructor)))))))
-
-(define remote-syslog-service-type
-  (service-type (name "remote-syslog")
-                (description "Remote syslog service")
-                (extensions (list (service-extension
-                                   shepherd-root-service-type
-                                   remote-syslog-shepherd-service)))
-                (default-value (remote-syslog-service-configuration))))
 
 ;;
 ;; rsyslog-service-type
