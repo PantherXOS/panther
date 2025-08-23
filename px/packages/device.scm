@@ -298,60 +298,6 @@ to other applications, without root priviliges.")
     "Pulls device backup config from Central Management and runs the backup.")
    (license license:expat)))
 
-(define-public sysinfo-daemon
-  (package
-   (name "sysinfo-daemon")
-   (version "0.0.10")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (string-append "https://source.pantherx.org/" name "_v" version
-                         ".tgz"))
-     (sha256
-      (base32 "0m4zyqxv2a6fk01x7f88wvp3w26wk17i9qgxh3il1q9089z000av"))))
-   (build-system python-build-system)
-   (arguments
-    `(#:tests? #f
-      #:phases
-      (modify-phases
-       %standard-phases
-       (add-after 'install 'wrap-for-openssl-tss2-conf
-		  (lambda* (#:key outputs #:allow-other-keys)
-		    (let ((out (assoc-ref outputs "out"))
-			  (openssl (assoc-ref %build-inputs "openssl"))
-			  (tpm2-tss (assoc-ref %build-inputs "tpm2-tss"))
-			  (tpm2-tss-engine (assoc-ref %build-inputs "tpm2-tss-engine")))
-		      (wrap-program (string-append out "/bin/sysinfo-daemon")
-				    `("OPENSSL_CONF" ":" prefix
-				      (,(string-append tpm2-tss-engine
-						       "/etc/openssl-tss2.conf")))
-				    `("PATH" ":" prefix
-				      (,(string-append tpm2-tss-engine "/bin/")
-				       ,(string-append openssl "/bin/")))
-				    `("TPM2TSSENGINE_TCTI" ":" prefix
-				      (,(string-append tpm2-tss
-						       "/lib/libtss2-tcti-device.so:/dev/tpm0")))
-				    `("TPM2TOOLS_TCTI" ":" prefix
-				      (,(string-append tpm2-tss
-						       "/lib/libtss2-tcti-device.so:/dev/tpm0"))))
-		      #t)))
-       (delete 'sanity-check))))
-   (inputs `(("openssl" ,openssl-1.1)
-             ("tpm2-tss" ,tpm2-tss-openssl-1.1)
-             ("tpm2-tss-engine" ,tpm2-tss-engine)))
-   (native-inputs `(("pkg-config" ,pkg-config)))
-   (propagated-inputs (list px-device-identity
-                           px-python-shared
-                           python-py-cpuinfo
-                           python-requests
-                           python-psutil
-                           procps))
-   (home-page "https://www.pantherx.org/")
-   (synopsis "Collect and submit detailed system info")
-   (description
-    "Submit detailed system information")
-   (license license:expat)))
-
 (define-public bcms
   (package
    (name "bcms")
