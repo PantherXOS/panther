@@ -1,6 +1,6 @@
 ;;; Package Repository for GNU Guix
 ;;; Copyright © 2021-2024 Hamzeh Nasajpour <h.nasajpour@pantherx.org>
-;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+;;; Copyright © 2021-2025 Franz Geffke <mail@gofranz.com>
 
 (define-module (px packages themes)
   #:use-module ((guix licenses)

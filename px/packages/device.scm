@@ -1,5 +1,5 @@
 ;;; Package Repository for GNU Guix
-;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+;;; Copyright © 2021-2025 Franz Geffke <mail@gofranz.com>
 
 (define-module (px packages device)
   #:use-module (guix build-system python)
