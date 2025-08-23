@@ -19,6 +19,7 @@
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages serialization)
   #:use-module (gnu packages tls)
+  #:use-module (gnu packages time)
   #:use-module (px packages common)
   #:use-module (px packages python-xyz)
   #:use-module (px packages tpm)
