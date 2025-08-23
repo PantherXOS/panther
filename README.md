@@ -1,14 +1,14 @@
 # Guix Channel: PantherX OS Packages
 
-This repository contains package defintions for PantherX OS.
+This repository contains GUIX package defintions maintained primarily by [Franz Geffke](https://gofranz.com).
 
-## Authentication
+## Channel Definition
 
 ```scheme
 (cons* (channel
         (name 'pantherx)
         (url "https://channels.pantherx.org/git/panther.git")
-        ;; Enable signature verification:
+        ;; Enable signature verification
         (introduction
          (make-channel-introduction
           "54b4056ac571611892c743b65f4c47dc298c49da"
@@ -17,44 +17,34 @@ This repository contains package defintions for PantherX OS.
        %default-channels)
 ```
 
-## Package for Guix
+## Time Travel
 
-- [A packaging tutorial for Guix](https://www.gnu.org/software/guix/blog/2018/a-packaging-tutorial-for-guix/)
-- [Pjotr’s hacking guide to GNU Guix](https://github.com/pjotrp/guix-notes/blob/master/HACKING.org)
-- [Creating package variants with GNU Guix and Guile Scheme](https://guix.mdc-berlin.de/documentation.html#sec-7)
+When things break because of upstream changes, this will allow you to run a future guix commit, to fix and test the channel without updating the whole system.
 
-Tip: GNU Guix respects the `GUIX_PACKAGE_PATH` environment variable and will prefer packages specified in the directories listed in this variable over those that come with GNU Guix.
-
-```bash
-$ export GUIX_PACKAGE_PATH=/root/panther
-$ guix package -i packagename
-```
-
-Format and lint the file before commit:
-
-```bash
-guix style --whole-file px/packages/tools.scm
-```
-
-### Test changes
-
-```bash
-./pre-inst-env guix system vm ../panther-examples/server-os.scm
-```
-
-### Patches
-
-For the time being, all patches must remain in `./` to be found by guix, due to:
+Create a channels file that includes only the guix channel:
 
 ```scheme
-;; gnu/packages.scm
-(define %patch-path
-  ;; Define it after '%package-module-path' so that '%load-path' contains user
-  ;; directories, allowing patches in $GUIX_PACKAGE_PATH to be found.
-  (make-parameter
-   (map (lambda (directory)
-          (if (string=? directory %distro-root-directory)
-              (string-append directory "/gnu/packages/patches")
-              directory))
-        %load-path)))
+(list (channel
+        (name 'guix)
+        (url "https://codeberg.org/guix/guix.git")
+        (branch "master")
+        ;; Specify commit
+        (commit "dc1a77267f03e37b331c8597b066c5ee52a75445")
+        (introduction
+          (make-channel-introduction
+            "9edb3f66fd807b096b48283debdcddccfea34bad"
+            (openpgp-fingerprint
+              "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA")))))
+```
+
+Spawn a shell for a clean environment:
+
+```bash
+guix shell --container --nesting --network openssl nss-certs coreutils guix
+```
+
+And build the target package:
+
+```bash
+guix time-machine --channels=default-channel.scm -- build -L panther pimsync
 ```
