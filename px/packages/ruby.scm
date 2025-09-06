@@ -12,13 +12,13 @@
 (define-public ruby-jekyll-polyglot
   (package
     (name "ruby-jekyll-polyglot")
-    (version "1.9.0")
+    (version "1.10.0")
     (source
      (origin
        (method url-fetch)
        (uri (rubygems-uri "jekyll-polyglot" version))
        (sha256
-        (base32 "0g7z5psi72pclkq6z2spqlyabw9jj11w1al9fmb2005ik8yn0ryr"))))
+        (base32 "1ly2mdaraihff4qj30002yrnh7gy2vl2m9m2ghzw2wggnmg9f088"))))
     (build-system ruby-build-system)
     (arguments
      '(#:tests? #f)) ; No Rakefile
