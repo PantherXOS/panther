@@ -25,7 +25,7 @@
 (define-public nebula
   (package
     (name "nebula")
-    (version "1.9.5")
+    (version "1.9.6")
     (source
      (origin
        (method url-fetch)
@@ -33,7 +33,7 @@
              "https://github.com/slackhq/nebula/releases/download/v" version
              "/nebula-linux-amd64.tar.gz"))
        (sha256
-        (base32 "0wdz3m2ab5mijn4lgqrlz9visdjbj911j094pf3083rpygcdwmxg"))))
+        (base32 "1zvdhnkc06c3aaqbzzjjqlc72psg1jfga2qr9yb95giz0dqgzx9p"))))
     (build-system binary-build-system)
     (arguments
      `(#:phases (modify-phases %standard-phases
