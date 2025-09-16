@@ -1,6 +1,6 @@
 ;;; Package Repository for GNU Guix
 ;;; Copyright © 2021-2023 Reza Alizadeh Majd <r.majd@pantherx.org>
-;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+;;; Copyright © 2021-2025 Franz Geffke <mail@gofranz.com>
 
 (define-module (px system panther)
   #:use-module (gnu)
@@ -72,7 +72,7 @@
   (append (list (channel
                   (name 'pantherx)
                   (branch "master")
-                  (url "https://channels.pantherx.org/git/panther.git")
+                  (url "https://codeberg.org/gofranz/panther.git")
                   (introduction
                    (make-channel-introduction
                     "54b4056ac571611892c743b65f4c47dc298c49da"

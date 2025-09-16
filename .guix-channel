@@ -4,11 +4,11 @@
 (channel
  (version 0)
  (name pantherx)
- (url "https://channels.pantherx.org/git/panther.git")
+ (url "https://codeberg.org/gofranz/panther.git")
  (dependencies
   (channel
    (name nonguix)
-   (url "https://channels.pantherx.org/git/nonguix.git")
+   (url "https://gitlab.com/nonguix/nonguix.git")
    (branch "master")
    (introduction
     (channel-introduction
