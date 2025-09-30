@@ -139,7 +139,7 @@ logdir /var/log/chrony")))
                         (config-path "/etc/nebula/config.yml")))
 
 (define %nebula-log-rotations
-  (list (log-rotation (files (list "/var/log/nebula.log")))))
+  (list "/var/log/nebula.log"))
 
 (define nebula-service-type
   (service-type (name 'nebula)
