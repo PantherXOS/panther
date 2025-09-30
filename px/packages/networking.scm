@@ -161,7 +161,7 @@ privacy. See our website for more information.")
                          ""))
                       #t)))))
     (native-inputs `(("ksh" ,oksh)))
-    (inputs `(("mbedtls" ,mbedtls-apache)))
+    (inputs `(("mbedtls" ,mbedtls)))
     (synopsis "Lightweight messaging library")
     (description
      "NNG project is a rewrite of the scalability protocols library
