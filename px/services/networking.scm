@@ -148,7 +148,7 @@ logdir /var/log/chrony")))
                                    nebula-shepherd-services)
                                   (service-extension profile-service-type
                                                      nebula-profile-packages)
-                                  (service-extension rottlog-service-type
+                                  (service-extension log-rotation-service-type
                                                      (const
                                                       %nebula-log-rotations))))
                 (default-value (list %default-nebula-configuration))
