@@ -13,7 +13,7 @@
 (define-public pnpm
   (package
     (name "pnpm")
-    (version "10.15.1")
+    (version "10.18.2")
     (source
      (origin
        (method url-fetch)
@@ -24,7 +24,7 @@
                              ("x86_64-linux" "x64")
                              ("aarch64-linux" "arm64"))))
        (sha256
-        (base32 "08nw2sfg7xyk82qknr94wqsbsijd7jg387yghdwif8rqs5ii1f7l"))))
+        (base32 "0c52hck7hcs90mzg13h173mqvpkx8kv7ksblq9wx30hyny2y6gd6"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build utils))
