@@ -49,3 +49,27 @@
      "pimsync is a tool for synchronizing calendars and contacts between
 local storage and remote servers using the CalDAV and CardDAV protocols.")
     (license license:eupl1.1)))
+
+(define-public himalaya
+  (package
+    (name "himalaya")
+    (version "1.1.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "himalaya" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0j9j5qydnr98w5qd0xv56yvqj5gm259ps129q5scq9f93sb3ysz6"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f))
+    (inputs (px-cargo-inputs 'himalaya))
+    (home-page "https://pimalaya.org/")
+    (synopsis "CLI to manage emails")
+    (description
+     "Himalaya is a command-line interface for managing emails, providing a
+modern and efficient way to interact with email accounts.  It supports IMAP,
+Maildir, Notmuch, SMTP, and Sendmail backends, along with OAuth 2.0
+authorization for various email providers including Gmail, Outlook, and iCloud.")
+    (license license:expat)))
