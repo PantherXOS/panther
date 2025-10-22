@@ -17,6 +17,52 @@ This repository contains GUIX package defintions maintained primarily by [Franz 
        %default-channels)
 ```
 
+## Home Services
+
+### Darkman
+
+Darkman is a framework for managing dark/light mode transitions. It automatically switches themes based on sunrise/sunset times.
+
+**Usage:**
+
+```scheme
+(use-modules (px home services darkman))
+
+;; Default configuration (uses geoclue2 for location)
+(service home-darkman-service-type)
+
+;; With manual coordinates
+(service home-darkman-service-type
+         (home-darkman-configuration
+          (latitude 52.52)
+          (longitude 13.405)
+          (use-geoclue? #f)))
+
+;; Custom configuration
+(service home-darkman-service-type
+         (home-darkman-configuration
+          (latitude 37.7749)
+          (longitude -122.4194)
+          (use-geoclue? #f)
+          (dbus-server? #t)
+          (portal? #f)))
+```
+
+**Mode-switching scripts:**
+
+Place executable scripts in:
+- `~/.local/share/dark-mode.d/` - Executed when switching to dark mode
+- `~/.local/share/light-mode.d/` - Executed when switching to light mode
+
+**Manual control:**
+
+```bash
+darkman get          # Show current mode
+darkman set dark     # Switch to dark mode
+darkman set light    # Switch to light mode
+darkman toggle       # Toggle between modes
+```
+
 ## Time Travel
 
 When things break because of upstream changes, this will allow you to run a future guix commit, to fix and test the channel without updating the whole system.
