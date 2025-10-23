@@ -1,6 +1,6 @@
 ;;; Package Repository for GNU Guix
 ;;; Copyright © 2021-2023 Reza Alizadeh Majd <r.majd@pantherx.org>
-;;; Copyright © 2021-2025 Franz Geffke <m@f-a.nz>
+;;; Copyright © 2021-2025 Franz Geffke <mail@gofranz.com>
 
 (define-module (px packages common)
   #:use-module ((guix licenses)
@@ -10,6 +10,7 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system pyproject)
   #:use-module (gnu packages cmake)
   #:use-module (gnu packages haskell-xyz)
   #:use-module (gnu packages libffi)
@@ -27,55 +28,49 @@
   #:use-module (gnu packages networking)
   #:use-module (px packages python-xyz))
 
-(define-public capnproto-0.9
+(define-public capnproto-shared
   (package
     (inherit capnproto)
-    (name "capnproto")
-    (version "0.9.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://capnproto.org/capnproto-c++-" version
-                           ".tar.gz"))
-       (sha256
-        (base32 "0hi5lpyhskdg99n9zgn0ffr79gn12m1j7igkp9wikklg2p4yjca0"))))))
+    (name "capnproto-shared")
+    (arguments
+     `(#:configure-flags '("-DBUILD_SHARED_LIBS=ON")
+       ,@(package-arguments capnproto)))))
 
 (define-public python-pycapnp
   (package
     (name "python-pycapnp")
-    (version "1.1.0")
+    (version "2.2.1")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://github.com/capnproto/pycapnp/archive/v"
                            version ".tar.gz"))
        (sha256
-        (base32 "0kj9jpg6vpmlqgzqnxz2dsbihwhimq9xzq6yrkqvgdzz3sdlk8fh"))))
-    (build-system python-build-system)
+        (base32 "0ysf179ki84maywgf8c4kaj7i8cjb9i92cyj2ygz4ggp2hfs53v9"))))
+    (build-system pyproject-build-system)
     (arguments
-     `(#:python ,python-3
-       #:tests? #f
+     `(#:tests? #f
+       #:configure-flags '(@ ("force-system-libcapnp" . #t))
        #:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'patch-source
+                  (add-after 'unpack 'force-system-library
                     (lambda _
-                      (substitute* '("setup.py")
-                        (("if need_build")
-                         "if False")) #t))
+                      (substitute* "setup.py"
+                        (("need_build = True")
+                         "need_build = False"))))
                   (delete 'sanity-check))))
-    (native-inputs `(("python-pkgconfig" ,python-pkgconfig)
-                     ("python-setuptools" ,python-setuptools)
-                     ("python-wrapper" ,python-wrapper)
-                     ("python-cython" ,python-cython)
-                     ("capnproto" ,capnproto)
-                     ("python-sphinx" ,python-sphinx)
-                     ("python-tox" ,python-tox)
-                     ("python-wheel" ,python-wheel)))
-    (propagated-inputs `(("python-jinja2" ,python-jinja2)))
-    (home-page "http://jparyani.github.io/pycapnp")
-    (synopsis "Capability-based RPC and serialization system")
-    (description "This is a python3 wrapping of the C++
-implementation of the Cap’n Proto library.")
-    (license license:gpl2+)))
+    (native-inputs (list python-cython
+                         python-pkgconfig
+                         python-setuptools
+                         python-wheel
+                         capnproto-shared))
+    (propagated-inputs (list python-jinja2))
+    (home-page "https://github.com/capnproto/pycapnp")
+    (synopsis "Cython wrapping of the C++ Cap'n Proto library")
+    (description
+     "This package provides a Cython wrapping of the C++ Cap'n Proto library,
+enabling Python applications to use the Cap'n Proto serialization and RPC
+system.")
+    (license license:bsd-2)))
 
 (define-public python-pynng
   (package
