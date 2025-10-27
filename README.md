@@ -63,6 +63,44 @@ darkman set light    # Switch to light mode
 darkman toggle       # Toggle between modes
 ```
 
+### Foot Server
+
+Foot server mode runs the foot terminal emulator as a background daemon, allowing fast terminal startup with `footclient`.
+
+**Usage:**
+
+```scheme
+(use-modules (px home services foot))
+
+;; Default configuration
+(service home-foot-server-service-type)
+
+;; With custom config file
+(service home-foot-server-service-type
+         (home-foot-server-configuration
+          (config-file "/path/to/foot.ini")))
+
+;; With hold option (remain open after child exits)
+(service home-foot-server-service-type
+         (home-foot-server-configuration
+          (hold? #t)))
+```
+
+**Connecting to server:**
+
+```bash
+footclient           # Open new terminal window
+footclient -- htop   # Open terminal running specific command
+```
+
+**Service management:**
+
+```bash
+herd start foot-server    # Start server
+herd stop foot-server     # Stop server
+herd status foot-server   # Check status
+```
+
 ## Time Travel
 
 When things break because of upstream changes, this will allow you to run a future guix commit, to fix and test the channel without updating the whole system.
