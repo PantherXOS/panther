@@ -10,6 +10,7 @@
   #:use-module (guix utils)
   #:use-module (guix build-system cargo)
   #:use-module (guix build-system cmake)
+  #:use-module (guix build-system go)
   #:use-module (guix build-system meson)
   #:use-module (gnu packages)
   #:use-module (gnu packages freedesktop)
@@ -113,4 +114,29 @@ selection.")
     (description
      "Govee H5074, H5075, H5100, H5174, H5177, H5179,
 H5181, H5182, and H5183 Bluetooth Low Energy Temperature and Humidity Logger")
+    (license license:expat)))
+
+(define-public bluetuith
+  (package
+    (name "bluetuith")
+    (version "0.2.5")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/bluetuith-org/bluetuith/archive/refs/tags/v"
+                           version ".tar.gz"))
+       (sha256
+        (base32 "1c467qw30d89rfkn9ys1n1x1ys49r4aafcp5k60hrrfi8f474j4y"))))
+    (build-system go-build-system)
+    (arguments
+     '(#:import-path "github.com/darkhz/bluetuith"
+       #:unpack-path "github.com/darkhz/bluetuith"
+       #:install-source? #f))
+    (inputs (list bluez))
+    (home-page "https://github.com/bluetuith-org/bluetuith")
+    (synopsis "TUI-based Bluetooth connection manager")
+    (description
+     "Bluetuith is a TUI-based Bluetooth connection manager which can interact
+with Bluetooth adapters and devices.  It aims to be a replacement to most
+Bluetooth managers, like blueman.")
     (license license:expat)))
