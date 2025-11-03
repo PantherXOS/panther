@@ -5,6 +5,8 @@
 (define-module (px packages desktop-tools)
   #:use-module ((guix licenses)
                 #:prefix license:)
+  #:use-module ((nonguix licenses)
+                #:prefix nonfree:)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system qt)
   #:use-module (guix build-system copy)
@@ -13,6 +15,7 @@
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix utils)
+  #:use-module (nonguix build-system chromium-binary)
   #:use-module (gnu packages boost)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages check)
@@ -316,3 +319,45 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
     (synopsis "PantherX Terminal Launcher")
     (description "PantherX Terminal Launcher")
     (license license:expat)))
+
+(define-public slack-desktop
+  (package
+    (name "slack-desktop")
+    (version "4.46.101")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append
+         "https://downloads.slack-edge.com/desktop-releases/linux/x64/"
+         version "/slack-desktop-" version "-amd64.deb"))
+       (sha256
+        (base32 "0dbrf30lixw1c2c028krcb9199vqybpqipzphrc5rs1alpqh3bqw"))))
+    (supported-systems '("x86_64-linux"))
+    (build-system chromium-binary-build-system)
+    (arguments
+     (list #:validate-runpath? #f
+           #:wrapper-plan
+           #~'(("lib/slack/slack" (("out" "/lib/slack")))
+               "lib/slack/chrome_crashpad_handler")
+           #:phases
+           #~(modify-phases %standard-phases
+               (add-after 'binary-unpack 'setup-cwd
+                 (lambda _
+                   (copy-recursively "usr/" ".")
+                   (delete-file-recursively "usr")
+                   (delete-file-recursively "etc")
+                   (delete-file-recursively "bin")
+                   (substitute* '("share/applications/slack.desktop")
+                     (("/usr/bin/slack") (string-append #$output "/bin/slack")))))
+               (add-after 'install 'symlink-binary-file
+                 (lambda _
+                   (mkdir-p (string-append #$output "/bin"))
+                   (symlink (string-append #$output "/lib/slack/slack")
+                            (string-append #$output "/bin/slack")))))))
+    (home-page "https://slack.com/")
+    (synopsis "Team collaboration and messaging platform")
+    (description "Slack Desktop is an Electron-based application for team
+communication and collaboration.  It provides messaging, file sharing, and
+integration with various productivity tools.")
+    (license (nonfree:nonfree "https://slack.com/terms-of-service"))))
