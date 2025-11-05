@@ -5,14 +5,135 @@
   #:use-module ((guix licenses)
                 #:prefix license:)
   #:use-module (guix build-system meson)
+  #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix packages)
-  #:use-module (gnu packages glib)
+  #:use-module (gnu packages audio)
+  #:use-module (gnu packages avahi)
+  #:use-module (gnu packages documentation)
   #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages gstreamer)
+  #:use-module (gnu packages libusb)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages lua)
+  #:use-module (gnu packages networking)
   #:use-module (gnu packages pkg-config)
-  #:use-module (gnu packages python))
+  #:use-module (gnu packages pulseaudio)
+  #:use-module (gnu packages python)
+  #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages readline)
+  #:use-module (gnu packages serialization)
+  #:use-module (gnu packages tls)
+  #:use-module (gnu packages video)
+  #:use-module (gnu packages vulkan)
+  #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xiph))
+
+(define-public libcamera-0.5
+  (package
+    (name "libcamera")
+    (version "0.5.2")
+    (source
+     (origin
+       (method git-fetch)
+       (uri
+        (git-reference
+         (url "https://github.com/libcamera-org/libcamera")
+         (commit (string-append "v" version))))
+       (file-name
+        (git-file-name name version))
+       (sha256
+        (base32 "0dhqgx63vgp3ish44v6fwlqwwkz0n2dqpxmpb20w2r4xfyd4pgcy"))))
+    (build-system meson-build-system)
+    (arguments
+     (list #:configure-flags
+           #~(list "-Dudev=enabled"
+                   "-Dtest=false"
+                   "-Dv4l2=true"
+                   "-Dpycamera=disabled"
+                   "-Dgstreamer=disabled"
+                   "-Dcam=disabled"
+                   "-Dqcam=disabled"
+                   "-Ddocumentation=disabled")))
+    (native-inputs
+     (list pkg-config python python-jinja2 python-ply python-pyyaml))
+    (inputs
+     (list eudev libyaml))
+    (home-page "https://libcamera.org/")
+    (synopsis "Camera support library (version 0.5)")
+    (description
+     "libcamera is a library that deals with heavy hardware image processing
+operations of complex camera devices that are shared between the linux host
+all while allowing offload of certain aspects to the control of complex camera
+hardware such as ISPs.  This is version 0.5.2, packaged for PipeWire compatibility.")
+    (license license:lgpl2.1+)))
+
+(define-public pipewire
+  (package
+    (name "pipewire")
+    (version "1.4.9")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://gitlab.freedesktop.org/pipewire/pipewire")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0mwn3aad8dg5ynxvgnvqi5wxqfy1xhhs2h0nf8awgsp5brihmkfz"))))
+    (build-system meson-build-system)
+    (arguments
+     (list
+      #:configure-flags
+      #~(list (string-append "-Dudevrulesdir=" #$output "/lib/udev/rules.d")
+              "-Dman=enabled"
+              "-Drlimits-install=false"
+              "-Dsession-managers=[]"
+              "-Dsysconfdir=/etc"
+              "-Dsystemd=disabled")))
+    (native-inputs
+     (list `(,glib "bin")
+           pkg-config
+           doxygen
+           python
+           python-docutils))
+    (inputs (list alsa-lib
+                  avahi
+                  bluez
+                  dbus
+                  eudev
+                  ffmpeg
+                  gst-plugins-base
+                  gstreamer
+                  jack-2
+                  ldacbt
+                  libcamera-0.5
+                  libdrm
+                  libfdk
+                  libfreeaptx
+                  libsndfile
+                  libusb
+                  openssl
+                  libva
+                  pulseaudio
+                  readline
+                  sbc
+                  vulkan-headers
+                  vulkan-loader
+                  webrtc-audio-processing))
+    (home-page "https://pipewire.org/")
+    (synopsis "Server and user space API to deal with multimedia pipelines")
+    (description
+     "PipeWire is a project that aims to greatly improve handling of audio and
+video under Linux.  It aims to support the usecases currently handled by both
+PulseAudio and Jack and at the same time provide same level of powerful handling
+of Video input and output.  It also introduces a security model that makes
+interacting with audio and video devices from containerized applications easy,
+with supporting Flatpak applications being the primary goal.  Alongside Wayland
+and Flatpak we expect PipeWire to provide a core building block for the future
+of Linux application development.")
+    (license license:lgpl2.0+)))
 
 (define-public wireplumber
   (package
