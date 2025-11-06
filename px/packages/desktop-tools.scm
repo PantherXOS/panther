@@ -7,6 +7,7 @@
                 #:prefix license:)
   #:use-module ((nonguix licenses)
                 #:prefix nonfree:)
+  #:use-module (guix build-system cargo)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system qt)
   #:use-module (guix build-system copy)
@@ -22,8 +23,11 @@
   #:use-module (gnu packages cups)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages gcc)
+  #:use-module (gnu packages glib)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages gnuzilla)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages llvm)
   #:use-module (gnu packages lxqt)
   #:use-module (gnu packages mate)
   #:use-module (gnu packages maths)
@@ -33,7 +37,9 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages qt)
   #:use-module (gnu packages search)
+  #:use-module (gnu packages version-control)
   #:use-module (gnu packages video)
+  #:use-module (gnu packages vulkan)
   #:use-module (gnu packages xfce)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages kde-frameworks)
@@ -42,6 +48,7 @@
   #:use-module (px packages common)
   #:use-module (px packages library)
   #:use-module (px packages themes)
+  #:use-module (px self)
   #:use-module (srfi srfi-1))
 
 (define-public albert-launcher
@@ -403,3 +410,53 @@ integration with various productivity tools.")
 gamers that works on desktop and phone.  It features voice chat, text chat,
 and rich media support for gaming communities.")
     (license (nonfree:nonfree "https://discord.com/terms"))))
+
+(define-public wluma
+  (package
+    (name "wluma")
+    (version "4.10.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/maximbaz/wluma")
+             (commit version)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0jf0gqh9xx0qilgqdv0hyjshw60carjniv9lin7wriszpbji42lb"))
+       (snippet
+        #~(begin
+            (use-modules (guix build utils))
+            ;; Fix build.rs to not panic when git-describe fails
+            (substitute* "build.rs"
+              (("Ok\\(o\\) => panic.*git-describe exited non-zero.*")
+               "Ok(_) => version.to_string(),\n"))))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'install 'install-auxiliary-files
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (udev-rules (string-append out "/lib/udev/rules.d"))
+                    (examples (string-append out "/share/doc/wluma/examples")))
+               (install-file "90-wluma-backlight.rules" udev-rules)
+               (install-file "config.toml" examples)))))))
+    (native-inputs
+     (list clang git pkg-config))
+    (inputs
+     (cons* dbus
+            eudev
+            v4l-utils
+            vulkan-loader
+            (px-cargo-inputs 'wluma)))
+    (home-page "https://github.com/maximbaz/wluma")
+    (synopsis "Automatic brightness adjustment for Wayland")
+    (description
+     "Wluma automatically adjusts screen brightness based on screen contents
+and ambient light.  It learns user brightness preferences and applies them
+intelligently across different lighting conditions.  The tool uses Vulkan for
+GPU-accelerated processing with minimal battery impact and supports multiple
+displays through both laptop backlights and external monitors via DDC.")
+    (license license:isc)))
