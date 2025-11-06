@@ -15,6 +15,8 @@
   #:use-module (gnu services desktop)
   ;; pulseaudio-service-type
   #:use-module (gnu services sound)
+  ;; gdm-service-type
+  #:use-module (gnu services xorg)
 
   ;; wpa-supplicant
   #:use-module (gnu packages admin)
@@ -143,6 +145,7 @@
     (delete login-service-type)
     (delete agetty-service-type)
     (delete mingetty-service-type)
+    (delete gdm-service-type)
     (delete pulseaudio-service-type)
     (delete alsa-service-type)))
 
