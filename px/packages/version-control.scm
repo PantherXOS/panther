@@ -6,9 +6,13 @@
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
+  #:use-module (guix build-system cargo)
   #:use-module (guix build-system copy)
   #:use-module (guix gexp)
-  #:use-module (gnu packages base))
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages tls)
+  #:use-module (px self))
 
 (define-public gh
   (package
@@ -54,3 +58,29 @@
 other GitHub concepts to the terminal next to where you are already working
 with git and your code.")
     (license license:expat)))
+
+(define-public jj-vcs
+  (package
+    (name "jj-vcs")
+    (version "0.28.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "jj-cli" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "09fymwchmq08i7ycb0kf5w2m1z0h6hh8kzj7ad2z29d1yb7z8pnm"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f
+       #:tests? #f))  ; Tests require testutils module
+    (native-inputs (list pkg-config))
+    (inputs (cons* openssl (px-cargo-inputs 'jj-cli)))
+    (home-page "https://github.com/jj-vcs/jj")
+    (synopsis "Git-compatible version control system")
+    (description
+     "Jujutsu (jj) is a Git-compatible version control system that is both
+powerful and easy to use.  It features automatic working copy management,
+operation logging for easy undo, first-class conflict handling, automatic
+rebasing of descendant commits, and comprehensive history rewriting tools.")
+    (license license:asl2.0)))
