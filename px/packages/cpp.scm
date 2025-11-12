@@ -202,7 +202,7 @@ install(TARGETS webrtc-cpp-demo
     (inputs (list rapidjson
                   openssl
                   websocketpp
-                  asio))
+                  asio-1.28))
     (native-inputs (list pkg-config))
     (home-page "https://github.com/socketio/socket.io-client-cpp")
     (synopsis "Socket.IO C++ client library")
