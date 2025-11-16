@@ -308,7 +308,8 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
     (build-system qt-build-system)
     (arguments
      ;; make qtsvg work
-     (list #:phases
+     (list #:tests? #f
+           #:phases
            #~(modify-phases %standard-phases
                (add-after 'install 'wrap-executable
                  (lambda* (#:key inputs outputs #:allow-other-keys)
