@@ -10,13 +10,15 @@
   #:use-module (gnu packages package-management)
   #:use-module (guix gexp)
   #:use-module (guix channels)
+  #:use-module (srfi srfi-1)
 
   ;; bluetooth-service-type
   #:use-module (gnu services desktop)
   ;; pulseaudio-service-type
   #:use-module (gnu services sound)
-  ;; gdm-service-type
+  ;; gdm-service-type sddm-service-type
   #:use-module (gnu services xorg)
+  #:use-module (gnu services sddm)
 
   ;; wpa-supplicant
   #:use-module (gnu packages admin)
@@ -140,14 +142,20 @@
   (append %panther-services-udev
          %desktop-services-modified))
 
+;; Remove display managers and other services for minimal setup.
+;; Using 'remove' instead of 'modify-services' with 'delete' because
+;; %desktop-services may contain either GDM or SDDM depending on architecture.
 (define %panther-desktop-services-minimal
-  (modify-services %panther-desktop-services
-    (delete login-service-type)
-    (delete agetty-service-type)
-    (delete mingetty-service-type)
-    (delete gdm-service-type)
-    (delete pulseaudio-service-type)
-    (delete alsa-service-type)))
+  (remove (lambda (service)
+            (memq (service-kind service)
+                  (list login-service-type
+                        agetty-service-type
+                        mingetty-service-type
+                        gdm-service-type
+                        sddm-service-type
+                        pulseaudio-service-type
+                        alsa-service-type)))
+          %panther-desktop-services))
 
 (define %panther-desktop-packages
   (cons* wpa-supplicant
