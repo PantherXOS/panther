@@ -12,14 +12,14 @@
 (define-public px-auth-library-cpp
   (package
     (name "px-auth-library-cpp")
-    (version "0.0.33")
+    (version "0.0.34")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_" version
                            ".tgz"))
        (sha256
-        (base32 "1q3zzvk64c98i6h0rkfh2f4nclvcq2f1kp8z21bzck9gjx4zkd2a"))))
+        (base32 "1c9vqx3mh18sbh79m6pw7ya27jj3dq96hm3wgqw7qwyj30f6vhpr"))))
     (build-system qt-build-system)
     (arguments
      (list
