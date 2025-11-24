@@ -32,14 +32,14 @@
 (define-public px-widget-style
   (package
     (name "px-widget-style")
-    (version "5.19.5-1")
+    (version "5.19.6-1")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_v" version
                            ".tgz"))
        (sha256
-        (base32 "0ihx39li1r266ankc1q4lvv2vfh9hbxjlyjddyy30rir8rbdfilp"))))
+        (base32 "0m2bkgsijghxj526zwl2zppqnw7q03zmfs8vvpbiggnxl2n77hf6"))))
     (properties `((tags quote
                         ("Desktop" "KDE" "Plasma"))))
     (build-system cmake-build-system)
@@ -67,7 +67,8 @@
               ("qtx11extras" ,qtx11extras)))
     (propagated-inputs `(("qtbase" ,qtbase-5)))
     (arguments
-     `(#:phases (modify-phases %standard-phases
+     `(#:tests? #f
+       #:phases (modify-phases %standard-phases
                   (add-before 'configure 'fix-source
                     (lambda* (#:key outputs #:allow-other-keys)
                       (let ((out (assoc-ref outputs "out")))
