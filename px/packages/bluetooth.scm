@@ -7,13 +7,18 @@
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
+  #:use-module (guix gexp)
   #:use-module (guix utils)
   #:use-module (guix build-system cargo)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system go)
   #:use-module (guix build-system meson)
+  #:use-module (nonguix build-system binary)
   #:use-module (gnu packages)
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages compression)
   #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages gcc)
   #:use-module (gnu packages gettext)
   #:use-module (gnu packages glib)
   #:use-module (gnu packages gnome)
@@ -22,6 +27,7 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages rust)
+  #:use-module (gnu packages webkit)
   #:use-module (px packages rust-crates)
   #:use-module (ice-9 match))
 
@@ -139,4 +145,85 @@ H5181, H5182, and H5183 Bluetooth Low Energy Temperature and Humidity Logger")
      "Bluetuith is a TUI-based Bluetooth connection manager which can interact
 with Bluetooth adapters and devices.  It aims to be a replacement to most
 Bluetooth managers, like blueman.")
+    (license license:expat)))
+
+(define-public nothing-linux
+  (package
+    (name "nothing-linux")
+    (version "0.0.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/sn99/nothing-linux/releases/download/v"
+             version "/nothing-linux_" version "_amd64.deb"))
+       (sha256
+        (base32 "0gq7bsjbg0q1zq7g4k9brv58sj23lkk1pl8pznbldzlpf6qzaa9p"))))
+    (supported-systems '("x86_64-linux"))
+    (build-system binary-build-system)
+    (arguments
+     (list
+      #:patchelf-plan
+      #~'(("bin/nothing-linux" ("glibc" "gcc" "gtk+" "webkitgtk-for-gtk3"
+                                "glib" "dbus" "zlib" "at-spi2-core"
+                                "pango" "harfbuzz" "cairo" "gdk-pixbuf"
+                                "libsoup")))
+      #:phases
+      #~(modify-phases %standard-phases
+          (replace 'unpack
+            (lambda* (#:key inputs #:allow-other-keys)
+              (invoke "ar" "x" (assoc-ref inputs "source"))
+              (invoke "tar" "-xzf" "data.tar.gz")
+              (copy-recursively "usr/" ".")
+              (delete-file-recursively "usr")))
+          (add-after 'install 'install-desktop-file
+            (lambda _
+              (let ((apps (string-append #$output "/share/applications")))
+                (substitute* "share/applications/nothing-linux.desktop"
+                  (("/usr/bin/nothing-linux")
+                   (string-append #$output "/bin/nothing-linux")))
+                (install-file "share/applications/nothing-linux.desktop" apps))))
+          (add-after 'install 'install-icons
+            (lambda _
+              (for-each
+               (lambda (size)
+                 (let ((icons (string-append #$output "/share/icons/hicolor/"
+                                             size "/apps")))
+                   (mkdir-p icons)
+                   (when (file-exists? (string-append "share/icons/hicolor/"
+                                                      size "/apps/nothing-linux.png"))
+                     (copy-file (string-append "share/icons/hicolor/"
+                                               size "/apps/nothing-linux.png")
+                                (string-append icons "/nothing-linux.png")))))
+               '("32x32" "128x128" "256x256@2"))))
+          (add-after 'install 'wrap-binary
+            (lambda* (#:key inputs #:allow-other-keys)
+              (wrap-program (string-append #$output "/bin/nothing-linux")
+                `("LD_LIBRARY_PATH" ":" prefix
+                  ,(map (lambda (pkg)
+                          (string-append (assoc-ref inputs pkg) "/lib"))
+                        '("gtk+" "webkitgtk-for-gtk3" "glib" "dbus" "zlib"
+                          "at-spi2-core" "glibc" "gcc" "pango" "harfbuzz"
+                          "cairo" "gdk-pixbuf" "libsoup")))))))))
+    (native-inputs (list gzip tar (@ (gnu packages base) binutils)))
+    (inputs (list glibc
+                  `(,gcc "lib")
+                  gtk+
+                  webkitgtk-for-gtk3
+                  glib
+                  dbus
+                  zlib
+                  at-spi2-core
+                  pango
+                  harfbuzz
+                  cairo
+                  gdk-pixbuf
+                  libsoup))
+    (home-page "https://github.com/sn99/nothing-linux")
+    (synopsis "Control Nothing Ear (2) earbuds on Linux")
+    (description
+     "Nothing Linux is a desktop application for controlling Nothing Ear (2)
+wireless earbuds via Bluetooth.  It provides a graphical interface to manage
+settings like low latency mode that would otherwise require the official
+Nothing mobile app.")
     (license license:expat)))
