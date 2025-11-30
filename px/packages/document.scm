@@ -25,7 +25,7 @@
        (uri (string-append "https://github.com/tsujan/FeatherPad/archive/V"
                            version ".tar.gz"))
        (sha256
-        (base32 "s5jxs2zkkjne22ytnftid2p3wcko3tba5cvn77gvxnx6elikl7nq"))))
+        (base32 "1nsz18ny4vxvspydzap8436fv55hzglq2rk92dmlsnjj59mpjlwp"))))
     (build-system cmake-build-system)
     (arguments
      `(#:tests? #f))
