@@ -10,7 +10,7 @@
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix records)
-  #:use-module (px packages tools)
+  #:use-module (gnu packages xdisorg)
   #:export (home-darkman-configuration
             home-darkman-configuration?
             home-darkman-service-type))
