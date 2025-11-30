@@ -18,20 +18,23 @@
 (define-public tarsnap
   (package
     (name "tarsnap")
-    (version "1.0.39")
+    (version "1.0.41")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://github.com/Tarsnap/tarsnap/archive/"
                            version ".tar.gz"))
        (sha256
-        (base32 "0b91k0sg64nxidvgzpip5a1rz0cwmygsfr13ac1q7zmd59iz1cz2"))
+        (base32 "10dwf0vgqj5vnsz6pfcn8mhazaj49xnz7zhfiwbsl19kpapglwja"))
        (patches (search-patches
                  "tarsnap-do-not-use-command-p-in-makefile.patch"))))
     ;; This official release includes a configure script but it will
     ;; try to invoke sh and that will not be found. Therefore it is
     ;; necessary to build the configure script with autoconf.
     (build-system gnu-build-system)
+    (arguments
+     `(#:configure-flags
+       (list (string-append "POSIX_SH=" (assoc-ref %build-inputs "bash") "/bin/sh"))))
     (inputs `(("openssl" ,openssl)
               ("zlib" ,zlib)
               ("e2fsprogs" ,e2fsprogs)))
