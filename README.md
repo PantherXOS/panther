@@ -101,6 +101,27 @@ herd stop foot-server     # Stop server
 herd status foot-server   # Check status
 ```
 
+## System Services
+
+### Tailscale
+
+Tailscale is a zero-config VPN built on WireGuard.
+
+**Usage:**
+
+```scheme
+(use-modules (px services networking))
+
+(service tailscale-service-type)
+```
+
+**After reconfiguration:**
+
+```bash
+tailscale up         # Authenticate and connect
+tailscale status     # Check connection status
+```
+
 ## Time Travel
 
 When things break because of upstream changes, this will allow you to run a future guix commit, to fix and test the channel without updating the whole system.

@@ -19,14 +19,16 @@
   #:use-module (px packages networking)
   #:use-module (srfi srfi-1)
 
-  #:export (chrony-service-configuration 
+  #:export (chrony-service-configuration
             chrony-service-type
             nebula-configuration
             nebula-configuration-package
             nebula-configuration-provision
             nebula-configuration-config-path
             %default-nebula-configuration
-            nebula-service-type))
+            nebula-service-type
+            tailscale-configuration
+            tailscale-service-type))
 
 ;;
 ;; Chrony SERVICE
@@ -154,3 +156,27 @@ logdir /var/log/chrony")))
                 (default-value (list %default-nebula-configuration))
                 (description
                  "Run configured instance of nebula on system start")))
+
+;;
+;; Tailscale SERVICE
+;;
+
+(define-public (tailscale-configuration) '())
+
+(define (tailscale-shepherd-service config)
+  (list (shepherd-service
+         (documentation "Run the tailscale daemon")
+         (provision '(tailscaled tailscale))
+         (requirement '(user-processes))
+         (start
+          #~(lambda _
+              (fork+exec-command (list #$(file-append tailscaled "/bin/tailscaled")))))
+         (stop #~(make-kill-destructor)))))
+
+(define-public tailscale-service-type
+  (service-type
+   (name 'tailscale)
+   (extensions
+    (list (service-extension shepherd-root-service-type tailscale-shepherd-service)))
+   (default-value (tailscale-configuration))
+   (description "Run and connect to tailscale")))
