@@ -75,7 +75,7 @@ in multiple languages.")
       (method url-fetch)
       (uri (string-append "https://source.pantherx.org/webrtc-cpp_v" version ".tgz"))
       (sha256
-       (base32 "0swkl0km3hrykjyhld75cb234mbwnwad7iix05nv430wsqvd41nf"))))
+       (base32 "08pqb8m782sdagcc167g6is1fk6nlnf2rcb14s7wkvj5q35xlb45"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f))
