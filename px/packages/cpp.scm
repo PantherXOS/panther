@@ -69,7 +69,7 @@ in multiple languages.")
 (define-public cpp-webrtc
   (package
     (name "cpp-webrtc")
-    (version "0.6.1")
+    (version "0.6.2")
     (source
     (origin
       (method url-fetch)
