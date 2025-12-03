@@ -220,7 +220,7 @@ publish/subscribe, RPC-style request/reply, or service discovery.")
        #~(begin
            (use-modules (guix build utils))
            (let ((inputs (list
-                          #+go-1.23
+                          #+go-1.25
                           #+tar
                           #+bzip2
                           #+gzip)))
@@ -264,7 +264,7 @@ publish/subscribe, RPC-style request/reply, or service discovery.")
      #:hash-algo hash-algorithm)))
 
 (define-public tailscale
-  (let ((version "1.74.1"))
+  (let ((version "1.90.9"))
     (package
       (name "tailscale")
       (version version)
@@ -272,11 +272,11 @@ publish/subscribe, RPC-style request/reply, or service discovery.")
                 (method go-fetch-vendored)
                 (uri (go-git-reference
                       (url "https://github.com/tailscale/tailscale")
-                      (commit "v1.74.1")
-                      (sha (base32 "0ncck013rzbrzcbpya1fq41jrgzxw22pps77l9kb7kx06as8bggb"))))
+                      (commit "v1.90.9")
+                      (sha (base32 "0hyn7lxfgfvrvwi2vffz4xqcj1grydcp40zv8zavxlxxb0zn7yl1"))))
                 (sha256
                  (base32
-                  "19sv3q0hgb1h5v75c8hrkna4xgbgrs0ym2kvq16rbn9kr0hjjr1j"))))
+                  "1r7inymz07lgr45bxfw2kw6qs59nxpaw2ppd2pb98kk4pzw9ynml"))))
       (build-system go-build-system)
       (arguments
        `(#:import-path "tailscale.com/cmd/tailscale"
@@ -285,7 +285,7 @@ publish/subscribe, RPC-style request/reply, or service discovery.")
          #:phases
          (modify-phases %standard-phases
            (delete 'check))
-         #:go ,go-1.23))
+         #:go ,go-1.25))
       (home-page "https://tailscale.com")
       (synopsis "Tailscale VPN client")
       (description "Tailscale is a zero-config VPN based on WireGuard.
