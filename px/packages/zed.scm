@@ -25,7 +25,7 @@
 (define-public zed
   (package
     (name "zed")
-    (version "0.214.7")
+    (version "0.215.3")
     (source #f)
     (build-system binary-build-system)
     (arguments
@@ -82,7 +82,7 @@
                         "https://github.com/zed-industries/zed/releases/download/v"
                         version "/zed-linux-x86_64.tar.gz"))
                   (sha256
-                   (base32 "15bvjk5wkxb5vn8ycsj7n9j4hwmf7q77d06qx3f9r9zd90s0x18s"))))
+                   (base32 "0li9zdlx9g7pdmdvv9i21w5yalbmniwzw02iigv2dnh4hwyfaxng"))))
               ("bash-minimal" ,bash-minimal)
               ("glib" ,glib)
               ("gtk+" ,gtk+)
