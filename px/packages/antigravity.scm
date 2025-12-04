@@ -1,25 +1,5 @@
 ;;; Package Repository for GNU Guix
 ;;; Copyright © 2025 Franz Geffke <mail@gofranz.com>
-;;;
-;;; NOTE: Google's Antigravity APT repository does not support direct HTTP downloads.
-;;; To build this package, first download the .deb file using APT:
-;;;
-;;; Download command:
-;;; podman run --rm -v /tmp:/output debian:bookworm bash -c "\
-;;;   apt-get update -qq && \
-;;;   apt-get install -y -qq curl gnupg ca-certificates && \
-;;;   mkdir -p /etc/apt/keyrings && \
-;;;   curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | \
-;;;     gpg --dearmor -o /etc/apt/keyrings/antigravity-repo-key.gpg && \
-;;;   echo 'deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] \
-;;;     https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ \
-;;;     antigravity-debian main' > /etc/apt/sources.list.d/antigravity.list && \
-;;;   apt-get update -qq && \
-;;;   cd /output && \
-;;;   apt-get download antigravity"
-;;;
-;;; This downloads: /tmp/antigravity_1.0.0-1763466940_amd64.deb (147MB)
-;;; Then build: guix build -L ~/git/panther antigravity
 
 (define-module (px packages antigravity)
   #:use-module (nonguix build-system binary)
@@ -48,17 +28,19 @@
 (define-public antigravity
   (package
     (name "antigravity")
-    (version "1.0.0-1763466940")
+    (version "1.11.9-4787439284912128")
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "file:///tmp/antigravity_1.0.0-1763466940_amd64.deb"))
+       (uri (string-append
+             "https://edgedl.me.gvt1.com/edgedl/release2/j0qc3/antigravity/stable/"
+             version "/linux-x64/Antigravity.tar.gz"))
        (sha256
         (base32
-         "0cl66cnji0r2xh60s28v87xapz0sxnwqzqhh3dwz6rha92zh2kxs"))))
+         "0ba79s00ijp1bm44kkk578frc2mbjbl715ijpipm5330v9hllfhr"))))
     (build-system binary-build-system)
     (arguments
-     `(#:patchelf-plan `(("usr/share/antigravity/antigravity"
+     `(#:patchelf-plan `(("Antigravity/antigravity"
                           ("glib"
                            "libx11"
                            "dbus"
@@ -87,13 +69,14 @@
                            "zlib"
                            "gcc:lib"
                            "libsecret"))
-                         ("usr/share/antigravity/chrome_crashpad_handler"
-                          ("gcc:lib")))
+                         ("Antigravity/chrome_crashpad_handler"
+                          ("gcc:lib"))
+                         ("Antigravity/resources/app/extensions/antigravity/bin/language_server_linux_x64"
+                          ()))
        #:phases (modify-phases %standard-phases
                   (replace 'unpack
                     (lambda* (#:key inputs outputs #:allow-other-keys)
-                      (invoke "ar" "x" (assoc-ref inputs "source"))
-                      (invoke "tar" "xf" "data.tar.xz")
+                      (invoke "tar" "xzf" (assoc-ref inputs "source"))
                       #t))
                   (add-after 'install 'add-desktop-file
                     (lambda* (#:key inputs outputs #:allow-other-keys)
@@ -108,7 +91,7 @@
                                            "GenericName=IDE\n"
                                            "Exec="
                                            out
-                                           "/usr/share/antigravity/bin/antigravity\n"
+                                           "/Antigravity/bin/antigravity\n"
                                            "Icon=antigravity\n"
                                            "Type=Application\n"
                                            "StartupNotify=true\n"
@@ -117,7 +100,7 @@
                                            "Keywords=editor;ide;ai;\n\n")))
                         (mkdir-p iconpath)
                         (invoke "cp"
-                         "usr/share/antigravity/resources/app/resources/linux/code.png"
+                         "Antigravity/resources/app/resources/linux/code.png"
                          (string-append iconpath "antigravity.png"))
                         (mkdir-p desktoppath)
                         (with-output-to-file (string-append desktoppath
@@ -128,19 +111,19 @@
                               (string-append %output "/environment-variables"))
                       (mkdir-p (string-append %output "/bin"))
                       (invoke "ln" "-s"
-                              (string-append %output "/usr/share/antigravity/bin/antigravity")
+                              (string-append %output "/Antigravity/bin/antigravity")
                               (string-append %output "/bin/antigravity")) #t))
                   (add-after 'install 'wrap-where-patchelf-does-not-work
                     (lambda* (#:key inputs outputs #:allow-other-keys)
                       (let ((out (assoc-ref outputs "out")))
-                        (wrap-program (string-append out "/usr/share/antigravity/antigravity")
+                        (wrap-program (string-append out "/Antigravity/antigravity")
                           `("FONTCONFIG_PATH" ":" prefix
                             (,(string-join (list (string-append (assoc-ref
                                                                  inputs
                                                                  "fontconfig")
                                                                 "/etc/fonts")
                                                  out) ":"))))
-                        (wrap-program (string-append out "/usr/share/antigravity/antigravity")
+                        (wrap-program (string-append out "/Antigravity/antigravity")
                           `("LD_LIBRARY_PATH" ":" prefix
                             (,(string-join (list (string-append (assoc-ref
                                                                  inputs "nss")
@@ -164,16 +147,16 @@
                                                                  "libsecret")
                                                                 "/lib")
                                                  (string-append out
-                                                                "/usr/share/antigravity")
+                                                                "/Antigravity")
                                                  out) ":"))))
-                        (wrap-program (string-append out "/usr/share/antigravity/chrome_crashpad_handler")
+                        (wrap-program (string-append out "/Antigravity/chrome_crashpad_handler")
                           `("FONTCONFIG_PATH" ":" prefix
                             (,(string-join (list (string-append (assoc-ref
                                                                  inputs
                                                                  "fontconfig")
                                                                 "/etc/fonts")
                                                  out) ":"))))
-                        (wrap-program (string-append out "/usr/share/antigravity/chrome_crashpad_handler")
+                        (wrap-program (string-append out "/Antigravity/chrome_crashpad_handler")
                           `("LD_LIBRARY_PATH" ":" prefix
                             (,(string-join (list (string-append (assoc-ref
                                                                  inputs "nss")
@@ -197,10 +180,9 @@
                                                                  "libsecret")
                                                                 "/lib")
                                                  (string-append out
-                                                                "/usr/share/antigravity")
+                                                                "/Antigravity")
                                                  out) ":"))))) #t)))))
-    (native-inputs `(("tar" ,tar)
-                     ("binutils" ,binutils)))
+    (native-inputs `(("tar" ,tar)))
     (inputs `(("gcc:lib" ,gcc "lib")
               ("gcc" ,gcc "lib")
               ("glib" ,glib)
@@ -238,8 +220,5 @@
     (description
      "Google Antigravity is a next-generation AI-powered IDE built on Electron,
 featuring deep integration with Gemini 3 for agentic development workflows,
-intelligent code generation, and collaborative AI assistance.
-
-Note: This package requires manual download of the .deb file via podman/apt-get
-before building.  See package comments for download instructions.")
+intelligent code generation, and collaborative AI assistance.")
     (license license:expat)))
