@@ -21,7 +21,7 @@
 (define-public broot
   (package
     (name "broot")
-    (version "1.51.0")
+    (version "1.54.0")
     (source
      (origin
        (method url-fetch)
@@ -29,7 +29,7 @@
                            version ".tar.gz"))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "18dn36qwkgfy6fmjg1d6g2xavsrh9fi2170fn8q1md6idyk9l2b6"))))
+        (base32 "1wawx7axmyd1bga06davsv8hsyzymidb8jissiv75vf8a5h8ry4j"))))
     (build-system cargo-build-system)
     (arguments
      `(#:install-source? #f
