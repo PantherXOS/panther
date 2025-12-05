@@ -27,12 +27,12 @@
 (define-public cursor
   (package
     (name "cursor")
-    (version "2.1.39")
+    (version "2.1.47")
     (source
      (origin
        (method url-fetch)
-       (uri "https://downloads.cursor.com/production/60d42bed27e5775c43ec0428d8c653c49e58e26a/linux/x64/deb/amd64/deb/cursor_2.1.39_amd64.deb")
-       (sha256 (base32 "1gr3h5hx4dhkwcs56zv9svaxrwh3dy85c46cyz2lrxw8a6rkcq01"))))
+       (uri "https://downloads.cursor.com/production/2d3ce3499c15efd55b6b8538ea255eb7ba4266b2/linux/x64/deb/amd64/deb/cursor_2.1.47_amd64.deb")
+       (sha256 (base32 "19hwja0fnvg42ykzzbdbi07923fpip43ydkjwl0nmy94zqjpqwq0"))))
     (build-system binary-build-system)
     (arguments
      `(#:patchelf-plan `(("usr/share/cursor/cursor"
