@@ -29,50 +29,6 @@
   #:use-module (guix git-download)
   #:use-module (px packages python-xyz))
 
-(define-public python-etesync
-  (package
-    (name "python-etesync")
-    (version "0.12.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/etesync/pyetesync/archive/v"
-                           version ".tar.gz"))
-       (sha256
-        (base32 "18z7fh8mg3h5zdp4zjshg29p495n03i6hh8nghpc9n79a6a4s8k3"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f))
-    (native-inputs `(("python" ,python)
-                     ("python-appdirs" ,python-appdirs)
-                     ("python-asn1crypto" ,python-asn1crypto)
-                     ("python-attrs" ,python-attrs)
-                     ("python-certifi" ,python-certifi)
-                     ("python-cffi" ,python-cffi)
-                     ("python-chardet" ,python-chardet)
-                     ("python-idna" ,python-idna)
-                     ("python-orderedmultidict" ,python-orderedmultidict)
-                     ("python-packaging" ,python-packaging)
-                     ("python-py" ,python-py)
-                     ("python-pyasn1" ,python-pyasn1)
-                     ("python-pycparser" ,python-pycparser)
-                     ("python-pyparsing" ,python-pyparsing)
-                     ("python-dateutil" ,python-dateutil)
-                     ("python-pytz" ,python-pytz)
-                     ("python-six" ,python-six)
-                     ("python-urllib3" ,python-urllib3)))
-    (propagated-inputs `(("python-cryptography" ,python-cryptography)
-                         ("python-furl" ,python-furl)
-                         ("python-peewee" ,python-peewee)
-                         ("python-requests" ,python-requests)
-                         ("python-vobject" ,python-vobject)))
-    (home-page "https://github.com/etesync/pyetesync")
-    (synopsis "A python client library for EteSync.")
-    (description
-     "This module provides a python API to interact with an EteSync server. 
-It currently implements AddressBook and Calendar access, and supports two-way sync (both push and pull) to the server.")
-    (license license:gpl3)))
-
 ;; etesync-dav: Requirement.parse('Radicale==3.0.3'), {'etesync-dav'})
 (define-public radicale-3.0.3
   (package
