@@ -29,60 +29,6 @@
   #:use-module (guix git-download)
   #:use-module (px packages python-xyz))
 
-(define-public python-etebase
-  (package
-    (name "python-etebase")
-    (version "0.31.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://github.com/etesync/etebase-py/releases/download/v"
-             version
-             "/etebase-"
-             version
-             ;; This fails because releases are only available up to python 3.9
-             ;; "-cp" (string-replace-substring (version-major+minor (package-version python)) "." "")
-             ;; "-cp" (string-replace-substring (version-major+minor (package-version python)) "." "") "-manylinux2010_"
-             "-cp39-cp39-manylinux2010_"
-             (match (or (%current-system)
-                        (%current-target-system))
-               ("x86_64-linux" "x86_64")
-               ("i686-linux" "i686")
-               ("aarch64-linux" "aarch64"))
-             ".whl"))
-       (sha256
-        (base32 "19gf7zriarcac3l6hx4zw7gl175fxaz457gkl4kkjdfcq6g5pxas"))))
-    (build-system gnu-build-system)
-    (arguments
-     `(#:tests? #f
-       #:validate-runpath? #f
-       #:phases (modify-phases %standard-phases
-                  (delete 'unpack)
-                  (delete 'configure)
-                  (delete 'build)
-                  (replace 'install
-                    (lambda* (#:key inputs outputs #:allow-other-keys)
-                      (let* ((source (assoc-ref %build-inputs "source"))
-                             (python (assoc-ref inputs "python"))
-                             (out (assoc-ref outputs "out"))
-                             (bin (string-append out "/bin/"))
-                             (target (string-append %output "/lib/python"
-                                                    ,(version-major+minor (package-version
-                                                                           python))
-                                                    "/site-packages/")))
-                        (mkdir-p target)
-                        (invoke "unzip" source "-d" target) #t))))))
-    (native-inputs `(("coreutils" ,coreutils)
-                     ("python" ,python-3)
-                     ("unzip" ,unzip)))
-    (propagated-inputs `(("python-msgpack" ,python-msgpack)))
-    (home-page "https://www.etesync.com/")
-    (synopsis "A Python library for Etebase")
-    (description
-     "This package is implemented in Rust and exposes a Python API for people to use.")
-    (license license:bsd-3)))
-
 (define-public python-etesync
   (package
     (name "python-etesync")
@@ -210,7 +156,7 @@ clients.")
                          ("python-vobject" ,python-vobject)
                          ("python-werkzeug" ,python-werkzeug)
                          ("python-wtforms" ,python-wtforms)
-                         ("radicale" ,radicale-3.0.3)))
+                         ("radicale" ,radicale)))
     (home-page "https://github.com/etesync/etesync-dav")
     (synopsis "CalDAV and CardDAV adapter for EteSync")
     (description
