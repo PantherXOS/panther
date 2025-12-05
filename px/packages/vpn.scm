@@ -158,7 +158,7 @@ and deadline support.")
 (define-public ivpn
   (package
     (name "ivpn")
-    (version "3.14.34")
+    (version "3.15.0")
     (source
      (origin
        (method git-fetch)
@@ -167,7 +167,7 @@ and deadline support.")
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0k60m7ag9ixifry5lxqdbpp9wn50fj0z12csqvbrk12scbk8dpj3"))))
+        (base32 "108dlvivn8sbr1wcb6p6lhs45xqwqhncaznlr7c7z443cpzidsk3"))))
     (build-system go-build-system)
     (arguments
      (list
