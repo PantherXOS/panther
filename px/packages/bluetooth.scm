@@ -34,7 +34,7 @@
 (define-public overskride
   (package
     (name "overskride")
-    (version "0.6.3")
+    (version "0.6.5")
     (source
      (origin
        (method git-fetch)
@@ -43,15 +43,19 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0c878kb47149dyz6ryx8n5p4nff1m2ygcc02y8b70ydq054raz5j"))))
+        (base32 "0v8bqyhhqrg6cf83xb58gql383ks408xjq9rjn1wc4vwzllffzmb"))))
     (build-system meson-build-system)
     (arguments
      `(#:glib-or-gtk? #t
        #:imported-modules (,@%meson-build-system-modules
-                           ,@%cargo-build-system-modules)
-       #:modules (((guix build cargo-build-system) #:prefix cargo:)
+                           (guix build cargo-utils))
+       #:modules ((guix build cargo-utils)
                   (guix build meson-build-system)
-                  (guix build utils))
+                  (guix build utils)
+                  (ice-9 ftw)
+                  (ice-9 match)
+                  (srfi srfi-1)
+                  (srfi srfi-26))
        #:phases
        (modify-phases %standard-phases
          (add-after 'unpack 'prepare-for-build
@@ -62,18 +66,43 @@
                (("update_desktop_database: true")
                 "update_desktop_database: false"))
              (delete-file "Cargo.lock")))
-         (add-after 'configure 'prepare-cargo-build-system
-           (lambda args
+         (add-after 'configure 'unpack-cargo-vendor
+           (lambda* (#:key inputs #:allow-other-keys)
+             (define (crate-dir? path)
+               (file-exists? (string-append path "/Cargo.toml")))
+             (define vendor-dir "guix-vendor")
+             (mkdir-p vendor-dir)
+             ;; Process each input that looks like a Rust crate
              (for-each
-              (lambda (phase)
-                (format #t "Running cargo phase: ~a~%" phase)
-                (apply (assoc-ref cargo:%standard-phases phase)
-                       #:vendor-dir "vendor"
-                       args))
-              '(unpack-rust-crates
-                configure
-                check-for-pregenerated-files
-                patch-cargo-checksums)))))))
+              (match-lambda
+                ((name . path)
+                 (when (and (string-prefix? "rust-" name)
+                            (or (crate-dir? path)
+                                (file-exists? path)))
+                   (let ((dest (string-append vendor-dir "/"
+                                 (strip-store-file-name path))))
+                     (unless (file-exists? dest)
+                       (if (directory-exists? path)
+                           (when (crate-dir? path)
+                             (copy-recursively path dest))
+                           ;; It's a tarball - extract it
+                           (begin
+                             (mkdir-p dest)
+                             (invoke "tar" "xf" path "-C" dest
+                                     "--strip-components" "1"))))))))
+              inputs)
+             ;; Create cargo config (checksums generated later)
+             (mkdir-p ".cargo")
+             (call-with-output-file ".cargo/config.toml"
+               (lambda (port)
+                 (format port "[source.crates-io]~%")
+                 (format port "replace-with = \"vendored-sources\"~%~%")
+                 (format port "[source.vendored-sources]~%")
+                 (format port "directory = \"~a\"~%" vendor-dir)))))
+         ;; Generate checksums AFTER patch-generated-file-shebangs
+         (add-before 'build 'generate-cargo-checksums
+           (lambda _
+             (generate-all-checksums "guix-vendor"))))))
     (native-inputs
      (list blueprint-compiler
            desktop-file-utils
@@ -122,6 +151,7 @@ selection.")
 H5181, H5182, and H5183 Bluetooth Low Energy Temperature and Humidity Logger")
     (license license:expat)))
 
+;; TODO: Switch back to go-build-system once Go dependencies are packaged
 (define-public bluetuith
   (package
     (name "bluetuith")
@@ -129,15 +159,21 @@ H5181, H5182, and H5183 Bluetooth Low Energy Temperature and Humidity Logger")
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "https://github.com/bluetuith-org/bluetuith/archive/refs/tags/v"
-                           version ".tar.gz"))
+       (uri (string-append
+             "https://github.com/bluetuith-org/bluetuith/releases/download/v"
+             version "/bluetuith_" version "_Linux_x86_64.tar.gz"))
        (sha256
-        (base32 "1j8bnpfbkgj947im8qqk2r0zpbc0acy3cdb0gpx7yjyk1vy86kky"))))
-    (build-system go-build-system)
+        (base32 "05r7lvpqlxib591zf74i29xg0gpdc7wqip07k7issin42qfp61pj"))))
+    (supported-systems '("x86_64-linux"))
+    (build-system binary-build-system)
     (arguments
-     '(#:import-path "github.com/darkhz/bluetuith"
-       #:unpack-path "github.com/darkhz/bluetuith"
-       #:install-source? #f))
+     (list
+      #:install-plan #~'(("bluetuith" "bin/"))
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'chmod
+            (lambda _
+              (chmod "bluetuith" #o755))))))
     (inputs (list bluez))
     (home-page "https://github.com/bluetuith-org/bluetuith")
     (synopsis "TUI-based Bluetooth connection manager")
