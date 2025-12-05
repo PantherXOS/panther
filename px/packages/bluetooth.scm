@@ -125,14 +125,14 @@ H5181, H5182, and H5183 Bluetooth Low Energy Temperature and Humidity Logger")
 (define-public bluetuith
   (package
     (name "bluetuith")
-    (version "0.2.5")
+    (version "0.2.6")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://github.com/bluetuith-org/bluetuith/archive/refs/tags/v"
                            version ".tar.gz"))
        (sha256
-        (base32 "1c467qw30d89rfkn9ys1n1x1ys49r4aafcp5k60hrrfi8f474j4y"))))
+        (base32 "1j8bnpfbkgj947im8qqk2r0zpbc0acy3cdb0gpx7yjyk1vy86kky"))))
     (build-system go-build-system)
     (arguments
      '(#:import-path "github.com/darkhz/bluetuith"
