@@ -5,10 +5,12 @@
   #:use-module (nonguix build-system binary)
   #:use-module ((guix licenses)
                 :prefix license:)
+  #:use-module (guix build-system cargo)
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix utils)
+  #:use-module (px self)
   #:use-module (ice-9 match)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
@@ -23,7 +25,9 @@
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages nss)
+  #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages sqlite)
+  #:use-module (gnu packages tls)
   #:use-module (gnu packages vulkan)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xml)
@@ -533,6 +537,34 @@ predictive code completion, and integrations with development workflows.")
 of Atom and Tree-sitter.  It features a fast GPU-accelerated UI, built-in
 collaboration tools, and AI-powered code assistance.")
     (license license:gpl3+)))
+
+(define-public package-version-server
+  (package
+    (name "package-version-server")
+    (version "0.0.9")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/zed-industries/package-version-server/archive/refs/tags/v"
+             version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "01qdyjiy9368avw49s6lhcxylw0r3183lg7cvlr9ysrlmy1xl1d4"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f
+       #:tests? #f))
+    (native-inputs (list pkg-config))
+    (inputs (cons* openssl (px-cargo-inputs 'package-version-server)))
+    (home-page "https://github.com/zed-industries/package-version-server")
+    (synopsis "Language server for package.json version information")
+    (description
+     "Package Version Server is a language server that provides package version
+information when hovering over dependency keys in @file{package.json} files.
+It displays the current version, latest available version, and release date
+for npm packages.")
+    (license license:expat)))
 
 (define-public antigravity
   (package
