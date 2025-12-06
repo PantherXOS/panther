@@ -122,6 +122,73 @@ tailscale up         # Authenticate and connect
 tailscale status     # Check connection status
 ```
 
+## System Configuration
+
+This channel provides pre-configured building blocks for Guix system definitions. Import with:
+
+```scheme
+(use-modules (px system panther))
+```
+
+### Packages
+
+| Variable | Description |
+|----------|-------------|
+| `%panther-base-packages` | Extends `%base-packages` with wpa-supplicant, libimobiledevice, neovim |
+| `%panther-desktop-packages` | Adds U2F/FIDO2 support (pam-u2f, libu2f-*) and blueman |
+
+### Services
+
+| Variable | Description |
+|----------|-------------|
+| `%panther-base-services` | Extends `%base-services` with panther channel and substitute servers |
+| `%panther-desktop-services` | Full desktop services including display managers, audio, and udev rules for security tokens |
+| `%panther-desktop-services-minimal` | Desktop services without login/display managers and audio (for custom greeter setups) |
+
+### Operating Systems
+
+| Variable | Description |
+|----------|-------------|
+| `%panther-os` | Base OS with `%panther-base-services` and `%panther-base-packages` |
+| `%panther-desktop-os` | Desktop OS with `%panther-desktop-services` and `%panther-desktop-packages` |
+
+### When to Use What
+
+- **Headless server**: Use `%panther-os` directly or inherit from it
+- **Desktop with GDM/SDDM**: Use `%panther-desktop-os` or `%panther-desktop-services`
+- **Desktop with custom greeter** (greetd, etc.): Use `%panther-desktop-services-minimal` to avoid conflicts
+
+### Usage
+
+Inherit from an OS definition and customize:
+
+```scheme
+(operating-system
+  (inherit %panther-os)
+  (host-name "my-workstation")
+  (timezone "Europe/Berlin")
+  ;; Add your file-systems, users, etc.
+  (services
+   (cons* (service openssh-service-type)
+          %panther-base-services)))
+```
+
+Or use just the services/packages in your own OS:
+
+```scheme
+(operating-system
+  ;; ...your configuration...
+  (packages
+   (cons* my-extra-package
+          %panther-desktop-packages))
+  (services
+   (modify-services %panther-desktop-services-minimal
+     (elogind-service-type config =>
+       (elogind-configuration
+         (inherit config)
+         (handle-lid-switch 'suspend))))))
+```
+
 ## Time Travel
 
 When things break because of upstream changes, this will allow you to run a future guix commit, to fix and test the channel without updating the whole system.
