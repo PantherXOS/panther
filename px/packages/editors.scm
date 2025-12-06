@@ -566,6 +566,39 @@ It displays the current version, latest available version, and release date
 for npm packages.")
     (license license:expat)))
 
+(define-public wakatime-ls
+  (package
+    (name "wakatime-ls")
+    (version "0.1.10")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/wakatime/zed-wakatime/archive/refs/tags/v"
+             version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0f4j4w4knggqwkkgnv9zhwi867vgpn5wmgbash08mjh84bv5g0i1"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f
+       #:cargo-build-flags '("--release" "-p" "wakatime-ls")
+       #:phases
+       (modify-phases %standard-phases
+         (replace 'install
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((bin (string-append (assoc-ref outputs "out") "/bin")))
+               (mkdir-p bin)
+               (install-file "target/release/wakatime-ls" bin)))))))
+    (inputs (px-cargo-inputs 'wakatime-ls))
+    (home-page "https://github.com/wakatime/zed-wakatime")
+    (synopsis "WakaTime language server for automatic time tracking")
+    (description
+     "WakaTime Language Server is a language server that sends heartbeats to
+WakaTime for automatic time tracking of programming activity.  It works with
+editors that support the Language Server Protocol.")
+    (license license:expat)))
+
 (define-public antigravity
   (package
     (name "antigravity")
