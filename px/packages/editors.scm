@@ -1,7 +1,7 @@
 ;;; Package Repository for GNU Guix
 ;;; Copyright © 2021-2025 Franz Geffke <mail@gofranz.com>
 
-(define-module (px packages programming)
+(define-module (px packages editors)
   #:use-module (nonguix build-system binary)
   #:use-module ((guix licenses)
                 :prefix license:)
