@@ -14,6 +14,11 @@
   #:use-module (guix records)
   #:use-module (guix utils)
   #:use-module (gnu packages golang)
+  #:use-module (gnu packages golang-build)
+  #:use-module (gnu packages golang-check)
+  #:use-module (gnu packages golang-crypto)
+  #:use-module (gnu packages golang-web)
+  #:use-module (gnu packages golang-xyz)
   #:use-module (gnu packages shells)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages base)
@@ -22,10 +27,12 @@
   #:use-module (gnu packages linux)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages nss)
+  #:use-module (gnu packages vpn)
   #:use-module (gnu packages web)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages xml)
+  #:use-module (px packages golang-xyz)
   #:use-module (ice-9 match))
 
 (define-public nebula
@@ -318,3 +325,81 @@ This package provides the Tailscale client command-line interface.")
       (description "Tailscale is a zero-config VPN based on WireGuard.
 This package provides the Tailscale daemon (tailscaled) which manages
 the VPN connection."))))
+
+(define-public ivpn
+  (package
+    (name "ivpn")
+    (version "3.15.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/ivpn/desktop-app")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "108dlvivn8sbr1wcb6p6lhs45xqwqhncaznlr7c7z443cpzidsk3"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:go go-1.23
+      #:import-path "github.com/ivpn/desktop-app/daemon"
+      #:unpack-path "github.com/ivpn/desktop-app"
+      #:install-source? #f
+      #:tests? #f  ; Tests require external binaries and network
+      #:phases
+      #~(modify-phases %standard-phases
+          (replace 'build
+            (lambda* (#:key import-path build-flags #:allow-other-keys)
+              (let ((ldflags (string-append
+                              "-s -w"
+                              " -X github.com/ivpn/desktop-app/daemon/version._version="
+                              #$version)))
+                ;; Build the daemon
+                (apply invoke "go" "build" "-v" "-x"
+                       (string-append "-ldflags=" ldflags)
+                       "-o" "bin/ivpn-service"
+                       import-path
+                       build-flags)
+                ;; Build the CLI
+                (apply invoke "go" "build" "-v" "-x"
+                       (string-append "-ldflags=" ldflags)
+                       "-o" "bin/ivpn"
+                       "github.com/ivpn/desktop-app/cli"
+                       build-flags))))
+          (replace 'install
+            (lambda* (#:key outputs #:allow-other-keys)
+              (let* ((out (assoc-ref outputs "out"))
+                     (bin (string-append out "/bin"))
+                     (sbin (string-append out "/sbin")))
+                (mkdir-p bin)
+                (mkdir-p sbin)
+                (install-file "bin/ivpn-service" sbin)
+                (install-file "bin/ivpn" bin)))))))
+    (inputs
+     (list openvpn
+           wireguard-tools))
+    (propagated-inputs
+     (list go-github-com-fsnotify-fsnotify
+           go-github-com-google-uuid
+           go-github-com-stretchr-testify
+           go-golang-org-x-crypto
+           go-golang-org-x-net
+           go-golang-org-x-sync
+           go-golang-org-x-sys
+           go-golang-zx2c4-com-wireguard
+           go-golang-zx2c4-com-wireguard-wgctrl
+           go-github-com-mdlayher-wifi-next
+           go-github-com-mdlayher-netlink
+           go-github-com-mdlayher-genetlink
+           go-github-com-mdlayher-socket
+           go-github-com-josharian-native
+           go-github-com-olekukonko-tablewriter))
+    (home-page "https://www.ivpn.net/")
+    (synopsis "IVPN client daemon and CLI")
+    (description
+     "IVPN is a privacy-focused VPN service.  This package provides the daemon
+service and command-line interface for connecting to IVPN servers using
+OpenVPN or WireGuard protocols.  Features include kill-switch, multi-hop
+connections, and custom DNS settings.")
+    (license license:gpl3+)))
