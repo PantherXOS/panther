@@ -458,7 +458,9 @@ predictive code completion, and integrations with development workflows.")
     (build-system binary-build-system)
     (arguments
      `(#:patchelf-plan
-       '(("opt/zed/libexec/zed-editor"
+       '(("opt/zed/bin/zed"
+          ("gcc:lib"))
+         ("opt/zed/libexec/zed-editor"
           ("gcc:lib" "glib" "gtk+" "libx11" "libxcb" "libxkbcommon"
            "fontconfig" "freetype" "mesa" "vulkan-loader" "alsa-lib"
            "zlib" "libxcursor" "libxi" "wayland" "sqlite")))
@@ -477,7 +479,8 @@ predictive code completion, and integrations with development workflows.")
          (add-after 'install 'create-wrapper
            (lambda* (#:key inputs outputs #:allow-other-keys)
              (let* ((out (assoc-ref outputs "out"))
-                    (zed-bin (string-append out "/opt/zed/libexec/zed-editor")))
+                    (zed-cli (string-append out "/opt/zed/bin/zed"))
+                    (zed-editor (string-append out "/opt/zed/libexec/zed-editor")))
                ;; Fix .desktop file
                (substitute* (string-append out "/opt/zed/share/applications/zed.desktop")
                  (("Exec=zed") (string-append "Exec=" out "/bin/zed"))
@@ -486,8 +489,9 @@ predictive code completion, and integrations with development workflows.")
                (mkdir-p (string-append out "/bin"))
                (mkdir-p (string-append out "/share/applications"))
                (mkdir-p (string-append out "/share/icons"))
-               ;; Wrap the binary
-               (wrap-program zed-bin
+               ;; Wrap the editor binary
+               (wrap-program zed-editor
+                 `("ZED_UPDATE_EXPLANATION" = ("Please use Guix to update Zed."))
                  `("XKB_CONFIG_ROOT" ":" prefix
                    (,(string-append (assoc-ref inputs "xkeyboard-config") "/share/X11/xkb")))
                  `("LD_LIBRARY_PATH" ":" prefix
@@ -495,8 +499,9 @@ predictive code completion, and integrations with development workflows.")
                     ,(string-append (assoc-ref inputs "vulkan-loader") "/lib")
                     ,(string-append (assoc-ref inputs "wayland") "/lib")
                     ,(string-append (assoc-ref inputs "libxkbcommon") "/lib"))))
-               ;; Symlinks
-               (symlink zed-bin (string-append out "/bin/zed"))
+               ;; Symlinks: zed -> CLI, zed-editor -> editor
+               (symlink zed-cli (string-append out "/bin/zed"))
+               (symlink zed-editor (string-append out "/bin/zed-editor"))
                (symlink (string-append out "/opt/zed/share/applications/zed.desktop")
                         (string-append out "/share/applications/zed.desktop"))
                (symlink (string-append out "/opt/zed/share/icons/hicolor")
