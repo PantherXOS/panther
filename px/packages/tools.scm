@@ -10,6 +10,9 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system go)
   #:use-module (guix utils)
+  #:use-module (ice-9 match)
+  #:use-module (nonguix build-system binary)
+  #:use-module (gnu packages compression)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages golang)
   #:use-module (gnu packages golang-xyz)
@@ -44,3 +47,51 @@ files.  It provides fast fuzzy searching, file preview capabilities, Git status
 integration, and customizable panels.  Broot helps you quickly overview and
 navigate large directory structures.")
     (license license:expat)))
+
+(define-public wakatime-cli
+  (package
+    (name "wakatime-cli")
+    (version "1.132.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/wakatime/wakatime-cli/releases/download/v"
+             version "/wakatime-cli-linux-"
+             (match (or (%current-system) (%current-target-system))
+               ("x86_64-linux" "amd64")
+               ("aarch64-linux" "arm64")
+               ("i686-linux" "386")
+               ("armhf-linux" "arm")) ".zip"))
+       (sha256
+        (base32 "0fkc14jmxs3jn4ijmx1j9lk3jgbnqhah4xbzhrc41npr03i627qr"))))
+    (build-system binary-build-system)
+    (arguments
+     (list
+      #:install-plan
+      #~'(("wakatime-cli" "bin/wakatime-cli"))
+      #:phases
+      #~(modify-phases %standard-phases
+          (replace 'unpack
+            (lambda* (#:key inputs #:allow-other-keys)
+              (invoke "unzip" (assoc-ref inputs "source"))
+              (rename-file
+               #$(string-append "wakatime-cli-linux-"
+                                (match (or (%current-system) (%current-target-system))
+                                  ("x86_64-linux" "amd64")
+                                  ("aarch64-linux" "arm64")
+                                  ("i686-linux" "386")
+                                  ("armhf-linux" "arm")))
+               "wakatime-cli")
+              (chmod "wakatime-cli" #o755)))
+          (delete 'patchelf)
+          (delete 'validate-runpath))))
+    (native-inputs (list unzip))
+    (supported-systems '("x86_64-linux" "aarch64-linux" "i686-linux" "armhf-linux"))
+    (home-page "https://wakatime.com/")
+    (synopsis "Command line interface to WakaTime")
+    (description
+     "WakaTime CLI is a command line interface used by all WakaTime text editor
+plugins to track coding activity.  It provides automatic time tracking for
+programmers, with dashboards showing metrics and insights about coding habits.")
+    (license license:bsd-3)))
