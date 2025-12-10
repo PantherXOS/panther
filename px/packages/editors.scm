@@ -52,8 +52,8 @@
      #f)
     (build-system binary-build-system)
     (arguments
-     `(#:patchelf-plan `(("opt/vscode/code" 
-                          ("glib" "atk"
+     `(#:patchelf-plan `(("opt/vscode/code"
+                          ("glib" "at-spi2-core"
                             "libx11"
                             "dbus"
                             "gdk-pixbuf"
@@ -74,9 +74,7 @@
                             "mesa"
                             "alsa-lib"
                             "cups"
-                            "at-spi2-core"
                             "libxcb"
-                            "at-spi2-atk"
                             "nspr"
                             "gcc"
                             "zlib"
@@ -210,7 +208,6 @@
               ("glib" ,glib)
               ("nss" ,nss)
               ("nspr" ,nspr)
-              ("atk" ,atk)
               ("libx11" ,libx11)
               ("dbus" ,dbus)
               ("librsvg" ,librsvg)
@@ -233,7 +230,6 @@
               ("cups" ,cups)
               ("at-spi2-core" ,at-spi2-core)
               ("libxcb" ,libxcb)
-              ("at-spi2-atk" ,at-spi2-atk)
               ("eudev" ,eudev)
               ("fontconfig" ,fontconfig)
               ("zlib" ,zlib)
@@ -258,7 +254,7 @@ building and debugging modern web and cloud applications.")
     (build-system binary-build-system)
     (arguments
      `(#:patchelf-plan `(("usr/share/cursor/cursor"
-                          ("glib" "atk"
+                          ("glib" "at-spi2-core"
                            "libx11"
                            "dbus"
                            "gdk-pixbuf"
@@ -279,9 +275,7 @@ building and debugging modern web and cloud applications.")
                            "mesa"
                            "alsa-lib"
                            "cups"
-                           "at-spi2-core"
                            "libxcb"
-                           "at-spi2-atk"
                            "nspr"
                            "gcc"
                            "zlib"
@@ -413,7 +407,6 @@ building and debugging modern web and cloud applications.")
               ("glib" ,glib)
               ("nss" ,nss)
               ("nspr" ,nspr)
-              ("atk" ,atk)
               ("libx11" ,libx11)
               ("dbus" ,dbus)
               ("librsvg" ,librsvg)
@@ -436,7 +429,6 @@ building and debugging modern web and cloud applications.")
               ("cups" ,cups)
               ("at-spi2-core" ,at-spi2-core)
               ("libxcb" ,libxcb)
-              ("at-spi2-atk" ,at-spi2-atk)
               ("eudev" ,eudev)
               ("fontconfig" ,fontconfig)
               ("zlib" ,zlib)
@@ -450,6 +442,7 @@ features an AI agent capable of converting ideas into functional code,
 predictive code completion, and integrations with development workflows.")
     (license license:expat)))
 
+;; Known issues: https://wiki.nixos.org/wiki/Zed
 (define-public zed
   (package
     (name "zed")
