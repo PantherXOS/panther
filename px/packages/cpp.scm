@@ -21,6 +21,7 @@
   #:use-module (gnu packages tls) ;; openssl
   #:use-module (gnu packages networking) ;; asio
   #:use-module (px packages gstreamer) ;; gst-plugins-good-qmlgl
+  #:use-module (px packages monitoring) ;; sentry
   #:use-module (ice-9 match))
 
 (define-public cpp-qr-code-generator
@@ -69,13 +70,13 @@ in multiple languages.")
 (define-public cpp-webrtc
   (package
     (name "cpp-webrtc")
-    (version "0.6.2")
+    (version "0.6.3")
     (source
     (origin
       (method url-fetch)
       (uri (string-append "https://source.pantherx.org/webrtc-cpp_v" version ".tgz"))
       (sha256
-       (base32 "08pqb8m782sdagcc167g6is1fk6nlnf2rcb14s7wkvj5q35xlb45"))))
+       (base32 "1g51fsx2axxn7zs4759ni2kg7mwf1ips70ixvh03hr7cjmh9dx3n"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f))
@@ -124,6 +125,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Find required packages (same as main library)
 find_package(PkgConfig REQUIRED)
 find_package(CLI11 REQUIRED)
+find_package(sentry CONFIG QUIET)
 
 set(GSTREAMER_MODULES
     gstreamer-1.0
@@ -158,7 +160,8 @@ install(TARGETS webrtc-cpp-demo
              ;; Fix the include path in main.cpp to use the installed header location
              (substitute* "example/main.cpp"
                (("#include <webrtc.hpp>") "#include <webrtclib/webrtc.hpp>")
-               (("#include <logger.hpp>") "#include <webrtclib/logger.hpp>"))
+               (("#include <logger.hpp>") "#include <webrtclib/logger.hpp>")
+               (("#include <sentry_integration.hpp>") "#include <webrtclib/sentry_integration.hpp>"))
              #t)))))
     (inputs (list cpp-webrtc
                   qtbase-5
@@ -177,7 +180,8 @@ install(TARGETS webrtc-cpp-demo
                              gst-plugins-good
                              gst-plugins-bad
                              gst-plugins-good-qmlgl))
-    (native-inputs (list pkg-config))
+    (native-inputs (list pkg-config
+                         sentry-native-0.9))
     (home-page "https://f-a.nz/")
     (synopsis "WebRTC C++ library demo application")
     (description "Demo application showcasing the webrtc-cpp library functionality.")
