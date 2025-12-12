@@ -220,3 +220,7 @@ And build the target package:
 ```bash
 guix time-machine --channels=default-channel.scm -- build -L panther pimsync
 ```
+
+## Known Issues
+
+- **Channel modules shadowed by system profile** ([bug #74396](https://issues.guix.gnu.org/74396)): After `guix pull`, new package versions may not be available until you also run `guix system reconfigure`. Workaround: keep system and user guix in sync, or use `guix time-machine -C ~/.config/guix/channels.scm -- shell <package>`.
