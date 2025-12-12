@@ -34,7 +34,7 @@
 (define-public bluez
   (package
     (name "bluez")
-    (version "5.83")
+    (version "5.85")
     (source (origin
               (method url-fetch)
               (uri (string-append
@@ -42,7 +42,7 @@
                     version ".tar.xz"))
               (sha256
                (base32
-                "0k6j7g38a1wpg4zdlgggrqwma0v2mgd97v5zk49mh86j17cj518h"))))
+                "0vsav450lfxv2npfhyypa2k2pl339j8fg3zh2cd5bi2b4m4qw0md"))))
     (build-system gnu-build-system)
     (arguments
      (list
@@ -56,6 +56,7 @@
               "--enable-hid2hci"
               ;; Install dbus/udev files to the correct location.
               (string-append "--with-dbusconfdir=" #$output "/etc")
+              (string-append "--with-dbussessionbusdir=" #$output "/share/dbus-1/services")
               (string-append "--with-udevdir=" #$output "/lib/udev"))
       #:phases
       #~(modify-phases %standard-phases
