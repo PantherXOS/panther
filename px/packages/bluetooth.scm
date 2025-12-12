@@ -132,7 +132,7 @@ selection.")
 (define-public goveebttemplogger
   (package
     (name "goveebttemplogger")
-    (version "2.20231001.1")
+    (version "3.20251208.0")
     (source
      (origin
        (method url-fetch)
@@ -140,14 +140,14 @@ selection.")
              "https://github.com/wcbonner/GoveeBTTempLogger/archive/refs/tags/v"
              version ".tar.gz"))
        (sha256
-        (base32 "00hsyxz6v0ksq4x6199hv0da5rg4z6s9g7vnkw3r1yfv9cc8j7xx"))
-       (patches (search-patches "goveebttemplogger-postbuild-sudo-fix.patch"))))
+        (base32 "1c4wr1vkrwzdl5fadf22lal2ca97ia41knqmpvk6gg8j95vlrzxr"))))
     (build-system cmake-build-system)
-    (inputs (list bluez))
+    (native-inputs (list pkg-config))
+    (inputs (list bluez dbus))
     (home-page "https://github.com/wcbonner/GoveeBTTempLogger")
-    (synopsis "Temperature and Humidity Logger for Goove devices")
+    (synopsis "Temperature and Humidity Logger for Govee devices")
     (description
-     "Govee H5074, H5075, H5100, H5174, H5177, H5179,
+     "Govee H5074, H5075, H5100, H5110, H5174, H5177, H5179,
 H5181, H5182, and H5183 Bluetooth Low Energy Temperature and Humidity Logger")
     (license license:expat)))
 
