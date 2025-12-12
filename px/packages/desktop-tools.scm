@@ -331,7 +331,7 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
 (define-public slack-desktop
   (package
     (name "slack-desktop")
-    (version "4.47.65")
+    (version "4.47.69")
     (source
      (origin
        (method url-fetch)
@@ -340,7 +340,7 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
          "https://downloads.slack-edge.com/desktop-releases/linux/x64/"
          version "/slack-desktop-" version "-amd64.deb"))
        (sha256
-        (base32 "1jv5lzxjv4j1342x065gcbw6l22hgmxmz18y0kb0clzc8rkrfh0f"))))
+        (base32 "19bbj3lk9vwqgjabsgisjldsxwwq3na7525vvijyfs59kq3y7mbv"))))
     (supported-systems '("x86_64-linux"))
     (build-system chromium-binary-build-system)
     (arguments
