@@ -33,7 +33,7 @@
   (package
     (inherit (@ (gnu packages music) strawberry))
     (name "strawberry")
-    (version "1.2.15")
+    (version "1.2.16")
     (source
      (origin
        (method git-fetch)
@@ -42,7 +42,7 @@
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0752mqy49mnhmsc8gm8d32zwzj12pj8drxik4inxc8dy5dp1imdq"))
+        (base32 "1xdf36047ycr93sxxyg31rf1sk421hzvn0f7vi1l2crz1ixy0pz1"))
        (modules '((guix build utils)
                   (ice-9 regex)))
        (snippet
