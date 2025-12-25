@@ -7,6 +7,7 @@
   #:use-module (guix download)
   #:use-module (guix packages)
   #:use-module (guix gexp)
+  #:use-module (guix build-system meson)
   #:use-module (nonguix build-system binary)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
@@ -14,6 +15,9 @@
   #:use-module (gnu packages glib)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages gtk)
+  #:use-module (gnu packages image-processing)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages python)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages webkit)
   #:use-module (gnu packages gcc)
@@ -123,3 +127,35 @@ with Rust and Tauri.  It features GPU-accelerated processing via WGPU,
 support for various camera RAW formats through the rawler library, and
 optional AI-powered features using ONNX Runtime.")
     (license license:agpl3+)))
+
+(define-public vipsdisp
+  (package
+    (name "vipsdisp")
+    (version "4.1.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/libvips/vipsdisp/archive/refs/tags/v"
+             version ".tar.gz"))
+       (sha256
+        (base32 "1hvnb7hjjh35gqsd5hha9v4fqmfp9fs7dsadkylsdbwk08jpqsv9"))))
+    (build-system meson-build-system)
+    (arguments
+     (list #:glib-or-gtk? #t))
+    (native-inputs
+     (list `(,glib "bin")
+           pkg-config
+           python))
+    (inputs
+     (list gtk
+           vips))
+    (home-page "https://github.com/libvips/vipsdisp")
+    (synopsis "Image viewer for libvips")
+    (description
+     "Vipsdisp is a lightweight image viewer powered by libvips and GTK4.
+It can display very large images quickly and supports a wide range of image
+formats including TIFF, PNG, JPEG, RAW, OpenEXR, FITS, and many scientific
+and technical formats.  It handles various pixel types from 1-bit mono to
+128-bit double precision complex.")
+    (license license:expat)))
