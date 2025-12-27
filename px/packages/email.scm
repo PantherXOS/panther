@@ -23,34 +23,6 @@
   #:use-module (gnu packages compression)
   #:use-module (guix git-download))
 
-(define-public kimap2
-  (package
-    (name "kimap2")
-    (version "0.4.0")
-    (home-page "https://kube-project.com/")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/KDE/kimap2")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "16ax75xq0lqzjf72xr7gci5vv55kf8r5iyr3s27y0j32fjr25l25"))))
-    (build-system qt-build-system)
-    (native-inputs (list extra-cmake-modules kdoctools pkg-config))
-    (inputs (list qtbase-5 kcoreaddons kcodecs kmime cyrus-sasl))
-    (arguments
-     `(#:tests? #f))
-    (synopsis
-     "This library provides a job-based API for interacting with an IMAP4rev1 server")
-    (description
-     "This library provides a job-based API for interacting with an IMAP4rev1 server.
-It manages connections, encryption and parameter quoting and encoding,
-but otherwise provides quite a low-level interface to the protocol.
-This library does not implement an IMAP client; it merely makes it easier to do so.")
-    (license license:gpl2+)))
-
 (define-public kdav2
   (package
     (name "kdav2")
