@@ -26,6 +26,7 @@
   #:use-module (gnu packages curl)
   #:use-module (gnu packages check)
   #:use-module (gnu packages networking)
+  #:use-module (gnu packages tls)
   #:use-module (px packages python-xyz))
 
 (define-public capnproto-shared
@@ -75,22 +76,22 @@ system.")
 (define-public cpr
   (package
     (name "cpr")
-    (version "1.5.1")
+    (version "1.12.0")
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "https://github.com/whoshuu/cpr/archive/v" version
+       (uri (string-append "https://github.com/libcpr/cpr/archive/" version
                            ".tar.gz"))
        (sha256
-        (base32 "18w0v6jhjz05c844wgsb07cxp4bbmcw0jiz9ka4hjsn6g5s3rmx6"))))
+        (base32 "02d7crr11bjyg3fhbjb6g8xqgvlmyfanmfwg4xm3s5kfwqfm0jzn"))))
     (arguments
      `(#:tests? #f
-       #:configure-flags '("-DUSE_SYSTEM_CURL=ON" "-DBUILD_CPR_TESTS=OFF")))
+       #:configure-flags '("-DCPR_USE_SYSTEM_CURL=ON" "-DCPR_BUILD_TESTS=OFF")))
     (build-system cmake-build-system)
-    (native-inputs `(("curl" ,curl)
-                     ("pkg-config" ,pkg-config)))
-    (inputs `(("curl" ,curl)))
-    (home-page "https://whoshuu.github.io/cpr/")
+    (native-inputs `(("pkg-config" ,pkg-config)))
+    (inputs `(("curl" ,curl)
+              ("openssl" ,openssl)))
+    (home-page "https://docs.libcpr.org/")
     (synopsis "C++ Requests: Curl for People ")
     (description "C++ Requests is a simple wrapper around libcurl
   inspired by the excellent Python Requests project.")
