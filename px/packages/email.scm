@@ -23,31 +23,6 @@
   #:use-module (gnu packages compression)
   #:use-module (guix git-download))
 
-(define-public kasync
-  (package
-    (name "kasync")
-    (version "0.3.0")
-    (home-page "https://kube-project.com/")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/KDE/kasync")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "0k5jrmyqa0y4vfvg6sjr3mf12p62b1f7l3ryvy3wg1app63rssaf"))))
-    (build-system qt-build-system)
-    (native-inputs (list extra-cmake-modules kdoctools pkg-config))
-    (inputs (list qtbase-5))
-    (arguments
-     `(#:tests? #f))
-    (synopsis "Library for composable asynchronous code
-using a continuation based approach")
-    (description "KAsync helps writing composable asynchronous code
-using a continuation based approach.")
-    (license license:gpl2+)))
-
 (define-public kimap2
   (package
     (name "kimap2")
