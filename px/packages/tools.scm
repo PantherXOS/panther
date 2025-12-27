@@ -5,6 +5,7 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)
+  #:use-module (guix git-download)
   #:use-module (guix gexp)
   #:use-module (guix build-system cargo)
   #:use-module (guix build-system gnu)
@@ -95,3 +96,38 @@ navigate large directory structures.")
 plugins to track coding activity.  It provides automatic time tracking for
 programmers, with dashboards showing metrics and insights about coding habits.")
     (license license:bsd-3)))
+
+(define-public witr
+  (let ((commit "a2dc41344d0d8bc103d730de61d35f6dbc98ea5a")
+        (revision "1"))
+    (package
+      (name "witr")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/pranshuparmar/witr")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "1xdhpks76r4f9z4rx1myn4hlh0hm7nqq269kzvpy6ph0zbic2mvp"))))
+      (build-system go-build-system)
+      (arguments
+       (list
+        #:install-source? #f
+        #:import-path "github.com/pranshuparmar/witr/cmd/witr"
+        #:unpack-path "github.com/pranshuparmar/witr"
+        #:go go-1.24
+        #:build-flags
+        #~(list (string-append
+                 "-ldflags=-X main.version=" #$version
+                 " -X main.commit=" #$(string-take commit 7)))))
+      (home-page "https://github.com/pranshuparmar/witr")
+      (synopsis "Explain why a process is running on Linux")
+      (description
+       "Witr (Why Is This Running) is a Linux CLI debugging tool that explains
+the causal chain of why a process exists.  It traces process ancestry, maps
+ports to processes, and identifies contexts like Git repositories, Docker
+containers, and PM2 instances.")
+      (license license:asl2.0))))
