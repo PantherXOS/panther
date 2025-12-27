@@ -27,6 +27,10 @@
   (crate-source "addr2line" "0.24.2"
                 "1hd1i57zxgz08j6h5qrhsnm2fi0bcqvsh389fw400xm3arz2ggnz"))
 
+(define rust-addr2line-0.25.1
+  (crate-source "addr2line" "0.25.1"
+                "0jwb96gv17vdr29hbzi0ha5q6jkpgjyn7rjlg5nis65k41rk0p8v"))
+
 (define rust-adler-1.0.2
   (crate-source "adler" "1.0.2"
                 "1zim79cvzd5yrkzl3nyfx0avijwgk9fqv3yrscdy1cc79ih02qpj"))
@@ -335,6 +339,10 @@
   (crate-source "async-lock" "3.4.0"
                 "060vh45i809wcqyxzs5g69nqiqah7ydz0hpkcjys9258vqn4fvpz"))
 
+(define rust-async-lock-3.4.1
+  (crate-source "async-lock" "3.4.1"
+                "1p6i1sw3mwv1msdx9jqkr0h0a2jlrp3717yyx5n9pvkw0h23dl2z"))
+
 (define rust-async-net-2.0.0
   (crate-source "async-net" "2.0.0"
                 "1xyc5a5vcp3a7h1q2lbfh79wz8136dig4q4x6g4w2ws8ml7h0j5r"))
@@ -503,6 +511,10 @@
 (define rust-backtrace-0.3.74
   (crate-source "backtrace" "0.3.74"
                 "06pfif7nwx66qf2zaanc2fcq7m64i91ki9imw9xd3bnz5hrwp0ld"))
+
+(define rust-backtrace-0.3.76
+  (crate-source "backtrace" "0.3.76"
+                "1mibx75x4jf6wz7qjifynld3hpw3vq6sy3d3c9y5s88sg59ihlxv"))
 
 (define rust-base16ct-0.2.0
   (crate-source "base16ct" "0.2.0"
@@ -800,6 +812,10 @@
   (crate-source "cairo-sys-rs" "0.21.2"
                 "1y03q419jfks67ycdy1q8ik2bahi6l092xg09n7fn0vi1hqc7mj7"))
 
+(define rust-calcard-0.2.0
+  (crate-source "calcard" "0.2.0"
+                "0mdlgci96fghiw11qc5dsjcz6gcr9xcmck72nknglk40kwwk61xw"))
+
 (define rust-calloop-0.12.3
   (crate-source "calloop" "0.12.3"
                 "1gxd20zpys0q4v9fg3nrkyhrnjgpkgriidgfm5aqraar9njbal3v"))
@@ -827,6 +843,10 @@
 (define rust-camino-1.1.6
   (crate-source "camino" "1.1.6"
                 "171vzfyrm2jmajd70q1m774297y028kadgm7cfw4kxc8lfsr57n5"))
+
+(define rust-camino-1.2.1
+  (crate-source "camino" "1.2.1"
+                "0296bpl9smby45fc2583cgb7ybdiqpqcjh4k2f47g5ic5fzmjsi7"))
 
 (define rust-cassowary-0.3.0
   (crate-source "cassowary" "0.3.0"
@@ -887,6 +907,10 @@
 (define rust-cc-1.2.39
   (crate-source "cc" "1.2.39"
                 "0py3546wz3k5qi6pbfz80jvg0g3qgzr21c7a1p5wjvscjm4l6dg1"))
+
+(define rust-cc-1.2.40
+  (crate-source "cc" "1.2.40"
+                "1ywr07jr2rj1h7gkgkc2c1bn39wchpfnrm39sjm7dzdiyj95vl71"))
 
 (define rust-cc-1.2.44
   (crate-source "cc" "1.2.44"
@@ -971,6 +995,10 @@
 (define rust-chrono-humanize-0.2.3
   (crate-source "chrono-humanize" "0.2.3"
                 "0fq25fcdqd7s39dx81hq123210q4lpcbjdz82jl2fy6jnkk2g5kr"))
+
+(define rust-chrono-tz-0.10.4
+  (crate-source "chrono-tz" "0.10.4"
+                "1hr6rmdvqwgk748g2f69mnk97fzhdkfzaczvdn0wz4pdjy2rl4x6"))
 
 (define rust-chumsky-1.0.0-alpha.7
   (crate-source "chumsky" "1.0.0-alpha.7"
@@ -1209,6 +1237,10 @@
   (crate-source "colored" "2.1.0"
                 "1f4h9p64snrnz4x432iza15p4diqjcgpmpvhi956d6r1rq61bwnb"))
 
+(define rust-colored-2.2.0
+  (crate-source "colored" "2.2.0"
+                "0g6s7j2qayjd7i3sivmwiawfdg8c8ldy0g2kl4vwk1yk16hjaxqi"))
+
 (define rust-colpetto-0.7.0
   (crate-source "colpetto" "0.7.0"
                 "19qjlpnma08himgw24qqvdlg8hhlvg8z2k1zcb996j4kxyy4y23v"))
@@ -1264,6 +1296,10 @@
 (define rust-core-foundation-0.10.0
   (crate-source "core-foundation" "0.10.0"
                 "0qscay14s2rwkg8nd8ljhiaf149hj8sfy95d70zssy64r3jp2lmm"))
+
+(define rust-core-foundation-0.10.1
+  (crate-source "core-foundation" "0.10.1"
+                "1xjns6dqf36rni2x9f47b65grxwdm20kwdg9lhmzdrrkwadcv9mj"))
 
 (define rust-core-foundation-0.9.3
   (crate-source "core-foundation" "0.9.3"
@@ -1779,6 +1815,14 @@
   (crate-source "domain" "0.10.3"
                 "13f2l5g9890v1ilgn6z16y09p1as7a7ssa6dcf5aidpkv5k8c034"))
 
+(define rust-domain-0.11.0
+  (crate-source "domain" "0.11.0"
+                "1ygyzv3r59d9lzpdlb7mzlp8pbx7bqgy7ijk07m2lvba9bqdf7d1"))
+
+(define rust-domain-macros-0.11.0
+  (crate-source "domain-macros" "0.11.0"
+                "0w3b6zviddzz2j5l83c9wb6lxl6msnpg7p4dgzmzvdfdsbgpy68f"))
+
 (define rust-downcast-rs-1.2.0
   (crate-source "downcast-rs" "1.2.0"
                 "0l36kgxqd5djhqwf5abxjmgasdw8n0qsjvw3jdvhi91nj393ba4y"))
@@ -2012,6 +2056,10 @@
   (crate-source "event-listener" "5.4.0"
                 "1bii2gn3vaa33s0gr2zph7cagiq0ppcfxcxabs24ri9z9kgar4il"))
 
+(define rust-event-listener-5.4.1
+  (crate-source "event-listener" "5.4.1"
+                "1asnp3agbr8shcl001yd935m167ammyi8hnvl0q1ycajryn6cfz1"))
+
 (define rust-event-listener-strategy-0.5.2
   (crate-source "event-listener-strategy" "0.5.2"
                 "18f5ri227khkayhv3ndv7yl4rnasgwksl2jhwgafcxzr7324s88g"))
@@ -2135,6 +2183,10 @@
 (define rust-find-msvc-tools-0.1.2
   (crate-source "find-msvc-tools" "0.1.2"
                 "0nbrhvk4m04hviiwbqp2jwcv9j2k70x0q2kcvfk51iygvaqp7v8w"))
+
+(define rust-find-msvc-tools-0.1.3
+  (crate-source "find-msvc-tools" "0.1.3"
+                "1cr47xn14dgkyd5ca2jzfk1apkm3wwqvvglqqhrcx4aidv9gk683"))
 
 (define rust-find-msvc-tools-0.1.4
   (crate-source "find-msvc-tools" "0.1.4"
@@ -2502,6 +2554,10 @@
 (define rust-gimli-0.31.1
   (crate-source "gimli" "0.31.1"
                 "0gvqc0ramx8szv76jhfd4dms0zyamvlg4whhiz11j34hh3dqxqh7"))
+
+(define rust-gimli-0.32.3
+  (crate-source "gimli" "0.32.3"
+                "1iqk5xznimn5bfa8jy4h7pa1dv3c624hzgd2dkz8mpgkiswvjag6"))
 
 (define rust-gio-0.18.4
   (crate-source "gio" "0.18.4"
@@ -3127,6 +3183,10 @@
   (crate-source "hashbrown" "0.16.1"
                 "004i3njw38ji3bzdp9z178ba9x3k0c1pgy8x69pj7yfppv4iq7c4"))
 
+(define rust-hashify-0.2.7
+  (crate-source "hashify" "0.2.7"
+                "0k2x1vrkafnhhwk5y8yh6a835f81fizwpqygak9nm8mm1slkx7hl"))
+
 (define rust-hashlink-0.10.0
   (crate-source "hashlink" "0.10.0"
                 "1h8lzvnl9qxi3zyagivzz2p1hp6shgddfmccyf6jv7s1cdicz0kk"))
@@ -3211,6 +3271,10 @@
   (crate-source "http" "1.2.0"
                 "1skglzdf98j5nzxlii540n11is0w4l80mi5sm3xrj716asps4v7i"))
 
+(define rust-http-1.3.1
+  (crate-source "http" "1.3.1"
+                "0r95i5h7dr1xadp1ac9453w0s62s27hzkam356nyx2d9mqqmva7l"))
+
 (define rust-http-body-0.4.6
   (crate-source "http-body" "0.4.6"
                 "1lmyjfk6bqk6k9gkn1dxq770sb78pqbqshga241hr5p995bb5skw"))
@@ -3230,6 +3294,10 @@
 (define rust-http-body-util-0.1.2
   (crate-source "http-body-util" "0.1.2"
                 "0kslwazg4400qnc2azkrgqqci0fppv12waicnsy5d8hncvbjjd3r"))
+
+(define rust-http-body-util-0.1.3
+  (crate-source "http-body-util" "0.1.3"
+                "0jm6jv4gxsnlsi1kzdyffjrj8cfr3zninnxpw73mvkxy4qzdj8dh"))
 
 (define rust-http-lib-0.1.0
   (crate-source "http-lib" "0.1.0"
@@ -3275,6 +3343,10 @@
   (crate-source "hyper" "1.6.0"
                 "103ggny2k31z0iq2gzwk2vbx601wx6xkpjpxn40hr3p3b0b5fayc"))
 
+(define rust-hyper-1.7.0
+  (crate-source "hyper" "1.7.0"
+                "07n59pxzlq621z611cbpvh7p4h9h15v0r7m5wgxygpx02d5aafpb"))
+
 (define rust-hyper-rustls-0.26.0
   (crate-source "hyper-rustls" "0.26.0"
                 "0b4m1jvs147hxi8677n2dxxib663s7c31xmfni7b5qkanihsggm0"))
@@ -3287,6 +3359,10 @@
   (crate-source "hyper-rustls" "0.27.5"
                 "1cjr3yf3x5mr3194llsfibacl6j7n2dknii2dwjha4ysyf1ia69d"))
 
+(define rust-hyper-rustls-0.27.7
+  (crate-source "hyper-rustls" "0.27.7"
+                "0n6g8998szbzhnvcs1b7ibn745grxiqmlpg53xz206v826v3xjg3"))
+
 (define rust-hyper-tls-0.5.0
   (crate-source "hyper-tls" "0.5.0"
                 "01crgy13102iagakf6q4mb75dprzr7ps1gj0l5hxm1cvm7gks66n"))
@@ -3298,6 +3374,10 @@
 (define rust-hyper-util-0.1.13
   (crate-source "hyper-util" "0.1.13"
                 "1s06md3mq6v6w2zqq0qfag2hw8drsvmxpiqd4mwcl7njnfv97hmi"))
+
+(define rust-hyper-util-0.1.17
+  (crate-source "hyper-util" "0.1.17"
+                "1a5fcnz0alrg4lx9xf6ja66ihaab58jnm5msnky804wg39cras9w"))
 
 (define rust-hyper-util-0.1.3
   (crate-source "hyper-util" "0.1.3"
@@ -3670,6 +3750,10 @@
   (crate-source "io-lifetimes" "1.0.10"
                 "08625nsz0lgbd7c9lly6b6l45viqpsnj9jbsixd9mrz7596wfrlw"))
 
+(define rust-io-uring-0.7.10
+  (crate-source "io-uring" "0.7.10"
+                "0yvjyygwdcqjcgw8zp254hvjbm7as1c075dl50spdshas3aa4vq4"))
+
 (define rust-ipconfig-0.3.2
   (crate-source "ipconfig" "0.3.2"
                 "0zwr0x3jnqmjdqqbzhb0nid011qyhcyfdfqv32cdw85pjqpvk3dm"))
@@ -3805,6 +3889,10 @@
 (define rust-jj-lib-proc-macros-0.35.0
   (crate-source "jj-lib-proc-macros" "0.35.0"
                 "0701skbg15ddm36dm5881hkclhjmkpz1fg516lh8nqgakfh34q9j"))
+
+(define rust-jmap-tools-0.1.2
+  (crate-source "jmap-tools" "0.1.2"
+                "1cdl8ivax1sryxmqqphash4aw4k0zrzvc5x391m6xh30z0gjw8li"))
 
 (define rust-jni-0.19.0
   (crate-source "jni" "0.19.0"
@@ -4009,6 +4097,10 @@
   (crate-source "lexopt" "0.3.0"
                 "00dlvik2ygw8z101vf3bfndcvxhp92v25sbzz6bdiwvxgxhlpzxs"))
 
+(define rust-lexopt-0.3.1
+  (crate-source "lexopt" "0.3.1"
+                "19zklfskhlvrfbl55h9g2a1v61k2jxcj4d1fqkk6nbxyzjhy584z"))
+
 (define rust-lfs-core-0.14.1
   (crate-source "lfs-core" "0.14.1"
                 "0sga4zdsal26s3fpdizgpakgzd80afbcfz07wsr2bczmqvgb4pdn"))
@@ -4070,6 +4162,10 @@
   (crate-source "libcorn" "0.9.2"
                 "07k7nwi7l0fix34jybrqbpvlghqk36j1rnvjbh4yn5f210bs9ba8"))
 
+(define rust-libdav-0.10.0
+  (crate-source "libdav" "0.10.0"
+                "1zx0nbdwj0ang3la3pmlnv7g53q5xmh3h7mq0jq4p9qiyi0dcciz"))
+
 (define rust-libdav-0.9.1
   (crate-source "libdav" "0.9.1"
                 "1646mcnalav3jiprn3xyslyncmcvn34jzw5qn0h4k1x0bppczqhm"))
@@ -4103,6 +4199,10 @@
   ;; TODO: Check bundled sources.
   (crate-source "libgpg-error-sys" "0.6.2"
                 "10kcif9qc4f6f52gdh5bvszg8vfxfjga2wygbc585v8n12y4q2jh"))
+
+(define rust-libjmap-0.1.1
+  (crate-source "libjmap" "0.1.1"
+                "0y8n9f22a940hl02zaq166dmqszf0apmc1dbgcvybdkvz1g3b264"))
 
 (define rust-libloading-0.7.4
   (crate-source "libloading" "0.7.4"
@@ -4412,6 +4512,14 @@
   (crate-source "mail-builder" "0.3.2"
                 "1jzg9y92xbdj2glkpbakhrgv0scd1ih9a2vmxvr81vbha8fqgx95"))
 
+(define rust-mail-builder-0.4.4
+  (crate-source "mail-builder" "0.4.4"
+                "0fs7214f92cav734hi0n9cr6fh3q1dv4vccal89l131k0zrrh2ch"))
+
+(define rust-mail-parser-0.11.1
+  (crate-source "mail-parser" "0.11.1"
+                "18qra6c5fcvjif1r3pjj553bnpc1h2sxzk6y1crzmrn4843kkx6w"))
+
 (define rust-mail-parser-0.9.4
   (crate-source "mail-parser" "0.9.4"
                 "1z7r9b4fn852s3kqi2mzlg01isfn6wxw9frh6dbsyzxiv3jvkhwk"))
@@ -4645,6 +4753,10 @@
 (define rust-mml-lib-1.1.1
   (crate-source "mml-lib" "1.1.1"
                 "14656qwl8bhp927209g4kspzqja3vyk3kzam81rlfjx3j02cprrr"))
+
+(define rust-moka-0.12.11
+  (crate-source "moka" "0.12.11"
+                "0xxhhs7lsfk47q065vibvggjhrf6h0lsvfji3m601q0jqf4csqc2"))
 
 (define rust-moka-0.12.8
   (crate-source "moka" "0.12.8"
@@ -4951,6 +5063,10 @@
 (define rust-object-0.36.7
   (crate-source "object" "0.36.7"
                 "11vv97djn9nc5n6w1gc6bd96d2qk2c8cg1kw5km9bsi3v4a8x532"))
+
+(define rust-object-0.37.3
+  (crate-source "object" "0.37.3"
+                "1zikiy9xhk6lfx1dn2gn2pxbnfpmlkn0byd7ib1n720x0cgj0xpz"))
 
 (define rust-octseq-0.5.2
   (crate-source "octseq" "0.5.2"
@@ -5270,6 +5386,10 @@
   (crate-source "phf" "0.11.3"
                 "0y6hxp1d48rx2434wgi5g8j1pr8s5jja29ha2b65435fh057imhz"))
 
+(define rust-phf-0.12.1
+  (crate-source "phf" "0.12.1"
+                "1dz85g1wshfca83mrq3va9rm9n8qcdjlpv1i3908y5zc9j4p6cli"))
+
 (define rust-phf-0.13.1
   (crate-source "phf" "0.13.1"
                 "1pzswx5gdglgjgp4azyzwyr4gh031r0kcnpqq6jblga72z3jsmn1"))
@@ -5309,6 +5429,10 @@
 (define rust-phf-shared-0.11.3
   (crate-source "phf_shared" "0.11.3"
                 "1rallyvh28jqd9i916gk5gk2igdmzlgvv5q0l3xbf3m6y8pbrsk7"))
+
+(define rust-phf-shared-0.12.1
+  (crate-source "phf_shared" "0.12.1"
+                "10cr16wpmbjxd7w6k98sxw9yw3zxnzscybl9jzyq3digi045a006"))
 
 (define rust-phf-shared-0.13.1
   (crate-source "phf_shared" "0.13.1"
@@ -6010,6 +6134,10 @@
   (crate-source "roxmltree" "0.20.0"
                 "15vw91ps91wkmmgy62khf9zb63bdinvm80957dascbsw7dwvc83c"))
 
+(define rust-roxmltree-0.21.0
+  (crate-source "roxmltree" "0.21.0"
+                "0gzmajlaxffndf7d39aq6znlqb8a22pkr2kvlpq7bscm0xx3wgln"))
+
 (define rust-rpassword-7.3.1
   (crate-source "rpassword" "7.3.1"
                 "0gvy3lcpph9vv1rl0cjfn72ylvmgbw2vklmj6w0iv4cpr3ijniw0"))
@@ -6049,6 +6177,10 @@
 (define rust-rustc-demangle-0.1.24
   (crate-source "rustc-demangle" "0.1.24"
                 "07zysaafgrkzy2rjgwqdj2a8qdpsm6zv6f5pgpk9x0lm40z9b6vi"))
+
+(define rust-rustc-demangle-0.1.26
+  (crate-source "rustc-demangle" "0.1.26"
+                "1kja3nb0yhlm4j2p1hl8d7sjmn2g9fa1s4pj0qma5kj2lcndkxsn"))
 
 (define rust-rustc-hash-1.1.0
   (crate-source "rustc-hash" "1.1.0"
@@ -6122,6 +6254,10 @@
   (crate-source "rustls" "0.23.23"
                 "15gk2bmry78cps3ya38a7cn4jxc36xv1r7gndr0fbz40qjc6qya7"))
 
+(define rust-rustls-0.23.32
+  (crate-source "rustls" "0.23.32"
+                "0h2ddlnbjhs47hcmf3rbvr32sxj5kpf0m56rgk739l192rijag6d"))
+
 (define rust-rustls-0.23.7
   (crate-source "rustls" "0.23.7"
                 "0yv7bh16rwhn6fnlb3wnixb2y4in9gf3z3ysa8k3zbgh3nbdpfzb"))
@@ -6133,6 +6269,10 @@
 (define rust-rustls-native-certs-0.7.3
   (crate-source "rustls-native-certs" "0.7.3"
                 "1r9ib5gwkfci2wbqnbh44nigvrfgxs4n1x89js82w97dxsab7gz5"))
+
+(define rust-rustls-native-certs-0.8.1
+  (crate-source "rustls-native-certs" "0.8.1"
+                "1ls7laa3748mkn23fmi3g4mlwk131lx6chq2lyc8v2mmabfz5kvz"))
 
 (define rust-rustls-pemfile-1.0.4
   (crate-source "rustls-pemfile" "1.0.4"
@@ -6157,6 +6297,10 @@
 (define rust-rustls-pki-types-1.11.0
   (crate-source "rustls-pki-types" "1.11.0"
                 "0755isc0x5iymm3wsn59s0ad1pm9zidw7p34qfqlsjsac9jf4z4i"))
+
+(define rust-rustls-pki-types-1.12.0
+  (crate-source "rustls-pki-types" "1.12.0"
+                "0yawbdpix8jif6s8zj1p2hbyb7y3bj66fhx0y7hyf4qh4964m6i2"))
 
 (define rust-rustls-pki-types-1.4.1
   (crate-source "rustls-pki-types" "1.4.1"
@@ -6193,6 +6337,10 @@
 (define rust-rustls-webpki-0.102.8
   (crate-source "rustls-webpki" "0.102.8"
                 "1sdy8ks86b7jpabpnb2px2s7f1sq8v0nqf6fnlvwzm4vfk41pjk4"))
+
+(define rust-rustls-webpki-0.103.7
+  (crate-source "rustls-webpki" "0.103.7"
+                "1gqlsd0yqiqch97g0wbsnbmyrp75j6nbzfpf8dmhxa78j50ky2z1"))
 
 (define rust-rustversion-1.0.14
   (crate-source "rustversion" "1.0.14"
@@ -6274,6 +6422,10 @@
   (crate-source "schannel" "0.1.27"
                 "0gbbhy28v72kd5iina0z2vcdl3vz63mk5idvkzn5r52z6jmfna8z"))
 
+(define rust-schannel-0.1.28
+  (crate-source "schannel" "0.1.28"
+                "1qb6s5gyxfz2inz753a4z3mc1d266mwvz0c5w7ppd3h44swq27c9"))
+
 (define rust-schemars-0.8.21
   (crate-source "schemars" "0.8.21"
                 "14lyx04388wgbilgcm0nl75w6359nw16glswfqv7x2rpi9329h09"))
@@ -6346,6 +6498,10 @@
   (crate-source "security-framework" "3.2.0"
                 "05mkrddi9i18h9p098d0iimqv1xxz0wd8mbgpbvh9jj67x0205r7"))
 
+(define rust-security-framework-3.5.1
+  (crate-source "security-framework" "3.5.1"
+                "1vz6pf5qjgx8s0hg805hq6qbcqnll6fs63irvrpgcc7qx91p6adk"))
+
 (define rust-security-framework-sys-2.11.0
   ;; TODO: Check bundled sources.
   (crate-source "security-framework-sys" "2.11.0"
@@ -6355,6 +6511,11 @@
   ;; TODO: Check bundled sources.
   (crate-source "security-framework-sys" "2.14.0"
                 "0chwn01qrnvs59i5220bymd38iddy4krbnmfnhf4k451aqfj7ns9"))
+
+(define rust-security-framework-sys-2.15.0
+  ;; TODO: Check bundled sources.
+  (crate-source "security-framework-sys" "2.15.0"
+                "1h6mijxnfrwvl1y4dzwn3m877j6dqp9qn3g37i954j5czazhq7yc"))
 
 (define rust-security-framework-sys-2.8.0
   ;; TODO: Check bundled sources.
@@ -6389,6 +6550,10 @@
 (define rust-semver-1.0.26
   (crate-source "semver" "1.0.26"
                 "1l5q2vb8fjkby657kdyfpvv40x2i2xqq9bg57pxqakfj92fgmrjn"))
+
+(define rust-semver-1.0.27
+  (crate-source "semver" "1.0.27"
+                "1qmi3akfrnqc2hfkdgcxhld5bv961wbk8my3ascv5068mc5fnryp"))
 
 (define rust-semver-rs-0.2.0
   (crate-source "semver_rs" "0.2.0"
@@ -6586,6 +6751,10 @@
   (crate-source "sha1-checked" "0.10.0"
                 "08s4h1drgwxzfn1mk11rn0r9i0rbjra1m0l2c0fbngij1jn9kxc9"))
 
+(define rust-sha1-smol-1.0.1
+  (crate-source "sha1_smol" "1.0.1"
+                "0pbh2xjfnzgblws3hims0ib5bphv7r5rfdpizyh51vnzvnribymv"))
+
 (define rust-sha2-0.10.6
   (crate-source "sha2" "0.10.6"
                 "1h5xrrv2y06kr1gsz4pwrm3lsp206nm2gjxgbf21wfrfzsavgrl2"))
@@ -6685,6 +6854,10 @@
 (define rust-simple-logger-4.2.0
   (crate-source "simple_logger" "4.2.0"
                 "0cwkcbd8ba73ic8g1n896n7mhrgdlm4hnqgvk6vcj5dq55fcsc12"))
+
+(define rust-simple-logger-5.0.0
+  (crate-source "simple_logger" "5.0.0"
+                "1swpfkym2f3pajcblskk7h82gmcljyfzs3xa0hvmarw7w2jxzig8"))
 
 (define rust-simplecss-0.2.2
   (crate-source "simplecss" "0.2.2"
@@ -6818,15 +6991,29 @@
   (crate-source "sqlite" "0.32.0"
                 "1rpqpkpxn2qdvghsnak2b73cn5ca37p6ri0ylyjdcmrq3481r003"))
 
+(define rust-sqlite-0.37.0
+  (crate-source "sqlite" "0.37.0"
+                "10s7kkypkvnx5dkxdi1vaj8vby015irvmnqh757iadhrl40rqvpn"))
+
 (define rust-sqlite3-src-0.5.1
   ;; TODO: Check bundled sources.
   (crate-source "sqlite3-src" "0.5.1"
                 "0m74wrkpify3z0xvrw4i2yssn9m9sjwqa5ipk6aq6f7fl58mmjdz"))
 
+(define rust-sqlite3-src-0.7.0
+  ;; TODO: Check bundled sources.
+  (crate-source "sqlite3-src" "0.7.0"
+                "081i23jsrmzna0j2q63sb4ipz8pllnb1fhlywqrhlsw8c34d7dp5"))
+
 (define rust-sqlite3-sys-0.15.2
   ;; TODO: Check bundled sources.
   (crate-source "sqlite3-sys" "0.15.2"
                 "0fq6m21dnd5yqrzknsmnl2565nahdwa29s7x12xhxr1kjik2qxgj"))
+
+(define rust-sqlite3-sys-0.18.0
+  ;; TODO: Check bundled sources.
+  (crate-source "sqlite3-sys" "0.18.0"
+                "0fbh4rjq4kc1mx6rigap6xzl5n7skbi9wyhjh581sfn1mnbisy57"))
 
 (define rust-stable-deref-trait-1.2.0
   (crate-source "stable_deref_trait" "1.2.0"
@@ -7389,6 +7576,10 @@
   (crate-source "tokio" "1.44.2"
                 "0j4w3qvlcqzgbxlnap0czvspqj6x461vyk1sbqcf97g4rci8if76"))
 
+(define rust-tokio-1.47.1
+  (crate-source "tokio" "1.47.1"
+                "0f2hp5v3payg6x04ijj67si1wsdhksskhmjs2k9p5f7bmpyrmr49"))
+
 (define rust-tokio-1.48.0
   (crate-source "tokio" "1.48.0"
                 "0244qva5pksy8gam6llf7bd6wbk2vkab9lx26yyf08dix810wdpz"))
@@ -7436,6 +7627,10 @@
 (define rust-tokio-rustls-0.26.2
   (crate-source "tokio-rustls" "0.26.2"
                 "16wf007q3584j46wc4s0zc4szj6280g23hka6x6bgs50l4v7nwlf"))
+
+(define rust-tokio-rustls-0.26.4
+  (crate-source "tokio-rustls" "0.26.4"
+                "0qggwknz9w4bbsv1z158hlnpkm97j3w8v31586jipn99byaala8p"))
 
 (define rust-tokio-stream-0.1.14
   (crate-source "tokio-stream" "0.1.14"
@@ -7596,6 +7791,10 @@
 (define rust-tower-http-0.6.2
   (crate-source "tower-http" "0.6.2"
                 "15wnvhl6cpir9125s73bqjzjsvfb0fmndmsimnl2ddnlhfvs6gs0"))
+
+(define rust-tower-http-0.6.6
+  (crate-source "tower-http" "0.6.6"
+                "1wh51y4rf03f91c6rvli6nwzsarx7097yx6sqlm75ag27pbjzj5d"))
 
 (define rust-tower-http-0.6.8
   (crate-source "tower-http" "0.6.8"
@@ -8041,6 +8240,10 @@
   (crate-source "uuid" "1.18.0"
                 "1gn1vlggiwrdpizqcpc5hyxsqz9s5215bbay1b182mqn7rj9ccgk"))
 
+(define rust-uuid-1.18.1
+  (crate-source "uuid" "1.18.1"
+                "18kh01qmfayn4psap52x8xdjkzw2q8bcbpnhhxjs05dr22mbi1rg"))
+
 (define rust-uuid-1.7.0
   (crate-source "uuid" "1.7.0"
                 "0aivp5ys7sg2izlj2sn6rr8p43vdcwg64naj8n0kqbd15iqcj37h"))
@@ -8126,9 +8329,17 @@
   (crate-source "vparser" "1.0.1"
                 "0yjszxiqz9bwxd5qx4w8k1gcbgf1mi9wrk75d89443najyl3klzr"))
 
+(define rust-vparser-1.1.0
+  (crate-source "vparser" "1.1.0"
+                "1l8qw1v5g1b2d3wsnrsd7314gq28ylyz279v2rsyjjvwcsydh5gr"))
+
 (define rust-vsimd-0.8.0
   (crate-source "vsimd" "0.8.0"
                 "0r4wn54jxb12r0x023r5yxcrqk785akmbddqkcafz9fm03584c2w"))
+
+(define rust-vstorage-0.4.0
+  (crate-source "vstorage" "0.4.0"
+                "0x2cgp40b4ifnvlzz0pkjvi5dfll091ray5158xymdy90mwh47v9"))
 
 (define rust-vte-0.11.1
   (crate-source "vte" "0.11.1"
@@ -9358,6 +9569,10 @@
 (define rust-zeroize-1.8.1
   (crate-source "zeroize" "1.8.1"
                 "1pjdrmjwmszpxfd7r860jx54cyk94qk59x13sc307cvr5256glyf"))
+
+(define rust-zeroize-1.8.2
+  (crate-source "zeroize" "1.8.2"
+                "1l48zxgcv34d7kjskr610zqsm6j2b4fcr2vfh9jm9j1jgvk58wdr"))
 
 (define rust-zeroize-derive-1.4.2
   (crate-source "zeroize_derive" "1.4.2"
@@ -11751,192 +11966,221 @@
                                               rust-windows-x86-64-msvc-0.52.5
                                               rust-winreg-0.50.0))
                      (pimsync =>
-                              (list rust-addr2line-0.21.0
-                                    rust-adler-1.0.2
-                                    rust-anyhow-1.0.75
-                                    rust-async-lock-3.4.0
-                                    rust-async-trait-0.1.73
-                                    rust-autocfg-1.1.0
-                                    rust-backtrace-0.3.69
-                                    rust-base64-0.21.3
+                              (list rust-addr2line-0.25.1
+                                    rust-adler2-2.0.1
+                                    rust-ahash-0.8.12
+                                    rust-allocator-api2-0.2.21
+                                    rust-android-system-properties-0.1.5
+                                    rust-anyhow-1.0.100
+                                    rust-async-lock-3.4.1
+                                    rust-async-trait-0.1.89
+                                    rust-atomic-waker-1.1.2
+                                    rust-autocfg-1.5.0
+                                    rust-backtrace-0.3.76
                                     rust-base64-0.22.1
-                                    rust-bitflags-1.3.2
-                                    rust-bitflags-2.4.0
+                                    rust-bitflags-2.9.4
                                     rust-block-buffer-0.10.4
-                                    rust-bumpalo-3.16.0
-                                    rust-bytes-1.4.0
-                                    rust-camino-1.1.6
-                                    rust-cc-1.2.16
-                                    rust-cfg-if-1.0.0
-                                    rust-colored-2.1.0
+                                    rust-bumpalo-3.19.0
+                                    rust-bytes-1.10.1
+                                    rust-calcard-0.2.0
+                                    rust-camino-1.2.1
+                                    rust-cc-1.2.40
+                                    rust-cfg-if-1.0.3
+                                    rust-chrono-0.4.42
+                                    rust-chrono-tz-0.10.4
+                                    rust-colored-2.2.0
                                     rust-concurrent-queue-2.5.0
-                                    rust-core-foundation-0.9.3
-                                    rust-core-foundation-sys-0.8.4
-                                    rust-cpufeatures-0.2.9
-                                    rust-crossbeam-channel-0.5.13
+                                    rust-core-foundation-0.10.1
+                                    rust-core-foundation-sys-0.8.7
+                                    rust-cpufeatures-0.2.17
+                                    rust-crossbeam-channel-0.5.15
                                     rust-crossbeam-epoch-0.9.18
-                                    rust-crossbeam-utils-0.8.20
+                                    rust-crossbeam-utils-0.8.21
                                     rust-crypto-common-0.1.6
-                                    rust-deranged-0.3.8
+                                    rust-deranged-0.5.4
                                     rust-digest-0.10.7
-                                    rust-domain-0.10.3
-                                    rust-errno-0.3.3
-                                    rust-errno-dragonfly-0.1.2
-                                    rust-event-listener-5.3.1
-                                    rust-event-listener-strategy-0.5.2
-                                    rust-fastrand-2.0.0
+                                    rust-domain-0.11.0
+                                    rust-domain-macros-0.11.0
+                                    rust-encoding-rs-0.8.35
+                                    rust-equivalent-1.0.2
+                                    rust-errno-0.3.14
+                                    rust-event-listener-5.4.1
+                                    rust-event-listener-strategy-0.5.4
+                                    rust-fastrand-2.3.0
+                                    rust-find-msvc-tools-0.1.3
                                     rust-fnv-1.0.7
-                                    rust-futures-channel-0.3.28
+                                    rust-futures-channel-0.3.31
                                     rust-futures-core-0.3.31
                                     rust-futures-macro-0.3.31
                                     rust-futures-task-0.3.31
                                     rust-futures-util-0.3.31
                                     rust-generic-array-0.14.7
-                                    rust-getrandom-0.2.10
-                                    rust-gimli-0.28.0
-                                    rust-hermit-abi-0.3.9
+                                    rust-getrandom-0.2.16
+                                    rust-getrandom-0.3.3
+                                    rust-gimli-0.32.3
+                                    rust-hashbrown-0.14.5
+                                    rust-hashify-0.2.7
                                     rust-hex-0.4.3
-                                    rust-http-1.1.0
+                                    rust-http-1.3.1
                                     rust-http-body-1.0.1
-                                    rust-http-body-util-0.1.2
-                                    rust-httparse-1.8.0
+                                    rust-http-body-util-0.1.3
+                                    rust-httparse-1.10.1
                                     rust-httpdate-1.0.3
-                                    rust-hyper-1.4.1
-                                    rust-hyper-rustls-0.26.0
-                                    rust-hyper-util-0.1.7
+                                    rust-hyper-1.7.0
+                                    rust-hyper-rustls-0.27.7
+                                    rust-hyper-util-0.1.17
                                     rust-hyperlocal-0.9.1
+                                    rust-iana-time-zone-0.1.64
+                                    rust-iana-time-zone-haiku-0.1.2
                                     rust-inotify-0.11.0
                                     rust-inotify-sys-0.1.5
-                                    rust-itoa-1.0.9
-                                    rust-js-sys-0.3.72
-                                    rust-lazy-static-1.4.0
-                                    rust-lexopt-0.3.0
-                                    rust-libc-0.2.161
-                                    rust-libdav-0.9.1
-                                    rust-linux-raw-sys-0.4.5
-                                    rust-lock-api-0.4.10
-                                    rust-log-0.4.20
-                                    rust-memchr-2.6.2
+                                    rust-io-uring-0.7.10
+                                    rust-itoa-1.0.15
+                                    rust-jmap-tools-0.1.2
+                                    rust-js-sys-0.3.81
+                                    rust-lazy-static-1.5.0
+                                    rust-lexopt-0.3.1
+                                    rust-libc-0.2.176
+                                    rust-libdav-0.10.0
+                                    rust-libjmap-0.1.1
+                                    rust-linux-raw-sys-0.11.0
+                                    rust-lock-api-0.4.14
+                                    rust-log-0.4.28
+                                    rust-mail-builder-0.4.4
+                                    rust-mail-parser-0.11.1
+                                    rust-memchr-2.7.6
                                     rust-mime-0.3.17
-                                    rust-miniz-oxide-0.7.1
-                                    rust-mio-1.0.2
-                                    rust-moka-0.12.8
-                                    rust-object-0.32.0
+                                    rust-miniz-oxide-0.8.9
+                                    rust-mio-1.0.4
+                                    rust-moka-0.12.11
+                                    rust-num-conv-0.1.0
+                                    rust-num-traits-0.2.19
+                                    rust-object-0.37.3
                                     rust-octseq-0.5.2
-                                    rust-once-cell-1.18.0
-                                    rust-openssl-probe-0.1.5
+                                    rust-once-cell-1.21.3
+                                    rust-openssl-probe-0.1.6
                                     rust-parking-2.2.1
-                                    rust-parking-lot-0.12.1
-                                    rust-parking-lot-core-0.9.8
-                                    rust-pin-project-1.1.5
-                                    rust-pin-project-internal-1.1.5
-                                    rust-pin-project-lite-0.2.13
+                                    rust-parking-lot-0.12.5
+                                    rust-parking-lot-core-0.9.12
+                                    rust-phf-0.12.1
+                                    rust-phf-shared-0.12.1
+                                    rust-pin-project-lite-0.2.16
                                     rust-pin-utils-0.1.0
-                                    rust-pkg-config-0.3.29
-                                    rust-ppv-lite86-0.2.17
-                                    rust-proc-macro2-1.0.86
-                                    rust-quanta-0.12.3
-                                    rust-quote-1.0.36
+                                    rust-pkg-config-0.3.32
+                                    rust-portable-atomic-1.11.1
+                                    rust-powerfmt-0.2.0
+                                    rust-ppv-lite86-0.2.21
+                                    rust-proc-macro2-1.0.101
+                                    rust-quote-1.0.41
+                                    rust-r-efi-5.3.0
                                     rust-rand-0.8.5
+                                    rust-rand-0.9.2
                                     rust-rand-chacha-0.3.1
+                                    rust-rand-chacha-0.9.0
                                     rust-rand-core-0.6.4
-                                    rust-raw-cpuid-11.2.0
-                                    rust-redox-syscall-0.3.5
+                                    rust-rand-core-0.9.3
+                                    rust-redox-syscall-0.5.18
                                     rust-ring-0.17.14
-                                    rust-roxmltree-0.20.0
-                                    rust-rustc-demangle-0.1.23
+                                    rust-roxmltree-0.21.0
+                                    rust-rustc-demangle-0.1.26
                                     rust-rustc-version-0.4.1
-                                    rust-rustix-0.38.10
-                                    rust-rustls-0.22.4
-                                    rust-rustls-native-certs-0.7.0
-                                    rust-rustls-pemfile-2.0.0
-                                    rust-rustls-pki-types-1.7.0
-                                    rust-rustls-webpki-0.102.4
+                                    rust-rustix-1.1.2
+                                    rust-rustls-0.23.32
+                                    rust-rustls-native-certs-0.8.1
+                                    rust-rustls-pemfile-2.2.0
+                                    rust-rustls-pki-types-1.12.0
+                                    rust-rustls-webpki-0.103.7
+                                    rust-rustversion-1.0.22
+                                    rust-ryu-1.0.20
                                     rust-scfg-0.3.1
-                                    rust-schannel-0.1.22
+                                    rust-schannel-0.1.28
                                     rust-scopeguard-1.2.0
-                                    rust-security-framework-2.9.2
-                                    rust-security-framework-sys-2.9.1
-                                    rust-semver-1.0.23
-                                    rust-serde-1.0.188
-                                    rust-serde-derive-1.0.188
-                                    rust-sha2-0.10.7
+                                    rust-security-framework-3.5.1
+                                    rust-security-framework-sys-2.15.0
+                                    rust-semver-1.0.27
+                                    rust-serde-1.0.228
+                                    rust-serde-core-1.0.228
+                                    rust-serde-derive-1.0.228
+                                    rust-serde-json-1.0.145
+                                    rust-sha1-smol-1.0.1
+                                    rust-sha2-0.10.9
                                     rust-shell-words-1.1.0
                                     rust-shlex-1.3.0
-                                    rust-signal-hook-registry-1.4.1
-                                    rust-simple-logger-4.2.0
-                                    rust-slab-0.4.9
-                                    rust-smallvec-1.13.2
-                                    rust-socket2-0.5.7
-                                    rust-sqlite-0.32.0
-                                    rust-sqlite3-src-0.5.1
-                                    rust-sqlite3-sys-0.15.2
-                                    rust-subtle-2.5.0
-                                    rust-syn-2.0.67
+                                    rust-simple-logger-5.0.0
+                                    rust-siphasher-1.0.1
+                                    rust-slab-0.4.11
+                                    rust-smallvec-1.15.1
+                                    rust-socket2-0.6.0
+                                    rust-sqlite-0.37.0
+                                    rust-sqlite3-src-0.7.0
+                                    rust-sqlite3-sys-0.18.0
+                                    rust-subtle-2.6.1
+                                    rust-syn-2.0.106
+                                    rust-sync-wrapper-1.0.2
                                     rust-tagptr-0.2.0
-                                    rust-tempfile-3.8.0
-                                    rust-thiserror-1.0.47
-                                    rust-thiserror-impl-1.0.47
-                                    rust-time-0.3.28
-                                    rust-time-core-0.1.1
-                                    rust-tokio-1.41.0
-                                    rust-tokio-macros-2.4.0
-                                    rust-tokio-rustls-0.25.0
-                                    rust-tower-0.4.13
-                                    rust-tower-0.5.1
-                                    rust-tower-http-0.6.2
+                                    rust-tempfile-3.23.0
+                                    rust-thiserror-2.0.17
+                                    rust-thiserror-impl-2.0.17
+                                    rust-time-0.3.44
+                                    rust-time-core-0.1.6
+                                    rust-tokio-1.47.1
+                                    rust-tokio-macros-2.5.0
+                                    rust-tokio-rustls-0.26.4
+                                    rust-tower-0.5.2
+                                    rust-tower-http-0.6.6
                                     rust-tower-layer-0.3.3
                                     rust-tower-service-0.3.3
-                                    rust-tracing-0.1.40
-                                    rust-tracing-attributes-0.1.27
-                                    rust-tracing-core-0.1.32
-                                    rust-triomphe-0.1.11
-                                    rust-try-lock-0.2.4
-                                    rust-typenum-1.16.0
-                                    rust-unicode-ident-1.0.11
+                                    rust-tracing-0.1.41
+                                    rust-tracing-attributes-0.1.30
+                                    rust-tracing-core-0.1.34
+                                    rust-try-lock-0.2.5
+                                    rust-typenum-1.19.0
+                                    rust-unicode-ident-1.0.19
                                     rust-untrusted-0.9.0
-                                    rust-uuid-1.11.0
-                                    rust-version-check-0.9.4
-                                    rust-vparser-1.0.1
+                                    rust-uuid-1.18.1
+                                    rust-version-check-0.9.5
+                                    rust-vparser-1.1.0
+                                    rust-vstorage-0.4.0
                                     rust-want-0.3.1
-                                    rust-wasi-0.11.0+wasi-snapshot-preview1
-                                    rust-wasm-bindgen-0.2.95
-                                    rust-wasm-bindgen-backend-0.2.95
-                                    rust-wasm-bindgen-macro-0.2.95
-                                    rust-wasm-bindgen-macro-support-0.2.95
-                                    rust-wasm-bindgen-shared-0.2.95
-                                    rust-web-sys-0.3.72
-                                    rust-winapi-0.3.9
-                                    rust-winapi-i686-pc-windows-gnu-0.4.0
-                                    rust-winapi-x86-64-pc-windows-gnu-0.4.0
-                                    rust-windows-sys-0.42.0
+                                    rust-wasi-0.11.1+wasi-snapshot-preview1
+                                    rust-wasi-0.14.7+wasi-0.2.4
+                                    rust-wasip2-1.0.1+wasi-0.2.4
+                                    rust-wasm-bindgen-0.2.104
+                                    rust-wasm-bindgen-backend-0.2.104
+                                    rust-wasm-bindgen-macro-0.2.104
+                                    rust-wasm-bindgen-macro-support-0.2.104
+                                    rust-wasm-bindgen-shared-0.2.104
+                                    rust-windows-core-0.62.2
+                                    rust-windows-implement-0.60.2
+                                    rust-windows-interface-0.59.3
+                                    rust-windows-link-0.2.1
+                                    rust-windows-result-0.4.1
+                                    rust-windows-strings-0.5.1
                                     rust-windows-sys-0.48.0
                                     rust-windows-sys-0.52.0
+                                    rust-windows-sys-0.59.0
+                                    rust-windows-sys-0.61.2
                                     rust-windows-targets-0.48.5
                                     rust-windows-targets-0.52.6
-                                    rust-windows-aarch64-gnullvm-0.42.2
                                     rust-windows-aarch64-gnullvm-0.48.5
                                     rust-windows-aarch64-gnullvm-0.52.6
-                                    rust-windows-aarch64-msvc-0.42.2
                                     rust-windows-aarch64-msvc-0.48.5
                                     rust-windows-aarch64-msvc-0.52.6
-                                    rust-windows-i686-gnu-0.42.2
                                     rust-windows-i686-gnu-0.48.5
                                     rust-windows-i686-gnu-0.52.6
                                     rust-windows-i686-gnullvm-0.52.6
-                                    rust-windows-i686-msvc-0.42.2
                                     rust-windows-i686-msvc-0.48.5
                                     rust-windows-i686-msvc-0.52.6
-                                    rust-windows-x86-64-gnu-0.42.2
                                     rust-windows-x86-64-gnu-0.48.5
                                     rust-windows-x86-64-gnu-0.52.6
-                                    rust-windows-x86-64-gnullvm-0.42.2
                                     rust-windows-x86-64-gnullvm-0.48.5
                                     rust-windows-x86-64-gnullvm-0.52.6
-                                    rust-windows-x86-64-msvc-0.42.2
                                     rust-windows-x86-64-msvc-0.48.5
                                     rust-windows-x86-64-msvc-0.52.6
-                                    rust-zeroize-1.7.0))
+                                    rust-wit-bindgen-0.46.0
+                                    rust-zerocopy-0.8.27
+                                    rust-zerocopy-derive-0.8.27
+                                    rust-zeroize-1.8.2))
                      (wakatime-ls =>
                                   (list rust-adler2-2.0.0
                                    rust-android-system-properties-0.1.5

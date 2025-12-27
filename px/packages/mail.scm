@@ -16,12 +16,13 @@
   #:use-module (gnu packages sqlite)
   #:use-module (gnu packages documentation)
   #:use-module (gnu packages version-control)
+  #:use-module (gnu packages rust)
   #:use-module (px self))
 
-(define-public pimsync 
+(define-public pimsync
   (package
     (name "pimsync")
-    (version "0.4.1")
+    (version "0.5.5")
     (source
      (origin
        (method git-fetch)
@@ -30,18 +31,18 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "108lhzzxblf39qcn5zccz7vciznisp2dk39x7sfbwdn6425wcw0h"))))
+        (base32 "12vqlz8sc4yh5h4vnhcab87xcjgfv468nrjrm914fnxl780m5isl"))))
     (build-system cargo-build-system)
     (arguments
      `(#:install-source? #f
        #:tests? #f
+       #:rust ,rust-1.88
        #:phases
        (modify-phases %standard-phases
-         ;; vstorage not found
          (delete 'package)
-         (add-after 'unpack 'set-shell-for-configure-script
+         (add-after 'unpack 'set-version
            (lambda _
-             (setenv "PIMSYNC_VERSION" "0.4.1"))))))
+             (setenv "PIMSYNC_VERSION" ,version))))))
     (native-inputs
      (list git-minimal scdoc))
     (inputs
