@@ -99,14 +99,14 @@ system.")
 (define-public restclient-cpp
   (package
     (name "restclient-cpp")
-    (version "0.5.2")
+    (version "0.5.3")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://github.com/mrtazz/restclient-cpp/archive/"
              version ".tar.gz"))
        (sha256
-        (base32 "1v35pkgqdcmyr1c91r9r312rjak6x24k4j1vslpnaf59z4cacayn"))))
+        (base32 "1wnn954rfc1870rv9sybfsvrgvrfhqi6ys1ls8s44wmrv4ahwifa"))))
     (arguments
      `(#:tests? #f))
     (build-system cmake-build-system)
