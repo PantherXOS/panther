@@ -72,37 +72,6 @@ enabling Python applications to use the Cap'n Proto serialization and RPC
 system.")
     (license license:bsd-2)))
 
-(define-public python-pynng
-  (package
-    (name "python-pynng")
-    (version "0.4.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "pynng" version))
-       (sha256
-        (base32 "0621j0dmrhg8ydrpr3k5ia50hp73r9khrcbwvp43jb51igl6wwvc"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:phases (modify-phases %standard-phases
-                  (add-after 'unpack 'patch-source
-                    (lambda _
-                      (substitute* '("setup.py" "build_nng.sh")
-                        ;; Replace default shell path.
-                        (("/bin/bash")
-                         (which "sh"))) #t)))
-       #:tests? #f))
-    (native-inputs `(("python-pytest-runner" ,python-pytest-runner)
-                     ("cmake" ,cmake)))
-    (propagated-inputs `(("python-cffi" ,python-cffi)
-                         ("python-sniffio" ,python-sniffio)))
-    (home-page "https://github.com/codypiersall/pynng")
-    (synopsis "Python bindings for Nanomsg Next Generation")
-    (description
-     "Ergonomic bindings for nanomsg next generation (nng), in Python.
-pynng provides a nice interface on top of the full power of nng")
-    (license license:expat)))
-
 (define-public cpr
   (package
     (name "cpr")
