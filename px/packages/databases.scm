@@ -15,14 +15,14 @@
 (define-public sqlitecpp
   (package
     (name "sqlitecpp")
-    (version "3.2.1")
+    (version "3.3.3")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://github.com/SRombauts/SQLiteCpp/archive/"
                            version ".tar.gz"))
        (sha256
-        (base32 "14yn8bdnmh5bv2k85acm0yqjzgr90dmqxgvs5bw60x64h1b7vikh"))))
+        (base32 "1inav751a06khmgikd8iyl3phpnhcjz45s4fj8bk3i1vv1r47g9k"))))
     (build-system cmake-build-system)
     (arguments
      `(#:tests? #f))
