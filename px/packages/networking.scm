@@ -5,6 +5,7 @@
   #:use-module (nonguix build-system binary)
   #:use-module ((guix licenses)
                 :prefix license:)
+  #:use-module (guix build-system cargo)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system go)
   #:use-module (guix download)
@@ -21,18 +22,25 @@
   #:use-module (gnu packages golang-xyz)
   #:use-module (gnu packages shells)
   #:use-module (gnu packages tls)
+  #:use-module (gnu packages admin)
   #:use-module (gnu packages base)
-  #:use-module (gnu packages glib)
+  #:use-module (gnu packages compression)
   #:use-module (gnu packages curl)
+  #:use-module (gnu packages fontutils)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages gl)
+  #:use-module (gnu packages glib)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages nss)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages rust)
   #:use-module (gnu packages vpn)
   #:use-module (gnu packages web)
-  #:use-module (gnu packages pkg-config)
-  #:use-module (gnu packages compression)
   #:use-module (gnu packages xml)
   #:use-module (px packages golang-xyz)
+  #:use-module (px self)
   #:use-module (ice-9 match))
 
 (define-public nebula
@@ -403,3 +411,51 @@ service and command-line interface for connecting to IVPN servers using
 OpenVPN or WireGuard protocols.  Features include kill-switch, multi-hop
 connections, and custom DNS settings.")
     (license license:gpl3+)))
+
+(define-public sniffnet
+  (package
+    (name "sniffnet")
+    (version "1.4.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "sniffnet" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "04fx5k9nlxwspnm3nvcw8idnvr1fdqqv6sxapgwj6w1j9n7j7qkq"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f
+       #:tests? #f
+       #:rust ,rust-1.88
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'install 'wrap-program
+           (lambda* (#:key inputs outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out"))
+                   (mesa (assoc-ref inputs "mesa"))
+                   (wayland (assoc-ref inputs "wayland"))
+                   (libxkbcommon (assoc-ref inputs "libxkbcommon")))
+               (wrap-program (string-append out "/bin/sniffnet")
+                 `("LD_LIBRARY_PATH" ":" prefix
+                   (,(string-append mesa "/lib")
+                    ,(string-append wayland "/lib")
+                    ,(string-append libxkbcommon "/lib"))))))))))
+    (native-inputs (list pkg-config))
+    (inputs
+     (cons* alsa-lib
+            fontconfig
+            libpcap
+            libxkbcommon
+            mesa
+            wayland
+            (px-cargo-inputs 'sniffnet)))
+    (home-page "https://sniffnet.net")
+    (synopsis "Application to comfortably monitor your network traffic")
+    (description
+     "Sniffnet is a cross-platform GUI application to monitor your network
+traffic. It provides real-time visualization of network connections, traffic
+statistics, and allows filtering by protocol, IP address, and port. Features
+include geolocation of remote hosts, custom notifications, and export of
+captured data.")
+    (license (list license:expat license:asl2.0))))
