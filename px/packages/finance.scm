@@ -23,23 +23,23 @@
     (inherit electrum)
     (name "electrum-cc")
     (inputs
-     (list libsecp256k1
+     (list electrum-aionostr
            python-aiohttp
            python-aiohttp-socks
            python-aiorpcx
            python-attrs
-           python-bitstring
-           python-btchip-python
            python-certifi
            python-cryptography
            python-dnspython
+           python-electrum-ecc
            python-hidapi
-           python-ledgerblue
+           python-jsonpatch
            python-protobuf
-           python-pyqt
+           python-pyaes
+           python-pyqt-6
            python-qdarkstyle
            python-qrcode
            zbar
-           python-ckcc-protocol
+           ;; Coldcard support
            python-cbor
-           python-pyaes))))
+           python-ckcc-protocol))))
