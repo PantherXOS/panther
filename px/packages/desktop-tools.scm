@@ -20,15 +20,19 @@
   #:use-module (gnu packages boost)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages check)
+  #:use-module (gnu packages cmake)
   #:use-module (gnu packages cups)
+  #:use-module (gnu packages fontutils)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages gcc)
+  #:use-module (gnu packages gl)
   #:use-module (gnu packages glib)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages gnuzilla)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages llvm)
   #:use-module (gnu packages lxqt)
+  #:use-module (gnu packages ncurses)
   #:use-module (gnu packages mate)
   #:use-module (gnu packages maths)
   #:use-module (gnu packages pdf)
@@ -36,10 +40,12 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages python)
   #:use-module (gnu packages qt)
+  #:use-module (gnu packages rust)
   #:use-module (gnu packages search)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages video)
   #:use-module (gnu packages vulkan)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xfce)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages kde-frameworks)
@@ -461,3 +467,74 @@ intelligently across different lighting conditions.  The tool uses Vulkan for
 GPU-accelerated processing with minimal battery impact and supports multiple
 displays through both laptop backlights and external monitors via DDC.")
     (license license:isc)))
+
+(define-public rio
+  (package
+    (name "rio")
+    (version "0.2.29")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/raphamorim/rio")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "028vw27yv8lrz30xzipzdz4d6qbjlyrsa1pr0diawihrjcamdkl4"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f
+       #:tests? #f
+       #:rust ,rust-1.88
+       #:cargo-build-flags '("--release" "-p" "rioterm")
+       #:phases
+       (modify-phases %standard-phases
+         (replace 'install
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (bin (string-append out "/bin"))
+                    (share (string-append out "/share"))
+                    (apps (string-append share "/applications"))
+                    (icons (string-append share "/icons/hicolor/scalable/apps"))
+                    (terminfo (string-append share "/terminfo")))
+               (mkdir-p bin)
+               (install-file "target/release/rio" bin)
+               (install-file "misc/rio.desktop" apps)
+               (mkdir-p icons)
+               (copy-file "misc/logo.svg" (string-append icons "/rio.svg"))
+               (mkdir-p terminfo)
+               (invoke "tic" "-x" "-o" terminfo "misc/rio.terminfo"))))
+         (add-after 'install 'wrap-program
+           (lambda* (#:key inputs outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out"))
+                   (mesa (assoc-ref inputs "mesa"))
+                   (vulkan (assoc-ref inputs "vulkan-loader"))
+                   (wayland (assoc-ref inputs "wayland"))
+                   (libxkbcommon (assoc-ref inputs "libxkbcommon")))
+               (wrap-program (string-append out "/bin/rio")
+                 `("LD_LIBRARY_PATH" ":" prefix
+                   (,(string-append mesa "/lib")
+                    ,(string-append vulkan "/lib")
+                    ,(string-append wayland "/lib")
+                    ,(string-append libxkbcommon "/lib"))))))))))
+    (native-inputs
+     (list cmake ncurses pkg-config))
+    (inputs
+     (cons* fontconfig
+            libxkbcommon
+            libx11
+            libxcursor
+            libxi
+            libxrandr
+            libxcb
+            mesa
+            vulkan-loader
+            wayland
+            (px-cargo-inputs 'rioterm)))
+    (home-page "https://rioterm.com")
+    (synopsis "Hardware-accelerated GPU terminal emulator")
+    (description
+     "Rio is a hardware-accelerated GPU terminal emulator focusing on running
+in desktops and browsers.  It features GPU rendering via WGPU, cross-platform
+support, customizable themes, font ligatures, and sixel image support.")
+    (license license:expat)))
