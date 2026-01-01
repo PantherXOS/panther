@@ -51,7 +51,7 @@
     (build-system pyproject-build-system)
     (arguments
      `(#:tests? #f
-       #:configure-flags '(@ ("force-system-libcapnp" . #t))
+       #:configure-flags '(("force-system-libcapnp" . #t))
        #:phases (modify-phases %standard-phases
                   (add-after 'unpack 'force-system-library
                     (lambda _
