@@ -539,7 +539,7 @@ collaboration tools, and AI-powered code assistance.")
 (define-public package-version-server
   (package
     (name "package-version-server")
-    (version "0.0.9")
+    (version "0.0.10")
     (source
      (origin
        (method url-fetch)
@@ -548,7 +548,7 @@ collaboration tools, and AI-powered code assistance.")
              version ".tar.gz"))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "01qdyjiy9368avw49s6lhcxylw0r3183lg7cvlr9ysrlmy1xl1d4"))))
+        (base32 "07b43fmi3zifilszzz6s343ggag4y3q5rlzfv753y8l177jqm9qf"))))
     (build-system cargo-build-system)
     (arguments
      `(#:install-source? #f
