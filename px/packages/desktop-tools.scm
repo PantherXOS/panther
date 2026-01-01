@@ -303,14 +303,14 @@ brand icons for easy, scalable vector graphics on websites and beyond.")
 (define-public px-terminal-launcher
   (package
     (name "px-terminal-launcher")
-    (version "v0.6.1")
+    (version "v0.6.2")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://source.pantherx.org/" name "_" version
                            ".tgz"))
        (sha256
-        (base32 "0kz2sh6padki4nrjxria94mrccxrwhsakfnj2g71s6xis2mjmbka"))))
+        (base32 "0b5fjnrb2kggrkfgsc3qkjmrxvp6c54xczhw1mfaq39li3z6sg5c"))))
     (build-system qt-build-system)
     (arguments
      ;; make qtsvg work
