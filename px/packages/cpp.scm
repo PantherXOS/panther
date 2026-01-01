@@ -70,13 +70,13 @@ in multiple languages.")
 (define-public cpp-webrtc
   (package
     (name "cpp-webrtc")
-    (version "0.6.3")
+    (version "0.6.4")
     (source
     (origin
       (method url-fetch)
       (uri (string-append "https://source.pantherx.org/webrtc-cpp_v" version ".tgz"))
       (sha256
-       (base32 "1g51fsx2axxn7zs4759ni2kg7mwf1ips70ixvh03hr7cjmh9dx3n"))))
+       (base32 "0a4pchpd6rr4x6swxwfc6p5kqpn1xjbxj77s6lwsvqirz879lv57"))))
     (build-system qt-build-system)
     (arguments
      `(#:tests? #f))
@@ -87,6 +87,7 @@ in multiple languages.")
                   qtquickcontrols-5
                   qtquickcontrols2-5
                   qtwebsockets-5
+                  qtsvg-5
                   gstreamer
                   gst-plugins-base
                   gst-plugins-good
@@ -171,6 +172,7 @@ install(TARGETS webrtc-cpp-demo
                   qtquickcontrols-5
                   qtquickcontrols2-5
                   qtwebsockets-5
+                  qtsvg-5
                   libnice
                   cli11
                   xz))
