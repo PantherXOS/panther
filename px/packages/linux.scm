@@ -29,7 +29,8 @@
   #:use-module (ice-9 match)
   #:use-module (nongnu packages linux)
   #:use-module (nonguix licenses)
-  #:export (%reterminal-kernel-modules))
+  #:export (%reterminal-kernel-modules
+            wireless-regdb-signed))
 
 (define-public bluez
   (package
@@ -155,6 +156,54 @@ is flexible, efficient and uses a modular implementation.")
 network cards supported by the brcmsmac or brcmfmac driver.")
     (license license:expat)))
 
+;; https://issues.guix.gnu.org/49649
+(define-public wireless-regdb-signed
+  (package
+    (inherit wireless-regdb)
+    (name "wireless-regdb-signed")
+    (source
+     (origin
+       (inherit (package-source wireless-regdb))
+       ;; Don't delete regulatory.bin - keep all upstream pre-built files
+       (snippet #f)))
+    (arguments
+     (list
+      #:phases
+      #~(modify-phases %standard-phases
+          (delete 'configure)
+          ;; Skip build entirely - use upstream pre-built signed files
+          (replace 'build
+            (lambda _ #t))
+          (replace 'install
+            (lambda* (#:key outputs #:allow-other-keys)
+              (let* ((out (assoc-ref outputs "out"))
+                     (firmware-dir (string-append out "/lib/firmware"))
+                     (crda-dir (string-append out "/lib/crda"))
+                     (doc-dir (string-append out "/share/doc/wireless-regdb"))
+                     (man5 (string-append out "/share/man/man5")))
+                (mkdir-p firmware-dir)
+                (mkdir-p crda-dir)
+                (mkdir-p doc-dir)
+                (mkdir-p man5)
+                ;; Install regulatory.db and signature for cfg80211
+                (install-file "regulatory.db" firmware-dir)
+                (install-file "regulatory.db.p7s" firmware-dir)
+                ;; Install regulatory.bin for legacy CRDA
+                (install-file "regulatory.bin" crda-dir)
+                (install-file "sforshee.key.pub.pem"
+                              (string-append crda-dir "/pubkeys"))
+                ;; Documentation
+                (install-file "LICENSE" doc-dir)
+                (install-file "regulatory.db.5" man5)
+                (install-file "regulatory.bin.5" man5)))))
+      #:tests? #f))
+    (native-inputs '())  ;; No build dependencies needed
+    (synopsis "Wireless regulatory database with upstream signature")
+    (description
+     "This package contains the wireless regulatory database for the Linux
+cfg80211 subsystem, including the upstream cryptographic signature required
+by modern kernels (4.15+) to load the regulatory database.")))
+
 (define-public bluez-firmware
   (let ((commit "31ad68831357d2019624004f1f0846475671088f")
         (revision "1"))
@@ -250,7 +299,7 @@ network cards supported by the brcmsmac or brcmfmac driver.")
      (substitute-keyword-arguments (package-arguments linux-libre-5.15)
        ((#:phases phases)
         #~(modify-phases #$phases
-            
+
             (replace 'configure
               (lambda* (#:key inputs target #:allow-other-keys)
                 ;; Avoid introducing timestamps
