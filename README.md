@@ -1,4 +1,4 @@
-# Guix Channel: PantherX OS Packages
+# My guix channel "panther"
 
 This repository contains GUIX package defintions maintained primarily by [Franz Geffke](https://gofranz.com).
 
