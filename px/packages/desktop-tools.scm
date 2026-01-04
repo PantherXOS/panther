@@ -27,6 +27,7 @@
   #:use-module (gnu packages gcc)
   #:use-module (gnu packages gl)
   #:use-module (gnu packages glib)
+  #:use-module (gnu packages networking)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages gnuzilla)
   #:use-module (gnu packages linux)
@@ -537,4 +538,46 @@ displays through both laptop backlights and external monitors via DDC.")
      "Rio is a hardware-accelerated GPU terminal emulator focusing on running
 in desktops and browsers.  It features GPU rendering via WGPU, cross-platform
 support, customizable themes, font ligatures, and sixel image support.")
+    (license license:expat)))
+
+(define-public networkmanager-dmenu
+  (package
+    (name "networkmanager-dmenu")
+    (version "2.6.2")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/firecat53/networkmanager-dmenu")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1r57znpd3rkrm836jw2wb1fx82p724r85n8jb1chzi3p8qlhcf9m"))))
+    (build-system copy-build-system)
+    (arguments
+     (list
+      #:install-plan #~'(("networkmanager_dmenu" "bin/networkmanager_dmenu")
+                         ("networkmanager_dmenu.desktop"
+                          "share/applications/networkmanager_dmenu.desktop"))
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'install 'wrap-program
+            (lambda* (#:key inputs outputs #:allow-other-keys)
+              (let ((out (assoc-ref outputs "out"))
+                    (gi-typelib-path (getenv "GI_TYPELIB_PATH")))
+                (wrap-program (string-append out "/bin/networkmanager_dmenu")
+                  `("GI_TYPELIB_PATH" ":" prefix (,gi-typelib-path))
+                  `("GUIX_PYTHONPATH" ":" prefix
+                    (,(getenv "GUIX_PYTHONPATH"))))))))))
+    (inputs
+     (list network-manager
+           python
+           python-pygobject))
+    (home-page "https://github.com/firecat53/networkmanager-dmenu")
+    (synopsis "NetworkManager control via dmenu, rofi, or similar launchers")
+    (description
+     "Networkmanager-dmenu is a Python script that provides a menu-based
+interface to control NetworkManager connections.  It supports dmenu, rofi,
+wofi, bemenu, and other dmenu-compatible launchers.  Features include managing
+WiFi and wired connections, VPN support, and Bluetooth tethering.")
     (license license:expat)))
