@@ -46,18 +46,18 @@
             %panther-os
             %panther-desktop-os))
 
-(define %px-substitute-server-url
-  "https://packages.pantherx.org")
+(define %gofranz-substitute-server-url
+  "https://substitutes.guix.gofranz.com")
 
 (define %nonguix-substitute-server-url
   "https://substitutes.nonguix.org")
 
-(define %px-substitute-server-key
-  (plain-file "packages.pantherx.org.pub"
-   "(public-key 
- (ecc 
+(define %gofranz-substitute-server-key
+  (plain-file "substitutes.guix.gofranz.com.pub"
+   "(public-key
+ (ecc
   (curve Ed25519)
-  (q #E8322D13EA02C09F06CB70FDA2ABBFD5E463F2AA34C18C692F5E25858F4E315D#)
+  (q #0096373009D945F86C75DFE96FC2D21E2F82BA8264CB69180AA4F9D3C45BAA47#)
   )
  )
 "))
@@ -104,11 +104,11 @@
         (inherit config)
         (guix (guix-for-channels %pantherx-default-channels))
         (authorized-keys
-        (cons* %px-substitute-server-key
+        (cons* %gofranz-substitute-server-key
                 %nonguix-substitute-server-key
                 %default-authorized-guix-keys))
         (substitute-urls
-        (cons* %px-substitute-server-url
+        (cons* %gofranz-substitute-server-url
                 %nonguix-substitute-server-url
                 %default-substitute-urls))
         (channels %pantherx-default-channels)))))
@@ -129,11 +129,11 @@
         (inherit config)
         (guix (guix-for-channels %pantherx-default-channels))
         (authorized-keys
-        (cons* %px-substitute-server-key
+        (cons* %gofranz-substitute-server-key
                 %nonguix-substitute-server-key
                 %default-authorized-guix-keys))
         (substitute-urls
-        (cons* %px-substitute-server-url
+        (cons* %gofranz-substitute-server-url
                 %nonguix-substitute-server-url
                 %default-substitute-urls))
         (channels %pantherx-default-channels)))))

@@ -17,6 +17,25 @@ This repository contains GUIX package defintions maintained primarily by [Franz 
        %default-channels)
 ```
 
+## Substitute Server
+
+**URL:** `https://substitutes.guix.gofranz.com`
+
+```scheme
+;; Public key
+(public-key
+ (ecc
+  (curve Ed25519)
+  (q #0096373009D945F86C75DFE96FC2D21E2F82BA8264CB69180AA4F9D3C45BAA47#)))
+```
+
+```bash
+# Authorize
+sudo guix archive --authorize < /path/to/key.pub
+```
+
+Already configured if using `%panther-base-services` or `%panther-desktop-services`.
+
 ## Home Services
 
 ### Darkman

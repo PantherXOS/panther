@@ -57,11 +57,11 @@
                    (inherit config)
                    (guix (guix-for-channels %pantherx-default-channels))
                    (authorized-keys
-                    (cons* %px-substitute-server-key
+                    (cons* %gofranz-substitute-server-key
                            %nonguix-substitute-server-key
                            %default-authorized-guix-keys))
                    (substitute-urls
-                    (cons* %px-substitute-server-url
+                    (cons* %gofranz-substitute-server-url
                            %nonguix-substitute-server-url
                            %default-substitute-urls))
                    (channels %pantherx-default-channels)))))))
