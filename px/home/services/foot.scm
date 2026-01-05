@@ -21,7 +21,7 @@
 ;;; Foot Server - Wayland terminal emulator server
 ;;;
 
-(define-maybe string)
+(define-maybe/no-serialization string)
 
 (define-configuration/no-serialization home-foot-server-configuration
   (foot
