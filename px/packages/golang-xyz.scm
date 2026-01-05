@@ -179,24 +179,3 @@ and deadline support.")
      "Package wifi provides access to IEEE 802.11 WiFi device operations.")
     (license license:expat)))
 
-(define-public go-github-com-josharian-native
-  (package
-    (name "go-github-com-josharian-native")
-    (version "1.1.0")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/josharian/native")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "1wa4yzc3r06qjklqjf4n30zx9v660w8hmxkmybzwk03fmlv2rcyj"))))
-    (build-system go-build-system)
-    (arguments
-     (list #:import-path "github.com/josharian/native"))
-    (home-page "https://github.com/josharian/native")
-    (synopsis "Native byte order detection for Go")
-    (description
-     "Package native provides easy access to native byte order.")
-    (license license:expat)))
