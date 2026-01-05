@@ -63,62 +63,6 @@ with data consistency.")
      "This package provides calculations for the position of the sun and moon.")
     (license license:asl2.0)))
 
-(define-public go-github-com-mdlayher-socket
-  (package
-    (name "go-github-com-mdlayher-socket")
-    (version "0.5.1")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/mdlayher/socket")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "1bq6sphsffjqqk2v9wy8qkv5yf0r6d72pklapgy3znqlnpgvnqab"))))
-    (build-system go-build-system)
-    (arguments
-     (list #:import-path "github.com/mdlayher/socket"
-           #:tests? #f))  ; Tests require network access
-    (propagated-inputs
-     (list go-golang-org-x-net
-           go-golang-org-x-sync
-           go-golang-org-x-sys))
-    (home-page "https://github.com/mdlayher/socket")
-    (synopsis "Low-level network socket operations for Go")
-    (description
-     "Package socket provides a low-level network connection type which
-integrates with Go's runtime network poller to provide asynchronous I/O
-and deadline support.")
-    (license license:expat)))
-
-(define-public go-github-com-mdlayher-genetlink
-  (package
-    (name "go-github-com-mdlayher-genetlink")
-    (version "1.3.2")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/mdlayher/genetlink")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "0vppn8071nh8pnbyq9769j1zcgq76iadd5fry90xkmfq429if356"))))
-    (build-system go-build-system)
-    (arguments
-     (list #:import-path "github.com/mdlayher/genetlink"
-           #:tests? #f))  ; Tests require root/network
-    (propagated-inputs
-     (list go-github-com-mdlayher-netlink
-           go-golang-org-x-net
-           go-golang-org-x-sys))
-    (home-page "https://github.com/mdlayher/genetlink")
-    (synopsis "Generic netlink interactions for Go")
-    (description
-     "Package genetlink implements generic netlink interactions and data types.")
-    (license license:expat)))
-
 (define-public go-golang-zx2c4-com-wireguard-wgctrl
   (package
     (name "go-golang-zx2c4-com-wireguard-wgctrl")
