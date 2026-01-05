@@ -22,7 +22,7 @@
 (define (inexact-number? n)
   (and (number? n) (inexact? n)))
 
-(define-maybe inexact-number)
+(define-maybe/no-serialization inexact-number)
 
 (define (serialize-yaml-boolean field value)
   (string-append (symbol->string field) ": "
