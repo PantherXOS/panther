@@ -4,6 +4,7 @@
 (define-module (px packages audio)
   #:use-module ((guix licenses)
                 #:prefix license:)
+  #:use-module (guix build-system copy)
   #:use-module (guix build-system meson)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
@@ -165,3 +166,32 @@ PipeWire and a GObject-based high-level library that wraps PipeWire's API,
 providing convenience for writing the daemon's modules as well as external
 tools for managing PipeWire.")
     (license license:expat)))
+
+(define-public easyeffects-presets-framework
+  (package
+    (name "easyeffects-presets-framework")
+    (version "0.0.0-1.e5289ec")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/FrameworkComputer/linux-docs")
+             (commit "e5289ecc283e0e940536ce48e0ed789adf0280be")))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1l78wlxr1w1pgiv030qbz94p1mwjb7235abrz2j9hq43rywwj705"))))
+    (build-system copy-build-system)
+    (arguments
+     '(#:install-plan
+       '(("easy-effects/fw13-easy-effects.json"
+          "share/easyeffects/output/fw13-easy-effects.json")
+         ("easy-effects/fw16-easy-effects.json"
+          "share/easyeffects/output/fw16-easy-effects.json")
+         ("easy-effects/irs/IR_22ms_27dB_5t_15s_0c.irs"
+          "share/easyeffects/irs/IR_22ms_27dB_5t_15s_0c.irs"))))
+    (home-page "https://github.com/FrameworkComputer/linux-docs")
+    (synopsis "EasyEffects presets for Framework laptops")
+    (description
+     "Audio presets for EasyEffects optimized for Framework 13 and Framework 16
+laptops.  These presets improve speaker output quality on Framework hardware.")
+    (license license:bsd-3)))
