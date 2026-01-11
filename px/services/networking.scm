@@ -81,7 +81,7 @@ logdir /var/log/chrony")))
                              (stop #~(make-kill-destructor)))))))
 
 (define chrony-service-type
-  (service-type (name "chrony")
+  (service-type (name 'chrony)
                 (description "Chrony service")
                 (extensions (list (service-extension
                                    shepherd-root-service-type

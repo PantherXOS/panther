@@ -155,7 +155,7 @@
   (list (px-device-runner-job config)))
 
 (define px-device-runner-service-type
-  (service-type (name "px-device-runner")
+  (service-type (name 'px-device-runner)
                 (extensions (list (service-extension mcron-service-type
                                    px-device-runner-mcron-jobs)))
                 (description
