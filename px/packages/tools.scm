@@ -98,36 +98,33 @@ programmers, with dashboards showing metrics and insights about coding habits.")
     (license license:bsd-3)))
 
 (define-public witr
-  (let ((commit "a2dc41344d0d8bc103d730de61d35f6dbc98ea5a")
-        (revision "1"))
-    (package
-      (name "witr")
-      (version (git-version "0" revision commit))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/pranshuparmar/witr")
-               (commit commit)))
-         (file-name (git-file-name name version))
-         (sha256
-          (base32 "1xdhpks76r4f9z4rx1myn4hlh0hm7nqq269kzvpy6ph0zbic2mvp"))))
-      (build-system go-build-system)
-      (arguments
-       (list
-        #:install-source? #f
-        #:import-path "github.com/pranshuparmar/witr/cmd/witr"
-        #:unpack-path "github.com/pranshuparmar/witr"
-        #:go go-1.24
-        #:build-flags
-        #~(list (string-append
-                 "-ldflags=-X main.version=" #$version
-                 " -X main.commit=" #$(string-take commit 7)))))
-      (home-page "https://github.com/pranshuparmar/witr")
-      (synopsis "Explain why a process is running on Linux")
-      (description
-       "Witr (Why Is This Running) is a Linux CLI debugging tool that explains
+  (package
+    (name "witr")
+    (version "0.2.3")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/pranshuparmar/witr")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "15l6m0q2mrca208ky3laxn2m14jhnicvkxj495p4gs71lpn26ny0"))))
+    (build-system go-build-system)
+    (arguments
+     (list
+      #:install-source? #f
+      #:import-path "github.com/pranshuparmar/witr/cmd/witr"
+      #:unpack-path "github.com/pranshuparmar/witr"
+      #:go go-1.24
+      #:build-flags
+      #~(list (string-append
+               "-ldflags=-X main.version=" #$version))))
+    (home-page "https://github.com/pranshuparmar/witr")
+    (synopsis "Explain why a process is running on Linux")
+    (description
+     "Witr (Why Is This Running) is a Linux CLI debugging tool that explains
 the causal chain of why a process exists.  It traces process ancestry, maps
 ports to processes, and identifies contexts like Git repositories, Docker
 containers, and PM2 instances.")
-      (license license:asl2.0))))
+    (license license:asl2.0)))
