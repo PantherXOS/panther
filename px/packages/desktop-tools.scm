@@ -380,7 +380,7 @@ integration with various productivity tools.")
 (define-public discord
   (package
     (name "discord")
-    (version "0.0.119")
+    (version "0.0.120")
     (source
      (origin
        (method url-fetch)
@@ -389,7 +389,7 @@ integration with various productivity tools.")
          "https://stable.dl2.discordapp.net/apps/linux/" version
          "/discord-" version ".deb"))
        (sha256
-        (base32 "0qr4ing3sq48pca9hz8hkqzz1xhsvd1xqvsg047yqy92xkr2xaj7"))))
+        (base32 "07bcz6hnmkvqnv2xnm8v0hf2skc8ggji97rcp41sdfrd55s8651j"))))
     (supported-systems '("x86_64-linux"))
     (build-system chromium-binary-build-system)
     (arguments
