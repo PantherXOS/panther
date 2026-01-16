@@ -17,14 +17,14 @@
 (define-public gh
   (package
     (name "gh")
-    (version "2.83.2")
+    (version "2.85.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://github.com/cli/cli/releases/download/v"
                            version "/gh_" version "_linux_amd64.tar.gz"))
        (sha256
-        (base32 "0ph1jaq4axa6j78xdyfq8vcnyqmslxj4pv4w88hhxgag450pcvna"))))
+        (base32 "1w1wr5i8lniqg1y1a83cqp7ndja8cjbhay113k9w08lw5cl4xk2x"))))
     (build-system copy-build-system)
     (arguments
      '(#:install-plan
