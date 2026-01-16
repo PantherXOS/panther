@@ -100,7 +100,7 @@ programmers, with dashboards showing metrics and insights about coding habits.")
 (define-public witr
   (package
     (name "witr")
-    (version "0.2.3")
+    (version "0.2.4")
     (source
      (origin
        (method git-fetch)
@@ -109,7 +109,7 @@ programmers, with dashboards showing metrics and insights about coding habits.")
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "15l6m0q2mrca208ky3laxn2m14jhnicvkxj495p4gs71lpn26ny0"))))
+        (base32 "0vbav25j41lyhmbh3slpqbgmp53cv6idcc157p3nj8akw0w4pwi4"))))
     (build-system go-build-system)
     (arguments
      (list
