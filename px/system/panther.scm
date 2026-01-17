@@ -92,7 +92,8 @@
          (udev-rules-service 'nitro %nitro-key-udev-rule #:groups '("plugdev"))
          (udev-rules-service 'fido2 libfido2)
          (udev-rules-service 'yubikey yubikey-personalization)
-         (udev-rules-service 'coinkite %coinkite-udev-rule)))
+         (udev-rules-service 'coinkite %coinkite-udev-rule)
+         (udev-rules-service 'ledger %ledger-udev-rule)))
 
 ;;
 ;; BASE
