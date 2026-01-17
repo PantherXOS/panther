@@ -12,6 +12,7 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages tls)
+  #:use-module (gnu packages perl)
   #:use-module (px self))
 
 (define-public gh
@@ -84,3 +85,27 @@ powerful and easy to use.  It features automatic working copy management,
 operation logging for easy undo, first-class conflict handling, automatic
 rebasing of descendant commits, and comprehensive history rewriting tools.")
     (license license:asl2.0)))
+
+(define-public keifu
+  (package
+    (name "keifu")
+    (version "0.2.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "keifu" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1pyhm35rdqyh3i7m1sgd4k19l8fjqfqn70pcbgdpa1c003a5jh0r"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:install-source? #f))
+    (native-inputs (list perl))
+    (inputs (px-cargo-inputs 'keifu))
+    (home-page "https://github.com/trasta298/keifu")
+    (synopsis "TUI tool to visualize Git commit graphs")
+    (description
+     "Keifu is a terminal user interface tool that visualizes Git commit graphs
+with branch genealogy.  It provides color-coded commit graphs, branch
+information, file change statistics, and basic Git operations.")
+    (license license:expat)))
